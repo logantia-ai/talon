@@ -711,7 +711,7 @@ function LandingPage({onGetStarted, onSignIn}){
 }
 
 // ─── Auth Screen ──────────────────────────────────────────────────────────────
-function AuthScreen({onAuth}) {
+function AuthScreen({onAuth, defaultMode="login"}) {
   const [mode,setMode]=useState(defaultMode);
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
