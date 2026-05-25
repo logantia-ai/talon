@@ -644,68 +644,67 @@ const OB=[
 function LandingPage({onGetStarted, onSignIn}){
   return(
     <div style={{minHeight:"100vh",background:C.bg,color:C.text,fontFamily:"'SF Pro Text',-apple-system,sans-serif",overflowX:"hidden"}}>
-      <div style={{background:C.nav,borderBottom:`1px solid ${C.border}`,padding:"14px 20px",display:"flex",justifyContent:"space-between",alignItems:"center",position:"sticky",top:0,zIndex:10}}>
-        <img src={TALON_WORDMARK} alt="TALON" style={{height:32,width:"auto"}}/>
+      <div style={{background:C.nav,borderBottom:`1px solid ${C.border}`,padding:"12px 20px",display:"flex",justifyContent:"space-between",alignItems:"center",position:"sticky",top:0,zIndex:10}}>
+        <img src={TALON_LOGO} alt="TALON" style={{height:44,width:44,objectFit:"contain"}}/>
         <div style={{display:"flex",gap:10,alignItems:"center"}}>
-          <div style={{fontSize:9,color:C.gold,letterSpacing:"0.1em"}}>LOGANTIA.AI</div>
-          <button onClick={onSignIn} style={{padding:"6px 14px",background:"transparent",border:`1px solid ${C.goldBorder}`,borderRadius:6,color:C.gold,fontSize:11,fontWeight:600,cursor:"pointer"}}>Sign In</button>
+          <span style={{fontSize:9,color:C.gold,letterSpacing:"0.12em"}}>LOGANTIA.AI</span>
+          <button onClick={onSignIn} style={{padding:"6px 16px",background:"transparent",border:`1px solid ${C.goldBorder}`,borderRadius:6,color:C.gold,fontSize:11,fontWeight:600,cursor:"pointer",letterSpacing:"0.04em"}}>Sign In</button>
         </div>
       </div>
-      <div style={{maxWidth:680,margin:"0 auto",padding:"48px 24px 80px"}}>
-        <div style={{textAlign:"center",marginBottom:40}}>
-          <img src={TALON_LOGO} alt="TALON" style={{width:"min(500px,94vw)",height:"min(500px,94vw)",objectFit:"contain",display:"block",margin:"0 auto 12px"}}/>
-
+      <div style={{maxWidth:700,margin:"0 auto",padding:"40px 24px 80px"}}>
+        <div style={{textAlign:"center",marginBottom:32}}>
+          <img src={TALON_LOGO} alt="TALON" style={{width:"min(480px,92vw)",height:"min(480px,92vw)",objectFit:"contain",display:"block",margin:"0 auto"}}/>
         </div>
-        <div style={{fontSize:"clamp(22px,5vw,32px)",fontWeight:700,color:C.text,lineHeight:1.3,marginBottom:24,textAlign:"center"}}>
+        <div style={{fontSize:"clamp(24px,5vw,36px)",fontWeight:800,color:C.text,lineHeight:1.3,marginBottom:24,textAlign:"center"}}>
           60% of Americans live paycheck to paycheck.
         </div>
-        <p style={{fontSize:"clamp(14px,3vw,16px)",color:C.muted,lineHeight:1.9,marginBottom:20}}>
-          Not because they're lazy. Not because they don't work hard enough. Because nobody ever taught them how money actually works.
+        <p style={{fontSize:"clamp(15px,3vw,17px)",color:C.muted,lineHeight:1.9,marginBottom:18}}>
+          Not because they are lazy. Not because they do not work hard enough. Because nobody ever taught them how money actually works.
         </p>
-        <p style={{fontSize:"clamp(14px,3vw,16px)",color:C.muted,lineHeight:1.9,marginBottom:20}}>
-          It was never in the curriculum. It was never at the dinner table. It was never explained by the bank quietly charging you fees you didn't know existed.
+        <p style={{fontSize:"clamp(15px,3vw,17px)",color:C.muted,lineHeight:1.9,marginBottom:18}}>
+          It was never in the curriculum. It was never at the dinner table. It was never explained by the bank quietly charging you fees you did not know existed.
         </p>
-        <p style={{fontSize:"clamp(14px,3vw,16px)",color:C.muted,lineHeight:1.9,marginBottom:20}}>
-          The system wasn't broken. It was working exactly as designed. An educated consumer is a less profitable consumer.
+        <p style={{fontSize:"clamp(15px,3vw,17px)",color:C.muted,lineHeight:1.9,marginBottom:18}}>
+          The system was not broken. It was working exactly as designed. An educated consumer is a less profitable consumer.
         </p>
-        <p style={{fontSize:"clamp(14px,3vw,16px)",color:C.text,lineHeight:1.9,marginBottom:32,fontWeight:500}}>
+        <p style={{fontSize:"clamp(16px,3vw,18px)",color:C.text,lineHeight:1.9,marginBottom:36,fontWeight:600}}>
           I got tired of watching it happen. So I built TALON.
         </p>
-        <div style={{background:C.card,border:`1px solid ${C.goldBorder}`,borderRadius:14,padding:"24px 20px",marginBottom:32}}>
-          <div style={{fontSize:11,color:C.gold,letterSpacing:"0.12em",marginBottom:16}}>HERE IS WHAT YOU GET FREE — RIGHT NOW</div>
+        <div style={{background:C.card,border:`1px solid ${C.goldBorder}`,borderRadius:14,padding:"24px 20px",marginBottom:36}}>
+          <div style={{fontSize:11,color:C.gold,letterSpacing:"0.14em",marginBottom:20,fontWeight:600}}>HERE IS WHAT YOU GET FREE RIGHT NOW</div>
           {[
-            "Your personal TALON Score measuring your complete financial health",
-            "A personalized financial roadmap based on your actual situation",
-            "5 complete financial education modules — plain English, real numbers",
-            "AI-generated investment portfolios explained term by term",
-            "Investment research across stocks, crypto, commodities, bonds, currencies, REITs",
-
+            "Your personal TALON Score — a complete picture of your financial health across 5 pillars",
+            "A personalized financial roadmap built around your actual situation",
+            "5 complete financial education modules — plain English, real numbers, zero jargon",
+            "AI-generated investment portfolios explained term by term in plain English",
+            "Investment research across stocks, ETFs, crypto, commodities, bonds, currencies, and REITs",
+            "Financial calculators — compound interest, debt payoff, and retirement projections"
           ].map((item,i)=>(
-            <div key={i} style={{display:"flex",gap:10,alignItems:"flex-start",marginBottom:12}}>
-              <span style={{color:C.gold,fontSize:14,flexShrink:0,marginTop:1}}>→</span>
-              <span style={{fontSize:"clamp(13px,3vw,15px)",color:C.muted,lineHeight:1.6}}>{item}</span>
+            <div key={i} style={{display:"flex",gap:12,alignItems:"flex-start",marginBottom:14}}>
+              <span style={{color:C.gold,fontSize:16,flexShrink:0,marginTop:1,lineHeight:1}}>→</span>
+              <span style={{fontSize:"clamp(13px,3vw,15px)",color:C.muted,lineHeight:1.7}}>{item}</span>
             </div>
           ))}
         </div>
-        <div style={{textAlign:"center",marginBottom:12}}>
-          <div style={{fontSize:"clamp(16px,3.5vw,20px)",fontWeight:700,color:C.text,marginBottom:8}}>No jargon. No gatekeeping. No BS.</div>
-          <div style={{fontSize:"clamp(20px,4.5vw,26px)",fontWeight:800,color:C.gold}}>The playing field just leveled.</div>
+        <div style={{textAlign:"center",marginBottom:8}}>
+          <div style={{fontSize:"clamp(16px,3.5vw,20px)",fontWeight:700,color:C.text,marginBottom:6}}>No jargon. No gatekeeping. No BS.</div>
+          <div style={{fontSize:"clamp(22px,5vw,30px)",fontWeight:800,color:C.gold,marginBottom:28}}>The playing field just leveled.</div>
         </div>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:16,marginBottom:32,paddingTop:24,paddingBottom:24,borderTop:`1px solid ${C.border}`,borderBottom:`1px solid ${C.border}`}}>
-          {[["60%","of Americans live paycheck to paycheck"],["$0","financial education in most schools"],["1","tool that changes everything"]].map(([num,label])=>(
+        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12,marginBottom:32,padding:"24px 16px",background:C.card,borderRadius:14,border:`1px solid ${C.border}`}}>
+          {[["60%","of Americans live paycheck to paycheck"],["$0","financial education in most schools"],["1","tool changes everything"]].map(([num,label])=>(
             <div key={num} style={{textAlign:"center"}}>
-              <div style={{fontSize:"clamp(36px,8vw,56px)",fontWeight:800,color:C.gold,fontFamily:"monospace",lineHeight:1}}>{num}</div>
+              <div style={{fontSize:"clamp(32px,7vw,52px)",fontWeight:800,color:C.gold,fontFamily:"monospace",lineHeight:1}}>{num}</div>
               <div style={{fontSize:"clamp(9px,2vw,11px)",color:C.muted,letterSpacing:"0.06em",marginTop:8,lineHeight:1.5}}>{label.toUpperCase()}</div>
             </div>
           ))}
         </div>
-        <button onClick={onGetStarted} style={{width:"100%",padding:"16px",background:C.gold,border:"none",borderRadius:12,color:"#000",fontSize:"clamp(14px,3vw,17px)",fontWeight:800,cursor:"pointer",letterSpacing:"0.04em",marginBottom:12}}>
-          Create Your Free Account →
+        <button onClick={onGetStarted} style={{width:"100%",padding:"18px",background:C.gold,border:"none",borderRadius:12,color:"#000",fontSize:"clamp(15px,3vw,18px)",fontWeight:800,cursor:"pointer",letterSpacing:"0.04em",marginBottom:14}}>
+          Create Your Free Account
         </button>
-        <button onClick={onSignIn} style={{width:"100%",padding:"14px",background:"transparent",border:`1px solid ${C.border}`,borderRadius:12,color:C.muted,fontSize:15,fontWeight:500,cursor:"pointer"}}>
+        <button onClick={onSignIn} style={{width:"100%",padding:"14px",background:"transparent",border:`1px solid ${C.border}`,borderRadius:12,color:C.muted,fontSize:15,fontWeight:500,cursor:"pointer",marginBottom:32}}>
           Already have an account? Sign In
         </button>
-        <p style={{fontSize:10,color:C.dim,textAlign:"center",marginTop:32,lineHeight:1.6}}>TALON is for educational purposes only and does not constitute financial, investment, legal, or tax advice. Powered by Logantia AI.</p>
+        <p style={{fontSize:10,color:C.dim,textAlign:"center",lineHeight:1.7}}>TALON is for educational purposes only and does not constitute financial, investment, legal, or tax advice. Powered by Logantia AI. Free to start. Cancel anytime.</p>
       </div>
     </div>
   );
