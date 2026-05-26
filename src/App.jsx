@@ -638,7 +638,7 @@ const OB=[
 
 
 // ─── Auth Screen ──────────────────────────────────────────────────────────────
-function AuthScreen({onAuth}) {
+function AuthScreen({onAuth, defaultMode="login"}) { {
   const [mode,setMode]=useState("login");
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
@@ -1628,3 +1628,4 @@ export default function TALON(){
     </div>
   );
 }
+
