@@ -493,7 +493,7 @@ function AICoach({userData,scoreData,plan,onUpgrade,completedCh}){
     setLoadMsg(LOAD_MSGS[Math.floor(Math.random()*LOAD_MSGS.length)]);
     const sys=`You are TALON, a financial fluency coach — not a financial advisor. Plain English, real numbers, street-level analogies. Never give specific investment advice or tell someone what to do with their money. User: Name ${userData.name||"User"}, Age ${userData.age||"unknown"}, Income ${userData.income||"unknown"}, Debt ${userData.debt||"unknown"}, EF ${userData.ef||"unknown"}, Retirement saving ${userData.retireSaving||"unknown"}, Knowledge ${userData.knowledge||"beginner"}, TALON Score ${scoreData?.total||0}/100. Always end with: "This is educational context — for decisions specific to your situation, a licensed financial advisor is your best resource." Keep responses under 200 words.`;
     try{
-      const res=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-5",max_tokens:500,system:sys,messages:[...msgs,userMsg].map(m=>({role:m.role,content:m.content}))})});
+      const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-5",max_tokens:500,system:sys,messages:[...msgs,userMsg].map(m=>({role:m.role,content:m.content}))})});
       const data=await res.json();
       const reply=data.content?.filter(b=>b.type==="text").map(b=>b.text).join("")||"Something went wrong — try again.";
       setMsgs(m=>[...m,{role:"assistant",content:reply}]);
@@ -841,7 +841,7 @@ function Portfolio({plan,onEarnBadge,onUpgrade}){
     const profiles={1:"ultra-conservative: Treasury ETFs (SHY,SGOV,BIL), TIPS",2:"income-focused: bond ETFs (LQD,VCIT), dividend aristocrats (NOBL), utilities (XLU)",3:"conservative growth: dividend growth (VIG,DGRO), staples (XLP), bonds (BND)",4:"moderate: S&P 500 (VOO), blue-chip dividends, bonds (BND). Classic 60/40",5:"balanced: diversified equities, 15-20% bonds, dividend layer",6:"balanced growth: growth large-caps (MSFT,AAPL,V), QQQ, minimal bonds, international (VEA)",7:"growth: QQQ, high-quality growth (NVDA,META,AMZN,GOOGL), no bonds",8:"aggressive growth: concentrated tech (NVDA,TSLA,AMD), small-cap (IWM), biotech (XBI)",9:"aggressive: high-volatility (TSLA,COIN,MSTR,PLTR), China tech (KWEB), emerging markets (EEM)",10:"maximum risk: 3x leveraged (TQQQ,SOXL), speculative (MSTR,COIN,RIOT,MARA)"};
     const prompt=`Educational portfolio basket for Risk Tier ${tier}/10: ${profiles[tier]}. Return ONLY raw JSON no markdown: {"stocks":[{"ticker":"VOO","name":"Vanguard S&P 500 ETF","allocation":40,"assetClass":"US Large Cap Blend","explanation":"2-3 sentences. Define financial terms inline in plain English.","whyThisTier":"One sentence."}],"strategyNote":"One sentence.","keyRisk":"One sentence.","expectedReturn":"e.g. 4-6% annually"}. Rules: 5-7 holdings, allocations sum to 100, real US tickers, tiers 1-3 must include bond ETFs, tiers 7-10 must be genuinely high-risk.`;
     try{
-      const res=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-5",max_tokens:1000,messages:[{role:"user",content:prompt}]})});
+      const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-5",max_tokens:1000,messages:[{role:"user",content:prompt}]})});
       if(!res.ok) throw new Error("API "+res.status);
       const data=await res.json();
       const raw=data.content.filter(b=>b.type==="text").map(b=>b.text).join("").trim().replace(/^```json\s*/i,"").replace(/^```\s*/i,"").replace(/\s*```$/i,"").trim();
@@ -1285,7 +1285,7 @@ function Research({onEarnBadge}){
     setLoading(true);setResult(null);setError(null);setShowAff(false);
     const prompt="Educational investment research for a financial literacy platform. Asset class: "+assetClass+". Asset: "+query+".\n\nReturn ONLY raw JSON no markdown:\n{\"name\":\"Full name\",\"ticker\":\"TICKER or N/A\",\"oneLiner\":\"One sentence plain English description\",\"whatItIs\":\"2-3 sentences what this asset is in plain English. Define every term inline.\",\"whatDrivesPrice\":\"2-3 sentences on what makes the price move. Plain English.\",\"keyRisk\":\"Biggest risk in one sentence.\",\"historicalContext\":\"One notable historical fact.\",\"talonRiskRating\":7,\"whoShouldConsider\":\"One sentence on what investor this suits.\",\"whoShouldAvoid\":\"One sentence on who should not consider this.\",\"relatedAssets\":[\"Asset1\",\"Asset2\",\"Asset3\"]}\n\ntalonRiskRating must be 1-10. Crypto=9-10. Treasuries=1-2. Blue chip stocks=5-6.";
     try{
-      const res=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-5",max_tokens:800,messages:[{role:"user",content:prompt}]})});
+      const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-5",max_tokens:800,messages:[{role:"user",content:prompt}]})});
       if(!res.ok) throw new Error("API "+res.status);
       const data=await res.json();
       const raw=data.content.filter(b=>b.type==="text").map(b=>b.text).join("").trim().replace(/^```json\s*/i,"").replace(/^```\s*/i,"").replace(/\s*```$/i,"").trim();
@@ -1628,6 +1628,5 @@ export default function TALON(){
     </div>
   );
 }
-
 
 
