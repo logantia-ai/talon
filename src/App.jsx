@@ -689,7 +689,7 @@ function AuthScreen({onAuth}) {
           <button onClick={handle} disabled={loading} style={{width:"100%",padding:"12px",background:loading?"rgba(201,162,39,0.2)":C.gold,border:"none",borderRadius:9,color:loading?"rgba(0,0,0,0.4)":"#000",fontSize:14,fontWeight:700,cursor:loading?"not-allowed":"pointer"}}>
             {loading?"Please wait...":(mode==="login"?"Sign In":"Create Free Account")}
           </button>
-          {mode==="login"&&<p style={{fontSize:11,color:C.dim,textAlign:"center",margin:"12px 0 0"}}>New to TALON? <button onClick={()=>setMode("signup")} style={{background:"none",border:"none",color:C.gold,fontSize:11,cursor:"pointer",padding:0}}>Create a free account</button></p>}
+          {mode==="login"&&<p style={{fontSize:11,color:C.dim,textAlign:"center",margin:"12px 0 0"}}>New to TALON? <button onClick={()=>s{()=>setMode("signup")} style={{background:"none",border:"none",color:C.gold,fontSize:11,cursor:"pointer",padding:0}}>Create a free account</button></p>}
           {mode==="signup"&&<p style={{fontSize:10,color:C.dim,textAlign:"center",margin:"12px 0 0",lineHeight:1.5}}>By creating an account you agree to our Terms of Service and Privacy Policy. TALON is for educational purposes only.</p>}
         </div>
       </div>
