@@ -27,7 +27,7 @@ async function signUp(email, password, userData) {
   });
   const data = await res.json();
   if (data.access_token) {
-    localStorage.setItem("talon_token", data.access_token);
+    localStorage.setItem("talon_token", data.access_token);if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_
     localStorage.setItem("talon_user_id", data.user.id);
     localStorage.setItem("talon_email", email);
     await saveUserProfile(data.user.id, {...userData, email});
@@ -43,7 +43,7 @@ async function signIn(email, password) {
   });
   const data = await res.json();
   if (data.access_token) {
-    localStorage.setItem("talon_token", data.access_token);
+    localStorage.setItem("talon_token", data.access_token);if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_
     localStorage.setItem("talon_user_id", data.user.id);
     localStorage.setItem("talon_email", email);
   }
@@ -1498,7 +1498,7 @@ function LegalFooter(){
   const [show,setShow]=useState(null);
   return(
     <div style={{padding:"12px 20px",borderTop:`1px solid ${C.border}`,textAlign:"center"}}>
-      <p style={{fontSize:9,color:C.dim,margin:"0 0 5px",lineHeight:1.6}}>TALON Financial Fluency Engine — Logantia — Educational purposes only — Not financial, investment, legal, or tax advice</p>
+      <p style={{fontSize:9,color:C.dim,margin:"0 0 5px",lineHeight:1.6}}>TALON Financial Fluency Engine — Logantia — Educational purposes only — Not financial, investment, legal, or tax advice — Support: support@logantia.com</p>
       <div style={{display:"flex",justifyContent:"center",gap:14,flexWrap:"wrap"}}>
         {[["terms","Terms"],["privacy","Privacy"],["disclaimer","Disclaimer"]].map(([k,l])=>(
           <button key={k} onClick={()=>setShow(show===k?null:k)} style={{background:"none",border:"none",color:C.dim,fontSize:9,cursor:"pointer",textDecoration:"underline"}}>{l}</button>
@@ -1712,3 +1712,6 @@ export default function TALON(){
     </div>
   );
 }
+
+
+
