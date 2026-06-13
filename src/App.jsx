@@ -27,7 +27,8 @@ async function signUp(email, password, userData) {
   });
   const data = await res.json();
   if (data.access_token) {
-    localStorage.setItem("talon_token", data.access_token);if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_
+    localStorage.setItem("talon_token", data.access_token);
+    if(data.refresh_token) localStorage.setItem("talon_refresh", data.refresh_token);
     localStorage.setItem("talon_user_id", data.user.id);
     localStorage.setItem("talon_email", email);
     await saveUserProfile(data.user.id, {...userData, email});
@@ -43,7 +44,8 @@ async function signIn(email, password) {
   });
   const data = await res.json();
   if (data.access_token) {
-    localStorage.setItem("talon_token", data.access_token);if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_if(data.refresh_token)localStorage.setItem("talon_refresh",data.refresh_
+    localStorage.setItem("talon_token", data.access_token);
+    if(data.refresh_token) localStorage.setItem("talon_refresh", data.refresh_token);
     localStorage.setItem("talon_user_id", data.user.id);
     localStorage.setItem("talon_email", email);
   }
@@ -1712,6 +1714,3 @@ export default function TALON(){
     </div>
   );
 }
-
-
-
