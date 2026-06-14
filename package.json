@@ -10,7 +10,7 @@
     "cross-env": "^7.0.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env DISABLE_ESLINT_PLUGIN=true react-scripts start",
     "build": "cross-env DISABLE_ESLINT_PLUGIN=true react-scripts build"
   },
   "browserslist": {

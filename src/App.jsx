@@ -16,7 +16,8 @@ async function supaFetch(path, options={}) {
       ...(options.headers||{})
     }
   });
-  return res.json();
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
 }
 
 async function signUp(email, password, userData) {
@@ -53,9 +54,9 @@ async function signIn(email, password) {
 }
 
 async function saveUserProfile(userId, userData) {
-  await supaFetch("/rest/v1/users", {
+  const result = await supaFetch("/rest/v1/users", {
     method: "POST",
-    headers: {"Prefer":"resolution=merge-duplicates"},
+    headers: {"Prefer":"resolution=merge-duplicates,return=minimal"},
     body: JSON.stringify({
       id: userId,
       email: userData.email,
@@ -69,6 +70,11 @@ async function saveUserProfile(userId, userData) {
       plan: userData.plan||"free"
     })
   });
+  if (result && result.code) {
+    console.error("[saveUserProfile] failed:", result);
+    throw new Error(result.message || "profile save failed");
+  }
+  return result;
 }
 
 async function saveScore(userId, scoreData) {
@@ -106,10 +112,11 @@ async function loadUserData(userId) {
     supaFetch("/rest/v1/scores?user_id=eq."+userId+"&order=updated_at.desc&limit=1"),
     supaFetch("/rest/v1/progress?user_id=eq."+userId+"&limit=1")
   ]);
+  if (!Array.isArray(profile)) throw new Error("auth_error");
   return {
     profile: profile[0]||null,
-    score: score[0]||null,
-    progress: progress[0]||null
+    score: Array.isArray(score) ? score[0]||null : null,
+    progress: Array.isArray(progress) ? progress[0]||null : null
   };
 }
 
@@ -119,6 +126,25 @@ function getStoredAuth() {
     userId: localStorage.getItem("talon_user_id"),
     email: localStorage.getItem("talon_email")
   };
+}
+
+async function refreshSession() {
+  const rt = localStorage.getItem("talon_refresh");
+  console.log("[auth] refreshSession — refresh token present:", !!rt);
+  if (!rt) return;
+  const res = await fetch(SUPA_URL + "/auth/v1/token?grant_type=refresh_token", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "apikey": SUPA_KEY },
+    body: JSON.stringify({ refresh_token: rt })
+  });
+  const data = await res.json();
+  console.log("[auth] refreshSession response:", data.access_token ? "got new token" : data);
+  if (data.access_token) {
+    localStorage.setItem("talon_token", data.access_token);
+    if (data.refresh_token) localStorage.setItem("talon_refresh", data.refresh_token);
+  } else {
+    throw new Error("session_expired");
+  }
 }
 
 function clearAuth() {
@@ -1521,6 +1547,103 @@ const BADGE_DEF=[
   {id:"module14_done",icon:"🧠",name:"Behavioral Edge"},{id:"graduate",icon:"🦅",name:"TALON Graduate"},
 ];
 
+const PROFILE_FIELDS = [
+  {key:"name",   label:"First name",                type:"text", ph:"What should TALON call you?"},
+  {key:"age",    label:"Age range",                 type:"sel",  opts:[["20s","20–29"],["30s","30–39"],["40s","40–49"],["50s","50–59"],["60s","60+"]]},
+  {key:"income", label:"Annual household income",   type:"sel",  opts:[["u25k","Under $25,000"],["25-50k","$25,000–$50,000"],["50-75k","$50,000–$75,000"],["75-150k","$75,000–$150,000"],["150k+","$150,000+"]]},
+  {key:"debt",   label:"Current debt situation",    type:"sel",  opts:[["none","Debt-free"],["low","Minimal (under $10k)"],["moderate","Manageable ($10k–$40k)"],["heavy","Heavy ($40k–$100k)"],["severe","Overwhelming ($100k+)"]]},
+  {key:"ef",     label:"Emergency fund",            type:"sel",  opts:[["none","None — fully exposed"],["partial","Under 1 month"],["1mo","1 month"],["3mo","3 months"],["6mo","6 months"],["12mo+","12+ months"]]},
+  {key:"retireSaving", label:"Saving for retirement?", type:"sel", opts:[["no","Not yet"],["yes","Yes — 401k, IRA, or both"]]},
+  {key:"knowledge",    label:"Financial knowledge",    type:"sel", opts:[["beginner","Beginner — learning basics"],["some","Some experience"],["intermediate","Intermediate — I invest"],["advanced","Advanced — active management"]]},
+];
+
+function ProfilePanel({userData, plan, onSave}){
+  const [form, setForm] = useState({
+    name: userData.name||"",
+    age: userData.age||"",
+    income: userData.income||"",
+    debt: userData.debt||"",
+    ef: userData.ef||"",
+    retireSaving: userData.retireSaving||"",
+    knowledge: userData.knowledge||"",
+  });
+  const [status, setStatus] = useState(null); // null | "saving" | "saved" | "error"
+
+  const set = (k,v) => setForm(f=>({...f,[k]:v}));
+
+  const handleSave = async () => {
+    setStatus("saving");
+    try {
+      const updated = {...userData, ...form};
+      await onSave(updated);
+      setStatus("saved");
+      setTimeout(()=>setStatus(null), 2500);
+    } catch(e) {
+      console.error("[ProfilePanel] save failed:", e);
+      setStatus("error");
+      setTimeout(()=>setStatus(null), 3000);
+    }
+  };
+
+  const inputStyle = {
+    width:"100%", padding:"9px 12px", background:C.card2,
+    border:`1px solid ${C.goldBorder}`, borderRadius:8, color:C.text,
+    fontSize:13, outline:"none", boxSizing:"border-box",
+  };
+
+  return(
+    <div style={{maxWidth:520,margin:"0 auto"}}>
+      <div style={{marginBottom:24}}>
+        <div style={{fontSize:11,color:C.gold,letterSpacing:"0.14em",fontWeight:600,marginBottom:4}}>YOUR PROFILE</div>
+        <div style={{fontSize:13,color:C.muted,lineHeight:1.6}}>Changes here recalculate your TALON Score instantly.</div>
+      </div>
+      <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:14,padding:"22px 20px",display:"flex",flexDirection:"column",gap:16}}>
+        {PROFILE_FIELDS.map(f=>(
+          <div key={f.key}>
+            <label style={{display:"block",fontSize:11,color:C.muted,marginBottom:5,letterSpacing:"0.04em"}}>{f.label.toUpperCase()}</label>
+            {f.type==="text"
+              ? <input
+                  value={form[f.key]}
+                  onChange={e=>set(f.key,e.target.value)}
+                  placeholder={f.ph}
+                  style={inputStyle}
+                />
+              : <select
+                  value={form[f.key]}
+                  onChange={e=>set(f.key,e.target.value)}
+                  style={{...inputStyle, cursor:"pointer"}}
+                >
+                  <option value="">— select —</option>
+                  {f.opts.map(([v,l])=><option key={v} value={v}>{l}</option>)}
+                </select>
+            }
+          </div>
+        ))}
+        <div style={{paddingTop:4}}>
+          <button
+            onClick={handleSave}
+            disabled={status==="saving"}
+            style={{
+              width:"100%", padding:"12px", border:"none", borderRadius:9,
+              background:status==="saving"?"rgba(201,162,39,0.2)":C.gold,
+              color:status==="saving"?"rgba(0,0,0,0.4)":"#000",
+              fontSize:14, fontWeight:700,
+              cursor:status==="saving"?"not-allowed":"pointer",
+            }}
+          >
+            {status==="saving" ? "Saving…" : status==="saved" ? "Saved ✓" : status==="error" ? "Save failed — try again" : "Save Profile"}
+          </button>
+        </div>
+      </div>
+      <div style={{marginTop:16,padding:"12px 16px",background:C.goldDim,border:`1px solid ${C.goldBorder}`,borderRadius:10}}>
+        <div style={{fontSize:11,color:C.gold,letterSpacing:"0.1em",fontWeight:600,marginBottom:2}}>ACCOUNT</div>
+        <div style={{fontSize:12,color:C.muted}}>{userData.email||"—"}</div>
+        <div style={{fontSize:11,color:C.dim,marginTop:2}}>Plan: {plan?.toUpperCase()||"FREE"}</div>
+      </div>
+    </div>
+  );
+}
+
 export default function TALON(){
   const [screen,setScreen]=useState("landing");
   const [authUser,setAuthUser]=useState(null);
@@ -1550,29 +1673,44 @@ export default function TALON(){
   // Check for existing session on load
   useEffect(()=>{
     const {token,userId,email}=getStoredAuth();
+    console.log("[auth] stored token:", token ? token.slice(0,20)+"…" : null);
+    console.log("[auth] stored userId:", userId);
     if(token&&userId){
-      loadUserData(userId).then(({profile,score,progress})=>{
-        if(profile){
-          const ud={name:profile.name,age:profile.age,income:profile.income,debt:profile.debt,ef:profile.ef,retireSaving:profile.retire_saving,knowledge:profile.knowledge,email:profile.email};
-          setUserData(ud);
-          setAuthUser({id:userId,email});
-          if(score) setScoreData({total:score.score_total,breakdown:score.breakdown});
-          else setScoreData(calcScore(ud));
-          if(progress){
-            const chMap={};
-            (progress.completed_chapters||[]).forEach(id=>{chMap[id]=true;});
-            setCompletedCh(chMap);
-            setBadges(progress.badges||[]);
-            setStreak(progress.streak||1);
+      refreshSession()
+        .then(()=>{
+          console.log("[auth] refreshSession succeeded, loading user data…");
+          return loadUserData(userId);
+        })
+        .then(({profile,score,progress})=>{
+          console.log("[auth] loadUserData result — profile:", profile, "score:", score, "progress:", progress);
+          if(profile){
+            const ud={name:profile.name,age:profile.age,income:profile.income,debt:profile.debt,ef:profile.ef,retireSaving:profile.retire_saving,knowledge:profile.knowledge,email:profile.email};
+            setUserData(ud);
+            setAuthUser({id:userId,email});
+            if(score) setScoreData({total:score.score_total,breakdown:score.breakdown});
+            else setScoreData(calcScore(ud));
+            if(progress){
+              const chMap={};
+              (progress.completed_chapters||[]).forEach(id=>{chMap[id]=true;});
+              setCompletedCh(chMap);
+              setBadges(progress.badges||[]);
+              setStreak(progress.streak||1);
+            }
+            setPlan(profile.plan||"free");
+            console.log("[auth] → screen: app");
+            setScreen("app");
+          }else{
+            console.log("[auth] → profile is null, screen: onboarding");
+            setScreen("onboarding");
           }
-          setPlan(profile.plan||"free");
-          setScreen("app");
-        }else{
-          setScreen("onboarding");
-        }
-        setLoadingUser(false);
-      }).catch(()=>{setScreen("auth");setLoadingUser(false);});
+          setLoadingUser(false);
+        }).catch((err)=>{
+          console.log("[auth] → caught error:", err?.message, "screen: auth");
+          setScreen("auth");
+          setLoadingUser(false);
+        });
     }else{
+      console.log("[auth] → no token/userId in localStorage, screen: landing");
       setScreen("landing");
       setLoadingUser(false);
     }
@@ -1629,9 +1767,13 @@ export default function TALON(){
     setScoreData(sc);
     const {userId}=getStoredAuth();
     if(userId){
-      await saveUserProfile(userId,fullData);
-      await saveScore(userId,sc);
-      await saveProgress(userId,{completedCh:{},badges:["onboarded"],points:0,streak:1});
+      try {
+        await saveUserProfile(userId,fullData);
+        await saveScore(userId,sc);
+        await saveProgress(userId,{completedCh:{},badges:["onboarded"],points:0,streak:1});
+      } catch(e) {
+        console.error("[handleOnboard] could not save profile — check Supabase RLS INSERT policy on the users table:", e.message);
+      }
     }
     setBadges(["onboarded"]);
     setScreen("app");
@@ -1642,6 +1784,17 @@ export default function TALON(){
     setShowUpgrade(false);
     const {userId}=getStoredAuth();
     if(userId) saveUserProfile(userId,{...userData,plan:p});
+  };
+
+  const handleProfileSave=async(updatedData)=>{
+    const newScore=calcScore(updatedData);
+    setUserData(updatedData);
+    setScoreData(newScore);
+    const {userId}=getStoredAuth();
+    if(userId){
+      await saveUserProfile(userId,{...updatedData,plan});
+      await saveScore(userId,newScore);
+    }
   };
 
   const handleSignOut=()=>{
@@ -1655,7 +1808,6 @@ export default function TALON(){
     setPlan("free");
   };
 
-  if(screen==="landing") return <LandingPage onGetStarted={()=>setScreen("auth_signup")} onSignIn={()=>setScreen("auth")}/>;
   if(loadingUser) return(
     <div style={{minHeight:"100vh",background:C.bg,display:"flex",alignItems:"center",justifyContent:"center"}}>
       <div style={{textAlign:"center"}}>
@@ -1664,6 +1816,7 @@ export default function TALON(){
       </div>
     </div>
   );
+  if(screen==="landing") return <LandingPage onGetStarted={()=>setScreen("auth_signup")} onSignIn={()=>setScreen("auth")}/>;
 
   if(screen==="auth"||screen==="auth_signup") return <AuthScreen onAuth={handleAuth} defaultMode={screen==="auth_signup"?"signup":"login"}/>;
   if(screen==="onboarding") return <Onboarding onComplete={handleOnboard}/>;
@@ -1687,9 +1840,13 @@ export default function TALON(){
           {plan==="free" && <button onClick={()=>setShowUpgrade(true)} style={{padding:"4px 9px",background:C.goldDim,border:`1px solid ${C.goldBorder}`,borderRadius:5,color:C.gold,fontSize:9,fontWeight:700,cursor:"pointer"}}>PRO</button>}
           {plan!=="free" && <Pill label={plan.toUpperCase()} color={C.green}/>}
           {scoreData && (
-            <div style={{display:"flex",alignItems:"center",gap:6,padding:"4px 9px",background:C.goldDim,border:`1px solid ${C.goldBorder}`,borderRadius:7,cursor:"pointer"}} onClick={()=>setTab("score")}>
+            <div style={{display:"flex",alignItems:"center",gap:8,padding:"4px 13px 4px 9px",background:C.goldDim,border:`1px solid ${tab==="profile"?C.gold:C.goldBorder}`,borderRadius:7,cursor:"pointer",boxShadow:tab==="profile"?`0 0 0 1px ${C.gold}`:"none"}} onClick={()=>setTab("profile")}>
               <ScoreRing score={scoreData.total} size={24} stroke={4} hideLabel={true}/>
-              <span style={{fontSize:13,fontWeight:700,color:C.gold,fontFamily:"monospace"}}>{scoreData.total}</span>
+              <div style={{display:"flex",flexDirection:"column",alignItems:"center",lineHeight:1.1}}>
+                <span style={{fontSize:8,color:C.muted,letterSpacing:"0.08em"}}>SCORE</span>
+                <span style={{fontSize:13,fontWeight:700,color:C.gold,fontFamily:"monospace"}}>{scoreData.total}</span>
+                <span style={{fontSize:8,color:C.muted,letterSpacing:"0.08em"}}>PROFILE</span>
+              </div>
             </div>
           )}
           <button onClick={handleSignOut} style={{padding:"4px 9px",background:"transparent",border:`1px solid ${C.border}`,borderRadius:5,color:"rgba(255,255,255,0.75)",fontSize:10,cursor:"pointer"}}>Sign Out</button>
@@ -1709,6 +1866,7 @@ export default function TALON(){
         {tab==="learn" && <Learn plan={plan} onEarnBadge={earnBadge} completed={completedCh} onComplete={completeCh} onUpgrade={()=>setShowUpgrade(true)}/>}
         {tab==="calculate" && <Calculators onEarnBadge={earnBadge} hasUsed={calcUsed} setHasUsed={setCalcUsed}/>}
         {tab==="score" && <ScoreDetail scoreData={scoreData} userData={userData} onUpgrade={()=>setShowUpgrade(true)}/>}
+        {tab==="profile" && <ProfilePanel userData={userData} plan={plan} onSave={handleProfileSave}/>}
       </div>
       <LegalFooter/>
     </div>
