@@ -938,6 +938,7 @@ function Portfolio({plan,onEarnBadge,onUpgrade}){
   const [mode,setMode]=useState("portfolio");
   const [tier,setTier]=useState(5);
   const [portfolio,setPortfolio]=useState(null);
+  const [activeBasket,setActiveBasket]=useState("etf");
   const [loading,setLoading]=useState(false);
   const [loadMsg,setLoadMsg]=useState("");
   const [error,setError]=useState(null);
@@ -947,17 +948,17 @@ function Portfolio({plan,onEarnBadge,onUpgrade}){
 
   const generate=useCallback(async()=>{
     if(locked){onUpgrade();return;}
-    setLoading(true);setPortfolio(null);setError(null);
+    setLoading(true);setPortfolio(null);setError(null);setActiveBasket("etf");
     setLoadMsg(LOAD_MSGS[Math.floor(Math.random()*LOAD_MSGS.length)]);
     const profiles={1:"ultra-conservative: Treasury ETFs (SHY,SGOV,BIL), TIPS",2:"income-focused: bond ETFs (LQD,VCIT), dividend aristocrats (NOBL), utilities (XLU)",3:"conservative growth: dividend growth (VIG,DGRO), staples (XLP), bonds (BND)",4:"moderate: S&P 500 (VOO), blue-chip dividends, bonds (BND). Classic 60/40",5:"balanced: diversified equities, 15-20% bonds, dividend layer",6:"balanced growth: growth large-caps (MSFT,AAPL,V), QQQ, minimal bonds, international (VEA)",7:"growth: QQQ, high-quality growth (NVDA,META,AMZN,GOOGL), no bonds",8:"aggressive growth: concentrated tech (NVDA,TSLA,AMD), small-cap (IWM), biotech (XBI)",9:"aggressive: high-volatility (TSLA,COIN,MSTR,PLTR), China tech (KWEB), emerging markets (EEM)",10:"maximum risk: 3x leveraged (TQQQ,SOXL), speculative (MSTR,COIN,RIOT,MARA)"};
-    const prompt=`Educational portfolio basket for Risk Tier ${tier}/10: ${profiles[tier]}. Return ONLY raw JSON no markdown: {"stocks":[{"ticker":"VOO","name":"Vanguard S&P 500 ETF","allocation":40,"assetClass":"US Large Cap Blend","explanation":"2-3 sentences. Define financial terms inline in plain English.","whyThisTier":"One sentence."}],"strategyNote":"One sentence.","keyRisk":"One sentence.","expectedReturn":"e.g. 4-6% annually"}. Rules: 5-7 holdings, allocations sum to 100, real US tickers, tiers 1-3 must include bond ETFs, tiers 7-10 must be genuinely high-risk.`;
+    const prompt=`Build three distinct educational investment baskets for Risk Tier ${tier}/10 (${profiles[tier]}). Return ONLY raw JSON no markdown no code fences: {"etf":{"thesis":"2-3 sentences plain English — what this ETF strategy does and who it suits.","stocks":[{"ticker":"VOO","name":"Vanguard S&P 500 ETF","allocation":40,"assetClass":"US Large Cap Blend","explanation":"2-3 sentences defining any financial terms inline.","whyThisTier":"One sentence."}],"strategyNote":"One sentence.","keyRisk":"One sentence.","expectedReturn":"e.g. 4-6% annually"},"stable":{"thesis":"2-3 sentences plain English — what the stable-stock strategy does and who it suits.","stocks":[{"ticker":"JNJ","name":"Johnson & Johnson","allocation":20,"assetClass":"Healthcare","explanation":"2-3 sentences.","whyThisTier":"One sentence."}],"strategyNote":"One sentence.","keyRisk":"One sentence.","expectedReturn":"e.g. 7-9% annually"},"growth":{"thesis":"2-3 sentences plain English — what the high-growth strategy does and who it suits.","stocks":[{"ticker":"NVDA","name":"NVIDIA Corporation","allocation":25,"assetClass":"Semiconductors","explanation":"2-3 sentences.","whyThisTier":"One sentence."}],"strategyNote":"One sentence.","keyRisk":"One sentence.","expectedReturn":"e.g. 12-20% annually"}}. Rules: ETF basket — ETFs and index funds only, no individual stocks, match tier profile, tiers 1-3 must include bond ETFs. Stable basket — individual stocks only, established companies with 10+ year track record, positive free cash flow (cash left after covering operations and capital spending), low debt; lower tiers favor dividend payers, higher tiers favor quality-growth names. Growth basket — individual stocks only, higher-beta higher-upside picks; lower tiers use quality growth leaders, tiers 7-10 must use genuinely speculative or high-volatility names. Each basket: 5-7 holdings, allocations sum to exactly 100, real US tickers only, no ticker duplicated across baskets in the same response.`;
     try{
-      const res=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-5",max_tokens:1000,messages:[{role:"user",content:prompt}]})});
+      const res=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-5",max_tokens:2800,messages:[{role:"user",content:prompt}]})});
       if(!res.ok) throw new Error("API "+res.status);
       const data=await res.json();
       const raw=data.content.filter(b=>b.type==="text").map(b=>b.text).join("").trim().replace(/^```json\s*/i,"").replace(/^```\s*/i,"").replace(/\s*```$/i,"").trim();
       const parsed=JSON.parse(raw);
-      if(!parsed.stocks?.length) throw new Error("Invalid response");
+      if(!parsed.etf?.stocks?.length||!parsed.stable?.stocks?.length||!parsed.growth?.stocks?.length) throw new Error("Invalid response");
       setPortfolio(parsed);
       onEarnBadge("portfolio_generated");
     }catch(e){setError(e.message);}
@@ -1020,11 +1021,34 @@ function Portfolio({plan,onEarnBadge,onUpgrade}){
             {error && <span style={{fontSize:11,color:C.red}}>{error}</span>}
           </div>
           {portfolio && (()=>{
-            const stocks=portfolio.stocks||[];
+            const BASKETS=[
+              {key:"etf",label:"ETF Basket",icon:"📦",accentColor:t.col,desc:"Passive funds"},
+              {key:"stable",label:"Stable Stocks",icon:"🏛",accentColor:"#4ade80",desc:"Low debt · FCF"},
+              {key:"growth",label:"High Growth",icon:"🚀",accentColor:"#f472b6",desc:"Higher upside"},
+            ];
+            const bCfg=BASKETS.find(b=>b.key===activeBasket);
+            const basket=portfolio[activeBasket];
+            const stocks=basket?.stocks||[];
             return(
               <div>
+                <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:5,marginBottom:16}}>
+                  {BASKETS.map(b=>{
+                    const act=b.key===activeBasket;
+                    return(
+                      <button key={b.key} onClick={()=>{setActiveBasket(b.key);setHovered(null);}} style={{padding:"9px 6px",background:act?b.accentColor+"18":"transparent",border:`1px solid ${act?b.accentColor+"60":C.border}`,borderRadius:8,color:act?b.accentColor:C.muted,fontSize:11,fontWeight:act?700:400,cursor:"pointer",outline:"none",textAlign:"center"}}>
+                        <div style={{fontSize:14,marginBottom:2}}>{b.icon}</div>
+                        <div style={{fontWeight:700,fontSize:11}}>{b.label}</div>
+                        <div style={{fontSize:9,color:act?b.accentColor+"80":C.dim,marginTop:1}}>{b.desc}</div>
+                      </button>
+                    );
+                  })}
+                </div>
+                <Card style={{marginBottom:16,borderLeft:`3px solid ${bCfg.accentColor}`,borderRadius:"0 10px 10px 0",padding:"12px 14px"}}>
+                  <div style={{fontSize:8,color:bCfg.accentColor,letterSpacing:"0.1em",marginBottom:5}}>THESIS · WHO THIS FITS</div>
+                  <p style={{fontSize:12,color:C.muted,lineHeight:1.8,margin:0}}>{basket.thesis}</p>
+                </Card>
                 <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:7,marginBottom:16}}>
-                  {[["EXPECTED RETURN",portfolio.expectedReturn],["HOLDINGS",stocks.length+" positions"],["RISK TIER",t.l]].map(([l,v])=>(
+                  {[["EXPECTED RETURN",basket.expectedReturn],["HOLDINGS",stocks.length+" positions"],["RISK TIER",t.l]].map(([l,v])=>(
                     <div key={l} style={{background:"rgba(255,255,255,0.03)",border:`1px solid ${C.border}`,borderRadius:8,padding:"9px 11px"}}>
                       <div style={{fontSize:8,color:C.dim,letterSpacing:"0.1em",marginBottom:3}}>{l}</div>
                       <div style={{fontSize:12,fontWeight:600,color:C.text}}>{v}</div>
@@ -1032,8 +1056,8 @@ function Portfolio({plan,onEarnBadge,onUpgrade}){
                   ))}
                 </div>
                 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:9,marginBottom:18}}>
-                  <Card style={{borderLeft:`3px solid ${t.col}`,borderRadius:"0 10px 10px 0",padding:"11px 14px"}}><div style={{fontSize:8,color:t.col,letterSpacing:"0.1em",marginBottom:4}}>STRATEGY</div><p style={{fontSize:11,color:C.muted,lineHeight:1.8,margin:0}}>{portfolio.strategyNote}</p></Card>
-                  <Card style={{borderLeft:"3px solid rgba(239,68,68,0.6)",borderRadius:"0 10px 10px 0",padding:"11px 14px"}}><div style={{fontSize:8,color:C.red,letterSpacing:"0.1em",marginBottom:4}}>KEY RISK</div><p style={{fontSize:11,color:C.muted,lineHeight:1.8,margin:0}}>{portfolio.keyRisk}</p></Card>
+                  <Card style={{borderLeft:`3px solid ${bCfg.accentColor}`,borderRadius:"0 10px 10px 0",padding:"11px 14px"}}><div style={{fontSize:8,color:bCfg.accentColor,letterSpacing:"0.1em",marginBottom:4}}>STRATEGY</div><p style={{fontSize:11,color:C.muted,lineHeight:1.8,margin:0}}>{basket.strategyNote}</p></Card>
+                  <Card style={{borderLeft:"3px solid rgba(239,68,68,0.6)",borderRadius:"0 10px 10px 0",padding:"11px 14px"}}><div style={{fontSize:8,color:C.red,letterSpacing:"0.1em",marginBottom:4}}>KEY RISK</div><p style={{fontSize:11,color:C.muted,lineHeight:1.8,margin:0}}>{basket.keyRisk}</p></Card>
                 </div>
                 <div style={{display:"grid",gridTemplateColumns:"155px 1fr",gap:20,alignItems:"start"}}>
                   <div>
@@ -1074,7 +1098,7 @@ function Portfolio({plan,onEarnBadge,onUpgrade}){
                             <div style={{height:3,background:"rgba(255,255,255,0.06)",borderRadius:2,overflow:"hidden",marginBottom:5}}><div style={{height:3,width:`${s.allocation}%`,background:PAL[i%PAL.length],borderRadius:2}}/></div>
                             <div style={{fontSize:9,color:C.dim,marginBottom:4}}>{s.assetClass}</div>
                             <p style={{fontSize:11,color:C.muted,lineHeight:1.8,margin:"0 0 4px"}}>{s.explanation}</p>
-                            {s.whyThisTier && <p style={{fontSize:10,color:t.col+"90",margin:0,fontStyle:"italic"}}>{s.whyThisTier}</p>}
+                            {s.whyThisTier && <p style={{fontSize:10,color:bCfg.accentColor+"90",margin:0,fontStyle:"italic"}}>{s.whyThisTier}</p>}
                           </div>
                         </div>
                       </div>
