@@ -156,7 +156,7 @@ function clearAuth() {
 const C = {
   bg:"#070e1c",nav:"#050c18",card:"#0c1a2e",card2:"#102238",
   gold:"#c9a227",goldDim:"rgba(201,162,39,0.12)",goldBorder:"rgba(201,162,39,0.22)",
-  text:"#e8e5da",muted:"rgba(232,229,218,0.42)",dim:"rgba(232,229,218,0.2)",
+  text:"#e8e5da",muted:"rgba(232,229,218,0.72)",dim:"rgba(232,229,218,0.50)",
   border:"rgba(255,255,255,0.07)",green:"#22c55e",red:"#ef4444",blue:"#60a5fa",purple:"#a78bfa",
 };
 
@@ -425,8 +425,8 @@ function calcScore(d) {
   return {total:Math.min(100,ef+debt+retire+inc+know),breakdown:{"Emergency Fund":ef,"Debt Health":debt,"Retirement":retire,"Income":inc,"Knowledge":know}};
 }
 
-function Pill({label,color=C.gold}){return <span style={{fontSize:10,padding:"2px 8px",borderRadius:5,background:color+"18",border:`1px solid ${color}30`,color,letterSpacing:"0.07em",fontWeight:600}}>{label}</span>;}
-function SL({children}){return <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:14}}><span style={{fontSize:10,color:C.muted,letterSpacing:"0.12em",flexShrink:0}}>{children}</span><div style={{flex:1,height:1,background:C.border}}/></div>;}
+function Pill({label,color=C.gold}){return <span style={{fontSize:14,padding:"2px 8px",borderRadius:5,background:color+"18",border:`1px solid ${color}30`,color,letterSpacing:"0.07em",fontWeight:600}}>{label}</span>;}
+function SL({children}){return <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:14}}><span style={{fontSize:14,color:C.muted,letterSpacing:"0.12em",flexShrink:0}}>{children}</span><div style={{flex:1,height:1,background:C.border}}/></div>;}
 function Card({children,style={}}){return <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:12,padding:"18px 20px",...style}}>{children}</div>;}
 
 function ScoreRing({score,size=160,stroke=14,hideLabel=false}){
@@ -441,7 +441,7 @@ function ScoreRing({score,size=160,stroke=14,hideLabel=false}){
       {!hideLabel && (
         <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
           <span style={{fontSize:size>120?32:20,fontWeight:700,color:col,fontFamily:"monospace",lineHeight:1}}>{score}</span>
-          <span style={{fontSize:9,color:C.muted,letterSpacing:"0.08em",marginTop:2}}>TALON SCORE</span>
+          <span style={{fontSize:13,color:C.muted,letterSpacing:"0.08em",marginTop:2}}>TALON SCORE</span>
         </div>
       )}
     </div>
@@ -453,16 +453,16 @@ function AffCard({affKey,context=""}){
   if(!a) return null;
   return(
     <div style={{background:"linear-gradient(135deg,rgba(201,162,39,0.08),rgba(201,162,39,0.03))",border:`1px solid ${C.goldBorder}`,borderRadius:10,padding:"14px 16px",marginTop:14}}>
-      <div style={{fontSize:9,color:C.gold,letterSpacing:"0.12em",marginBottom:8}}>TALON RECOMMENDS</div>
+      <div style={{fontSize:13,color:C.gold,letterSpacing:"0.12em",marginBottom:8}}>TALON RECOMMENDS</div>
       <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:10}}>
-        <span style={{fontSize:20}}>{a.icon}</span>
-        <div><div style={{fontSize:13,fontWeight:600,color:C.text}}>{a.name}</div><div style={{fontSize:11,color:C.muted}}>{a.cta}</div></div>
+        <span style={{fontSize:24}}>{a.icon}</span>
+        <div><div style={{fontSize:17,fontWeight:600,color:C.text}}>{a.name}</div><div style={{fontSize:15,color:C.muted}}>{a.cta}</div></div>
       </div>
       <a href={`${a.url}?utm_source=talon&utm_campaign=${affKey}&utm_content=${context}`} target="_blank" rel="noopener noreferrer"
-        style={{display:"block",textAlign:"center",padding:"9px",background:C.gold,borderRadius:7,color:"#000",fontSize:12,fontWeight:700,textDecoration:"none"}}>
+        style={{display:"block",textAlign:"center",padding:"9px",background:C.gold,borderRadius:7,color:"#000",fontSize:16,fontWeight:700,textDecoration:"none"}}>
         Get Started with {a.name}
       </a>
-      <p style={{fontSize:9,color:C.dim,margin:"6px 0 0",textAlign:"center"}}>TALON may earn a commission at no cost to you.</p>
+      <p style={{fontSize:13,color:C.dim,margin:"6px 0 0",textAlign:"center"}}>TALON may earn a commission at no cost to you.</p>
     </div>
   );
 }
@@ -474,23 +474,23 @@ function WTFButton(){
   const close=()=>{setOpen(false);setSent(false);setText("");};
   return(
     <>
-      <button onClick={()=>setOpen(true)} style={{position:"fixed",bottom:80,right:16,background:"transparent",border:"2px solid "+C.red,borderRadius:20,padding:"8px 14px",color:C.red,fontSize:12,fontWeight:800,cursor:"pointer",zIndex:50}}>WTF!?</button>
+      <button onClick={()=>setOpen(true)} style={{position:"fixed",bottom:80,right:16,background:"transparent",border:"2px solid "+C.red,borderRadius:20,padding:"8px 14px",color:C.red,fontSize:16,fontWeight:800,cursor:"pointer",zIndex:50}}>WTF!?</button>
       {open && (
         <div onClick={close} style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.8)",zIndex:100,display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
           <div onClick={e=>e.stopPropagation()}><Card style={{maxWidth:400,width:"100%"}}>
             {sent ? (
               <div style={{textAlign:"center",padding:"20px 0"}}>
-                <div style={{fontSize:32,marginBottom:12}}>😤</div>
-                <div style={{fontSize:16,fontWeight:700,color:C.text,marginBottom:8}}>We got it.</div>
-                <p style={{fontSize:13,color:C.muted}}>Received, logged, and escalated to the appropriate department. Which is us. We are the department. Someone is getting yelled at right now and it is also us. We appreciate your patience and your rage.</p>
+                <div style={{fontSize:36,marginBottom:12}}>😤</div>
+                <div style={{fontSize:20,fontWeight:700,color:C.text,marginBottom:8}}>We got it.</div>
+                <p style={{fontSize:17,color:C.muted}}>Received, logged, and escalated to the appropriate department. Which is us. We are the department. Someone is getting yelled at right now and it is also us. We appreciate your patience and your rage.</p>
                 <button onClick={close} style={{marginTop:16,padding:"9px 20px",background:C.gold,border:"none",borderRadius:8,color:"#000",fontWeight:700,cursor:"pointer"}}>Close</button>
               </div>
             ) : (
               <>
-                <div style={{fontSize:10,color:C.red,letterSpacing:"0.1em",marginBottom:8}}>SOMETHING IS BROKEN</div>
-                <h3 style={{fontSize:18,fontWeight:700,color:C.text,margin:"0 0 8px"}}>Oh. That was not supposed to happen.</h3>
-                <p style={{fontSize:13,color:C.muted,margin:"0 0 16px",lineHeight:1.6}}>Tell us what broke. Be as specific as your feelings allow. Someone is about to have a very educational Monday morning.</p>
-                <textarea value={text} onChange={e=>setText(e.target.value)} placeholder="What went wrong? The more detail you give us the faster we fix it and the better we sleep at night." rows={4} style={{width:"100%",padding:"10px 12px",background:C.card2,border:`1px solid ${C.border}`,borderRadius:8,color:C.text,fontSize:13,outline:"none",resize:"vertical",boxSizing:"border-box"}}/>
+                <div style={{fontSize:14,color:C.red,letterSpacing:"0.1em",marginBottom:8}}>SOMETHING IS BROKEN</div>
+                <h3 style={{fontSize:22,fontWeight:700,color:C.text,margin:"0 0 8px"}}>Oh. That was not supposed to happen.</h3>
+                <p style={{fontSize:17,color:C.muted,margin:"0 0 16px",lineHeight:1.6}}>Tell us what broke. Be as specific as your feelings allow. Someone is about to have a very educational Monday morning.</p>
+                <textarea value={text} onChange={e=>setText(e.target.value)} placeholder="What went wrong? The more detail you give us the faster we fix it and the better we sleep at night." rows={4} style={{width:"100%",padding:"10px 12px",background:C.card2,border:`1px solid ${C.border}`,borderRadius:8,color:C.text,fontSize:17,outline:"none",resize:"vertical",boxSizing:"border-box"}}/>
                 <div style={{display:"flex",gap:8,marginTop:12}}>
                   <button onClick={close} style={{flex:1,padding:"10px",background:"transparent",border:`1px solid ${C.border}`,borderRadius:8,color:C.muted,cursor:"pointer"}}>Never mind</button>
                   <button onClick={()=>setSent(true)} disabled={!text} style={{flex:2,padding:"10px",background:text?C.red:"rgba(239,68,68,0.2)",border:"none",borderRadius:8,color:text?"white":C.muted,fontWeight:700,cursor:text?"pointer":"not-allowed"}}>Send It</button>
@@ -533,32 +533,32 @@ function AICoach({userData,scoreData,plan,onUpgrade,completedCh}){
 
   return(
     <>
-      <button onClick={()=>setOpen(true)} style={{position:"fixed",bottom:80,left:16,background:"transparent",border:"2px solid "+C.gold,borderRadius:20,padding:"7px 12px",color:C.gold,fontSize:11,fontWeight:800,cursor:"pointer",zIndex:50,letterSpacing:"0.05em"}}>💰 Money Coach</button>
+      <button onClick={()=>setOpen(true)} style={{position:"fixed",bottom:80,left:16,background:"transparent",border:"2px solid "+C.gold,borderRadius:20,padding:"7px 12px",color:C.gold,fontSize:15,fontWeight:800,cursor:"pointer",zIndex:50,letterSpacing:"0.05em"}}>💰 Money Coach</button>
       {open && (
         <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.85)",zIndex:100,display:"flex",alignItems:"flex-end",justifyContent:"center"}}>
           <div style={{background:C.card,border:`1px solid ${C.goldBorder}`,borderRadius:"16px 16px 0 0",width:"100%",maxWidth:520,height:"75vh",display:"flex",flexDirection:"column"}}>
             <div style={{padding:"16px 20px",borderBottom:`1px solid ${C.border}`,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-              <div><div style={{fontSize:14,fontWeight:700,color:C.gold}}>TALON Financial Coach</div><div style={{fontSize:10,color:C.muted}}>Educational guidance — not financial advice</div></div>
-              <button onClick={()=>setOpen(false)} style={{background:"none",border:"none",color:C.muted,fontSize:20,cursor:"pointer"}}>x</button>
+              <div><div style={{fontSize:18,fontWeight:700,color:C.gold}}>TALON Financial Coach</div><div style={{fontSize:14,color:C.muted}}>Educational guidance — not financial advice</div></div>
+              <button onClick={()=>setOpen(false)} style={{background:"none",border:"none",color:C.muted,fontSize:24,cursor:"pointer"}}>x</button>
             </div>
             <div style={{flex:1,overflowY:"auto",padding:"16px 20px",display:"flex",flexDirection:"column",gap:12}}>
               {msgs.map((m,i)=>(
                 <div key={i} style={{display:"flex",justifyContent:m.role==="user"?"flex-end":"flex-start"}}>
-                  <div style={{maxWidth:"85%",padding:"10px 14px",borderRadius:m.role==="user"?"12px 12px 2px 12px":"12px 12px 12px 2px",background:m.role==="user"?C.gold:C.card2,color:m.role==="user"?"#000":C.muted,fontSize:13,lineHeight:1.7}}>{m.content}</div>
+                  <div style={{maxWidth:"85%",padding:"10px 14px",borderRadius:m.role==="user"?"12px 12px 2px 12px":"12px 12px 12px 2px",background:m.role==="user"?C.gold:C.card2,color:m.role==="user"?"#000":C.muted,fontSize:17,lineHeight:1.7}}>{m.content}</div>
                 </div>
               ))}
-              {loading && <div style={{display:"flex",justifyContent:"flex-start"}}><div style={{padding:"10px 14px",borderRadius:"12px 12px 12px 2px",background:C.card2,color:C.muted,fontSize:12,fontStyle:"italic"}}>{loadMsg}</div></div>}
+              {loading && <div style={{display:"flex",justifyContent:"flex-start"}}><div style={{padding:"10px 14px",borderRadius:"12px 12px 12px 2px",background:C.card2,color:C.muted,fontSize:16,fontStyle:"italic"}}>{loadMsg}</div></div>}
               <div ref={endRef}/>
             </div>
             {plan==="free" ? (
               <div style={{padding:"12px 16px",background:"rgba(201,162,39,0.08)",borderTop:`1px solid ${C.goldBorder}`,textAlign:"center"}}>
-                <div style={{fontSize:12,color:C.muted,marginBottom:8}}>AI Coach unlocks with TALON Pro</div>
-                <button onClick={onUpgrade} style={{padding:"8px 20px",background:C.gold,border:"none",borderRadius:8,color:"#000",fontSize:12,fontWeight:700,cursor:"pointer"}}>Upgrade to Pro</button>
+                <div style={{fontSize:16,color:C.muted,marginBottom:8}}>AI Coach unlocks with TALON Pro</div>
+                <button onClick={onUpgrade} style={{padding:"8px 20px",background:C.gold,border:"none",borderRadius:8,color:"#000",fontSize:16,fontWeight:700,cursor:"pointer"}}>Upgrade to Pro</button>
               </div>
             ) : (
               <div style={{padding:"12px 16px",borderTop:`1px solid ${C.border}`,display:"flex",gap:8}}>
-                <input value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&send()} placeholder="Ask anything about money..." style={{flex:1,padding:"9px 12px",background:C.card2,border:`1px solid ${C.border}`,borderRadius:8,color:C.text,fontSize:13,outline:"none"}}/>
-                <button onClick={send} disabled={!input.trim()||loading} style={{padding:"9px 16px",background:input.trim()?C.gold:"rgba(201,162,39,0.2)",border:"none",borderRadius:8,color:input.trim()?"#000":C.muted,fontWeight:700,cursor:input.trim()?"pointer":"not-allowed",fontSize:13}}>Send</button>
+                <input value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&send()} placeholder="Ask anything about money..." style={{flex:1,padding:"9px 12px",background:C.card2,border:`1px solid ${C.border}`,borderRadius:8,color:C.text,fontSize:17,outline:"none"}}/>
+                <button onClick={send} disabled={!input.trim()||loading} style={{padding:"9px 16px",background:input.trim()?C.gold:"rgba(201,162,39,0.2)",border:"none",borderRadius:8,color:input.trim()?"#000":C.muted,fontWeight:700,cursor:input.trim()?"pointer":"not-allowed",fontSize:17}}>Send</button>
               </div>
             )}
           </div>
@@ -600,27 +600,27 @@ function ShareCard({score,userData}){
   ];
   return(
     <Card style={{borderColor:col+"30"}}>
-      <div style={{fontSize:9,color:C.muted,letterSpacing:"0.1em",marginBottom:12}}>SHARE YOUR SCORE</div>
+      <div style={{fontSize:13,color:C.muted,letterSpacing:"0.1em",marginBottom:12}}>SHARE YOUR SCORE</div>
       <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:14,padding:"10px 12px",background:"rgba(0,0,0,0.2)",borderRadius:9}}>
         <ScoreRing score={score} size={64} stroke={7}/>
         <div style={{flex:1}}>
-          <div style={{fontSize:15,fontWeight:700,color:C.text,marginBottom:2}}>{msg}</div>
-          <div style={{fontSize:11,color:C.muted}}>TALON Financial Fluency — Logantia</div>
-          <div style={{fontSize:12,color:col,fontFamily:"monospace",fontWeight:700,marginTop:3}}>{score} / 100</div>
+          <div style={{fontSize:19,fontWeight:700,color:C.text,marginBottom:2}}>{msg}</div>
+          <div style={{fontSize:15,color:C.muted}}>TALON Financial Fluency — Logantia</div>
+          <div style={{fontSize:16,color:col,fontFamily:"monospace",fontWeight:700,marginTop:3}}>{score} / 100</div>
         </div>
       </div>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:6}}>
         {(showMore?PLAT:PLAT.slice(0,4)).map(p=>(
-          <button key={p.id} onClick={()=>share(p.id)} style={{padding:"8px 6px",background:p.bg,border:`1px solid ${p.border}`,borderRadius:8,color:p.color,fontSize:11,fontWeight:600,cursor:"pointer"}}>{p.label}</button>
+          <button key={p.id} onClick={()=>share(p.id)} style={{padding:"8px 6px",background:p.bg,border:`1px solid ${p.border}`,borderRadius:8,color:p.color,fontSize:15,fontWeight:600,cursor:"pointer"}}>{p.label}</button>
         ))}
       </div>
-      {!showMore && <button onClick={()=>setShowMore(true)} style={{width:"100%",padding:"6px",background:"transparent",border:`1px solid ${C.border}`,borderRadius:7,color:C.muted,fontSize:10,cursor:"pointer",marginBottom:6}}>+ Reddit and Pinterest</button>}
+      {!showMore && <button onClick={()=>setShowMore(true)} style={{width:"100%",padding:"6px",background:"transparent",border:`1px solid ${C.border}`,borderRadius:7,color:C.muted,fontSize:14,cursor:"pointer",marginBottom:6}}>+ Reddit and Pinterest</button>}
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:6,marginBottom:8}}>
-        <button onClick={()=>{navigator.clipboard?.writeText(ig);setIgCopied(true);setTimeout(()=>setIgCopied(false),2500);}} style={{padding:"7px 4px",background:"rgba(193,53,132,0.12)",border:"1px solid rgba(193,53,132,0.3)",borderRadius:7,color:"#c13584",fontSize:10,fontWeight:600,cursor:"pointer"}}>📸 {igCopied?"Copied!":"Instagram"}</button>
-        <button onClick={()=>{navigator.clipboard?.writeText(tt);setTtCopied(true);setTimeout(()=>setTtCopied(false),2500);}} style={{padding:"7px 4px",background:"rgba(255,255,255,0.05)",border:`1px solid ${C.border}`,borderRadius:7,color:C.text,fontSize:10,fontWeight:600,cursor:"pointer"}}>TikTok {ttCopied?"Copied!":""}</button>
-        <button onClick={()=>{navigator.clipboard?.writeText(url);setCopied(true);setTimeout(()=>setCopied(false),2000);}} style={{padding:"7px 4px",background:"rgba(255,255,255,0.03)",border:`1px solid ${C.border}`,borderRadius:7,color:C.muted,fontSize:10,fontWeight:600,cursor:"pointer"}}>Link {copied?"Copied!":""}</button>
+        <button onClick={()=>{navigator.clipboard?.writeText(ig);setIgCopied(true);setTimeout(()=>setIgCopied(false),2500);}} style={{padding:"7px 4px",background:"rgba(193,53,132,0.12)",border:"1px solid rgba(193,53,132,0.3)",borderRadius:7,color:"#c13584",fontSize:14,fontWeight:600,cursor:"pointer"}}>📸 {igCopied?"Copied!":"Instagram"}</button>
+        <button onClick={()=>{navigator.clipboard?.writeText(tt);setTtCopied(true);setTimeout(()=>setTtCopied(false),2500);}} style={{padding:"7px 4px",background:"rgba(255,255,255,0.05)",border:`1px solid ${C.border}`,borderRadius:7,color:C.text,fontSize:14,fontWeight:600,cursor:"pointer"}}>TikTok {ttCopied?"Copied!":""}</button>
+        <button onClick={()=>{navigator.clipboard?.writeText(url);setCopied(true);setTimeout(()=>setCopied(false),2000);}} style={{padding:"7px 4px",background:"rgba(255,255,255,0.03)",border:`1px solid ${C.border}`,borderRadius:7,color:C.muted,fontSize:14,fontWeight:600,cursor:"pointer"}}>Link {copied?"Copied!":""}</button>
       </div>
-      <p style={{fontSize:10,color:C.dim,textAlign:"center",margin:0}}>Every share helps someone who was never taught money.</p>
+      <p style={{fontSize:14,color:C.dim,textAlign:"center",margin:0}}>Every share helps someone who was never taught money.</p>
     </Card>
   );
 }
@@ -629,32 +629,32 @@ function UpgradeModal({onClose,onSelect}){
   return(
     <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.9)",zIndex:200,display:"flex",alignItems:"center",justifyContent:"center",padding:16,overflowY:"auto"}}>
       <div style={{background:C.card,border:`1px solid ${C.goldBorder}`,borderRadius:16,padding:"24px 20px",maxWidth:480,width:"100%",maxHeight:"90vh",overflowY:"auto"}}>
-        <div style={{display:"flex",justifyContent:"flex-end",marginBottom:8}}><button onClick={onClose} style={{background:"none",border:"none",color:C.muted,fontSize:26,cursor:"pointer",padding:0,lineHeight:1}}>×</button></div>
+        <div style={{display:"flex",justifyContent:"flex-end",marginBottom:8}}><button onClick={onClose} style={{background:"none",border:"none",color:C.muted,fontSize:30,cursor:"pointer",padding:0,lineHeight:1}}>×</button></div>
           <div style={{textAlign:"center",marginBottom:20}}>
-          <div style={{fontSize:28,fontWeight:100,letterSpacing:"0.5em",color:"#fff",fontFamily:"'Josefin Sans',sans-serif",marginBottom:4}}>TALON</div>
-          <div style={{fontSize:11,color:C.gold,letterSpacing:"0.1em",marginBottom:8}}>FOUNDING MEMBER — FIRST 100 PER TIER</div>
-          <p style={{fontSize:12,color:C.muted,margin:0}}>Lock in your rate forever. When we hit 100,000 users you'll still pay what you paid on day one.</p>
+          <div style={{fontSize:32,fontWeight:100,letterSpacing:"0.5em",color:"#fff",fontFamily:"'Josefin Sans',sans-serif",marginBottom:4}}>TALON</div>
+          <div style={{fontSize:15,color:C.gold,letterSpacing:"0.1em",marginBottom:8}}>FOUNDING MEMBER — FIRST 100 PER TIER</div>
+          <p style={{fontSize:16,color:C.muted,margin:0}}>Lock in your rate forever. When we hit 100,000 users you'll still pay what you paid on day one.</p>
         </div>
         {Object.entries(FOUNDING).map(([key,tier])=>(
           <div key={key} style={{border:`1px solid ${key==="pro"?tier.color:C.border}`,borderRadius:12,padding:"14px 16px",marginBottom:8,background:key==="pro"?tier.color+"08":"transparent"}}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:8}}>
               <div>
-                <div style={{fontSize:14,fontWeight:700,color:tier.color}}>{tier.name}</div>
-                <div style={{fontSize:10,color:C.dim}}>{tier.spots} of 100 spots remaining</div>
+                <div style={{fontSize:18,fontWeight:700,color:tier.color}}>{tier.name}</div>
+                <div style={{fontSize:14,color:C.dim}}>{tier.spots} of 100 spots remaining</div>
               </div>
               <div style={{textAlign:"right"}}>
-                <div style={{fontSize:20,fontWeight:800,color:C.text}}>${tier.price}</div>
-                <div style={{fontSize:10,color:C.dim}}>{tier.once?"one time":"/mo locked forever"}</div>
-                <div style={{fontSize:10,color:C.muted,textDecoration:"line-through"}}>${tier.regular}</div>
+                <div style={{fontSize:24,fontWeight:800,color:C.text}}>${tier.price}</div>
+                <div style={{fontSize:14,color:C.dim}}>{tier.once?"one time":"/mo locked forever"}</div>
+                <div style={{fontSize:14,color:C.muted,textDecoration:"line-through"}}>${tier.regular}</div>
               </div>
             </div>
-            <button onClick={()=>{key==="pro"?window.open("https://buy.stripe.com/28E14n6NDf5H2MSat800000","_blank"):onSelect(key);}} style={{width:"100%",padding:"9px",background:key==="pro"?tier.color:"transparent",border:`1px solid ${key==="pro"?tier.color:C.border}`,borderRadius:8,color:key==="pro"?"#000":C.text,fontSize:12,fontWeight:key==="pro"?700:400,cursor:"pointer"}}>
+            <button onClick={()=>{key==="pro"?window.open("https://buy.stripe.com/28E14n6NDf5H2MSat800000","_blank"):onSelect(key);}} style={{width:"100%",padding:"9px",background:key==="pro"?tier.color:"transparent",border:`1px solid ${key==="pro"?tier.color:C.border}`,borderRadius:8,color:key==="pro"?"#000":C.text,fontSize:16,fontWeight:key==="pro"?700:400,cursor:"pointer"}}>
               {key==="pro"?"Claim Founding Pro Spot →":"Select "+tier.name}
             </button>
           </div>
         ))}
-        <p style={{fontSize:10,color:C.dim,textAlign:"center",margin:"12px 0 0"}}>30-day money-back guarantee. Cancel anytime. 100 means 100.</p>
-        <button onClick={onClose} style={{width:"100%",padding:"8px",background:"transparent",border:"none",color:C.dim,fontSize:11,cursor:"pointer",marginTop:8}}>Maybe later — continue with Free</button>
+        <p style={{fontSize:14,color:C.dim,textAlign:"center",margin:"12px 0 0"}}>30-day money-back guarantee. Cancel anytime. 100 means 100.</p>
+        <button onClick={onClose} style={{width:"100%",padding:"8px",background:"transparent",border:"none",color:C.dim,fontSize:15,cursor:"pointer",marginTop:8}}>Maybe later — continue with Free</button>
       </div>
     </div>
   );
@@ -676,31 +676,31 @@ function LandingPage({onGetStarted, onSignIn}){
       <div style={{background:C.nav,borderBottom:`1px solid ${C.border}`,padding:"12px 20px",display:"flex",justifyContent:"space-between",alignItems:"center",position:"sticky",top:0,zIndex:10}}>
         <img src={TALON_LOGO} alt="TALON" style={{height:44,width:44,objectFit:"contain"}}/>
         <div style={{display:"flex",gap:10,alignItems:"center"}}>
-          <span style={{fontSize:9,color:C.gold,letterSpacing:"0.12em"}}>LOGANTIA</span>
-          <button onClick={onSignIn} style={{padding:"6px 16px",background:"transparent",border:`1px solid ${C.goldBorder}`,borderRadius:6,color:C.gold,fontSize:11,fontWeight:600,cursor:"pointer",letterSpacing:"0.04em"}}>Sign In</button>
+          <span style={{fontSize:13,color:C.gold,letterSpacing:"0.12em"}}>LOGANTIA</span>
+          <button onClick={onSignIn} style={{padding:"6px 16px",background:"transparent",border:`1px solid ${C.goldBorder}`,borderRadius:6,color:C.gold,fontSize:15,fontWeight:600,cursor:"pointer",letterSpacing:"0.04em"}}>Sign In</button>
         </div>
       </div>
       <div style={{maxWidth:700,margin:"0 auto",padding:"40px 24px 80px"}}>
         <div style={{textAlign:"center",marginBottom:32}}>
           <img src={TALON_LOGO} alt="TALON" style={{width:"min(480px,92vw)",height:"min(480px,92vw)",objectFit:"contain",display:"block",margin:"0 auto"}}/>
         </div>
-        <div style={{fontSize:"clamp(24px,5vw,36px)",fontWeight:800,color:C.text,lineHeight:1.3,marginBottom:24,textAlign:"center"}}>
+        <div style={{fontSize:"clamp(28px,5vw,42px)",fontWeight:800,color:C.text,lineHeight:1.3,marginBottom:24,textAlign:"center"}}>
           60% of Americans live paycheck to paycheck.
         </div>
-        <p style={{fontSize:"clamp(15px,3vw,17px)",color:C.muted,lineHeight:1.9,marginBottom:18}}>
+        <p style={{fontSize:"clamp(19px,3vw,21px)",color:C.muted,lineHeight:1.9,marginBottom:18}}>
           Not because they are lazy. Not because they do not work hard enough. Because nobody ever taught them how money actually works.
         </p>
-        <p style={{fontSize:"clamp(15px,3vw,17px)",color:C.muted,lineHeight:1.9,marginBottom:18}}>
+        <p style={{fontSize:"clamp(19px,3vw,21px)",color:C.muted,lineHeight:1.9,marginBottom:18}}>
           It was never in the curriculum. It was never at the dinner table. It was never explained by the bank quietly charging you fees you did not know existed.
         </p>
-        <p style={{fontSize:"clamp(15px,3vw,17px)",color:C.muted,lineHeight:1.9,marginBottom:18}}>
+        <p style={{fontSize:"clamp(19px,3vw,21px)",color:C.muted,lineHeight:1.9,marginBottom:18}}>
           The system was not broken. It was working exactly as designed. An educated consumer is a less profitable consumer.
         </p>
-        <p style={{fontSize:"clamp(16px,3vw,18px)",color:C.text,lineHeight:1.9,marginBottom:36,fontWeight:600}}>
+        <p style={{fontSize:"clamp(20px,3vw,22px)",color:C.text,lineHeight:1.9,marginBottom:36,fontWeight:600}}>
           I got tired of watching it happen. So I built TALON.
         </p>
         <div style={{background:C.card,border:`1px solid ${C.goldBorder}`,borderRadius:14,padding:"24px 20px",marginBottom:36}}>
-          <div style={{fontSize:11,color:C.gold,letterSpacing:"0.14em",marginBottom:20,fontWeight:600}}>HERE IS WHAT YOU GET FREE RIGHT NOW</div>
+          <div style={{fontSize:15,color:C.gold,letterSpacing:"0.14em",marginBottom:20,fontWeight:600}}>HERE IS WHAT YOU GET FREE RIGHT NOW</div>
           {[
             "Your personal TALON Score — a complete picture of your financial health across 5 pillars",
             "A personalized financial roadmap built around your actual situation",
@@ -710,30 +710,30 @@ function LandingPage({onGetStarted, onSignIn}){
             "Financial calculators — compound interest, debt payoff, and retirement projections"
           ].map((item,i)=>(
             <div key={i} style={{display:"flex",gap:12,alignItems:"flex-start",marginBottom:14}}>
-              <span style={{color:C.gold,fontSize:16,flexShrink:0,marginTop:1,lineHeight:1}}>→</span>
-              <span style={{fontSize:"clamp(13px,3vw,15px)",color:C.muted,lineHeight:1.7}}>{item}</span>
+              <span style={{color:C.gold,fontSize:20,flexShrink:0,marginTop:1,lineHeight:1}}>→</span>
+              <span style={{fontSize:"clamp(17px,3vw,19px)",color:C.muted,lineHeight:1.7}}>{item}</span>
             </div>
           ))}
         </div>
         <div style={{textAlign:"center",marginBottom:8}}>
-          <div style={{fontSize:"clamp(16px,3.5vw,20px)",fontWeight:700,color:C.text,marginBottom:6}}>No jargon. No gatekeeping. No BS.</div>
-          <div style={{fontSize:"clamp(22px,5vw,30px)",fontWeight:800,color:C.gold,marginBottom:28}}>The playing field just leveled.</div>
+          <div style={{fontSize:"clamp(20px,3.5vw,24px)",fontWeight:700,color:C.text,marginBottom:6}}>No jargon. No gatekeeping. No BS.</div>
+          <div style={{fontSize:"clamp(26px,5vw,34px)",fontWeight:800,color:C.gold,marginBottom:28}}>The playing field just leveled.</div>
         </div>
         <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12,marginBottom:32,padding:"24px 16px",background:C.card,borderRadius:14,border:`1px solid ${C.border}`}}>
           {[["60%","of Americans live paycheck to paycheck"],["$0","financial education in most schools"],["1","tool changes everything"]].map(([num,label])=>(
             <div key={num} style={{textAlign:"center"}}>
-              <div style={{fontSize:"clamp(32px,7vw,52px)",fontWeight:800,color:C.gold,fontFamily:"monospace",lineHeight:1}}>{num}</div>
-              <div style={{fontSize:"clamp(9px,2vw,11px)",color:C.muted,letterSpacing:"0.06em",marginTop:8,lineHeight:1.5}}>{label.toUpperCase()}</div>
+              <div style={{fontSize:"clamp(36px,7vw,56px)",fontWeight:800,color:C.gold,fontFamily:"monospace",lineHeight:1}}>{num}</div>
+              <div style={{fontSize:"clamp(13px,2vw,15px)",color:C.muted,letterSpacing:"0.06em",marginTop:8,lineHeight:1.5}}>{label.toUpperCase()}</div>
             </div>
           ))}
         </div>
-        <button onClick={onGetStarted} style={{width:"100%",padding:"18px",background:C.gold,border:"none",borderRadius:12,color:"#000",fontSize:"clamp(15px,3vw,18px)",fontWeight:800,cursor:"pointer",letterSpacing:"0.04em",marginBottom:14}}>
+        <button onClick={onGetStarted} style={{width:"100%",padding:"18px",background:C.gold,border:"none",borderRadius:12,color:"#000",fontSize:"clamp(19px,3vw,22px)",fontWeight:800,cursor:"pointer",letterSpacing:"0.04em",marginBottom:14}}>
           Create Your Free Account
         </button>
-        <button onClick={onSignIn} style={{width:"100%",padding:"14px",background:"transparent",border:`1px solid ${C.border}`,borderRadius:12,color:C.muted,fontSize:15,fontWeight:500,cursor:"pointer",marginBottom:32}}>
+        <button onClick={onSignIn} style={{width:"100%",padding:"14px",background:"transparent",border:`1px solid ${C.border}`,borderRadius:12,color:C.muted,fontSize:19,fontWeight:500,cursor:"pointer",marginBottom:32}}>
           Already have an account? Sign In
         </button>
-        <p style={{fontSize:10,color:C.dim,textAlign:"center",lineHeight:1.7}}>TALON is for educational purposes only and does not constitute financial, investment, legal, or tax advice. Logantia. Free to start. Cancel anytime.</p>
+        <p style={{fontSize:14,color:C.dim,textAlign:"center",lineHeight:1.7}}>TALON is for educational purposes only and does not constitute financial, investment, legal, or tax advice. Logantia. Free to start. Cancel anytime.</p>
       </div>
     </div>
   );
@@ -773,34 +773,34 @@ function AuthScreen({onAuth, defaultMode="login"}) {
       <div style={{width:"100%",maxWidth:420}}>
         <div style={{textAlign:"center",marginBottom:24}}>
           <img src={TALON_WORDMARK} alt="TALON" style={{width:"min(260px,80vw)",height:"auto",objectFit:"contain",display:"block",margin:"0 auto 8px"}}/>
-          <div style={{fontSize:9,color:C.gold,letterSpacing:"0.18em"}}>LOGANTIA</div>
+          <div style={{fontSize:13,color:C.gold,letterSpacing:"0.18em"}}>LOGANTIA</div>
         </div>
       <div style={{width:"100%"}}>
         <div style={{display:"flex",gap:6,marginBottom:20,background:"rgba(255,255,255,0.04)",padding:4,borderRadius:10}}>
           {["login","signup"].map(m=>(
-            <button key={m} onClick={()=>{setMode(m);setError("");}} style={{flex:1,padding:"9px",background:mode===m?C.card:"transparent",border:"none",borderRadius:8,color:mode===m?C.gold:C.muted,fontSize:12,fontWeight:mode===m?700:400,cursor:"pointer"}}>
+            <button key={m} onClick={()=>{setMode(m);setError("");}} style={{flex:1,padding:"9px",background:mode===m?C.card:"transparent",border:"none",borderRadius:8,color:mode===m?C.gold:C.muted,fontSize:16,fontWeight:mode===m?700:400,cursor:"pointer"}}>
               {m==="login"?"Sign In":"Create Account"}
             </button>
           ))}
         </div>
         <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:12,padding:"24px 20px"}}>
-          <h2 style={{fontSize:18,fontWeight:600,color:C.text,margin:"0 0 6px"}}>{mode==="login"?"Welcome back":"Join TALON"}</h2>
-          <p style={{fontSize:12,color:C.muted,margin:"0 0 20px",lineHeight:1.6}}>{mode==="login"?"Sign in to access your financial dashboard and saved progress.":"Create your free account and start building financial fluency today."}</p>
-          {error&&<div style={{padding:"9px 12px",background:"rgba(239,68,68,0.1)",border:"1px solid rgba(239,68,68,0.3)",borderRadius:7,fontSize:12,color:C.red,marginBottom:14}}>{error}</div>}
+          <h2 style={{fontSize:22,fontWeight:600,color:C.text,margin:"0 0 6px"}}>{mode==="login"?"Welcome back":"Join TALON"}</h2>
+          <p style={{fontSize:16,color:C.muted,margin:"0 0 20px",lineHeight:1.6}}>{mode==="login"?"Sign in to access your financial dashboard and saved progress.":"Create your free account and start building financial fluency today."}</p>
+          {error&&<div style={{padding:"9px 12px",background:"rgba(239,68,68,0.1)",border:"1px solid rgba(239,68,68,0.3)",borderRadius:7,fontSize:16,color:C.red,marginBottom:14}}>{error}</div>}
           <div style={{marginBottom:13}}>
-            <label style={{display:"block",fontSize:12,color:C.muted,marginBottom:5}}>Email address</label>
-            <input value={email} onChange={e=>setEmail(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handle()} type="email" placeholder="your@email.com" style={{width:"100%",padding:"9px 12px",background:C.card2,border:`1px solid ${C.goldBorder}`,borderRadius:8,color:C.text,fontSize:13,outline:"none",boxSizing:"border-box"}}/>
+            <label style={{display:"block",fontSize:16,color:C.muted,marginBottom:5}}>Email address</label>
+            <input value={email} onChange={e=>setEmail(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handle()} type="email" placeholder="your@email.com" style={{width:"100%",padding:"9px 12px",background:C.card2,border:`1px solid ${C.goldBorder}`,borderRadius:8,color:C.text,fontSize:17,outline:"none",boxSizing:"border-box"}}/>
           </div>
           <div style={{marginBottom:20}}>
-            <label style={{display:"block",fontSize:12,color:C.muted,marginBottom:5}}>Password</label>
-            <input value={password} onChange={e=>setPassword(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handle()} type="password" placeholder="At least 6 characters" style={{width:"100%",padding:"9px 12px",background:C.card2,border:`1px solid ${C.goldBorder}`,borderRadius:8,color:C.text,fontSize:13,outline:"none",boxSizing:"border-box"}}/>
+            <label style={{display:"block",fontSize:16,color:C.muted,marginBottom:5}}>Password</label>
+            <input value={password} onChange={e=>setPassword(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handle()} type="password" placeholder="At least 6 characters" style={{width:"100%",padding:"9px 12px",background:C.card2,border:`1px solid ${C.goldBorder}`,borderRadius:8,color:C.text,fontSize:17,outline:"none",boxSizing:"border-box"}}/>
           </div>
-          <button onClick={handle} disabled={loading} style={{width:"100%",padding:"12px",background:loading?"rgba(201,162,39,0.2)":C.gold,border:"none",borderRadius:9,color:loading?"rgba(0,0,0,0.4)":"#000",fontSize:14,fontWeight:700,cursor:loading?"not-allowed":"pointer"}}>
+          <button onClick={handle} disabled={loading} style={{width:"100%",padding:"12px",background:loading?"rgba(201,162,39,0.2)":C.gold,border:"none",borderRadius:9,color:loading?"rgba(0,0,0,0.4)":"#000",fontSize:18,fontWeight:700,cursor:loading?"not-allowed":"pointer"}}>
             {loading?"Please wait...":(mode==="login"?"Sign In":"Create Free Account")}
           </button>
-          {mode==="login"&&<p style={{fontSize:11,color:C.dim,textAlign:"center",margin:"12px 0 0"}}>New to TALON? <button onClick={()=>setMode("signup")} style={{background:"none",border:"none",color:C.gold,fontSize:11,cursor:"pointer",padding:0}}>Create a free account</button></p>}
-          {mode==="login"&&<p style={{fontSize:11,color:C.dim,textAlign:"center",margin:"8px 0 0"}}>Forgot your password? <button onClick={async()=>{if(!email){alert("Enter your email address first.");return;}const res=await fetch(SUPA_URL+"/auth/v1/recover",{method:"POST",headers:{"Content-Type":"application/json","apikey":SUPA_KEY},body:JSON.stringify({email})});alert("Password reset email sent. Check your inbox.");}} style={{background:"none",border:"none",color:C.gold,fontSize:11,cursor:"pointer",padding:0}}>Reset it</button></p>}
-          {mode==="signup"&&<p style={{fontSize:10,color:C.dim,textAlign:"center",margin:"12px 0 0",lineHeight:1.5}}>By creating an account you agree to our Terms of Service and Privacy Policy. TALON is for educational purposes only.</p>}
+          {mode==="login"&&<p style={{fontSize:15,color:C.dim,textAlign:"center",margin:"12px 0 0"}}>New to TALON? <button onClick={()=>setMode("signup")} style={{background:"none",border:"none",color:C.gold,fontSize:15,cursor:"pointer",padding:0}}>Create a free account</button></p>}
+          {mode==="login"&&<p style={{fontSize:15,color:C.dim,textAlign:"center",margin:"8px 0 0"}}>Forgot your password? <button onClick={async()=>{if(!email){alert("Enter your email address first.");return;}const res=await fetch(SUPA_URL+"/auth/v1/recover",{method:"POST",headers:{"Content-Type":"application/json","apikey":SUPA_KEY},body:JSON.stringify({email})});alert("Password reset email sent. Check your inbox.");}} style={{background:"none",border:"none",color:C.gold,fontSize:15,cursor:"pointer",padding:0}}>Reset it</button></p>}
+          {mode==="signup"&&<p style={{fontSize:14,color:C.dim,textAlign:"center",margin:"12px 0 0",lineHeight:1.5}}>By creating an account you agree to our Terms of Service and Privacy Policy. TALON is for educational purposes only.</p>}
         </div>
       </div>
       </div>
@@ -828,23 +828,23 @@ function Onboarding({onComplete}){
   return(
     <div style={{minHeight:"100vh",background:C.bg,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"24px 20px",fontFamily:"'SF Pro Text',-apple-system,sans-serif"}}>
       <div style={{marginBottom:28,textAlign:"center"}}>
-        <div style={{fontSize:36,fontWeight:100,letterSpacing:"0.5em",color:"#fff",fontFamily:"'Josefin Sans',sans-serif",textTransform:"uppercase",marginBottom:4}}>TALON</div>
-        <div style={{fontSize:9,color:C.dim,letterSpacing:"0.14em"}}>FINANCIAL FLUENCY ENGINE — LOGANTIA AI</div>
+        <div style={{fontSize:40,fontWeight:100,letterSpacing:"0.5em",color:"#fff",fontFamily:"'Josefin Sans',sans-serif",textTransform:"uppercase",marginBottom:4}}>TALON</div>
+        <div style={{fontSize:13,color:C.dim,letterSpacing:"0.14em"}}>FINANCIAL FLUENCY ENGINE — LOGANTIA AI</div>
       </div>
       <div style={{width:"100%",maxWidth:440}}>
         <div style={{display:"flex",gap:5,marginBottom:24}}>
           {OB.map((_,i)=><div key={i} style={{flex:1,height:3,borderRadius:2,background:i<=step?C.gold:"rgba(255,255,255,0.1)",transition:"background 0.3s"}}/>)}
         </div>
         <Card style={{marginBottom:14}}>
-          <h2 style={{fontSize:19,fontWeight:600,color:C.text,margin:"0 0 5px"}}>{cur.title}</h2>
-          <p style={{fontSize:13,color:C.muted,lineHeight:1.7,margin:"0 0 18px"}}>{cur.sub}</p>
+          <h2 style={{fontSize:23,fontWeight:600,color:C.text,margin:"0 0 5px"}}>{cur.title}</h2>
+          <p style={{fontSize:17,color:C.muted,lineHeight:1.7,margin:"0 0 18px"}}>{cur.sub}</p>
           {cur.fields.map(f=>(
             <div key={f.key} style={{marginBottom:13}}>
-              <label style={{display:"block",fontSize:12,color:C.muted,marginBottom:5}}>{f.label}</label>
+              <label style={{display:"block",fontSize:16,color:C.muted,marginBottom:5}}>{f.label}</label>
               {f.type==="text" ? (
-                <input value={data[f.key]||""} onChange={e=>set(f.key,e.target.value)} placeholder={f.ph} style={{width:"100%",padding:"9px 12px",background:C.card2,border:`1px solid ${C.goldBorder}`,borderRadius:8,color:C.text,fontSize:13,outline:"none",boxSizing:"border-box"}}/>
+                <input value={data[f.key]||""} onChange={e=>set(f.key,e.target.value)} placeholder={f.ph} style={{width:"100%",padding:"9px 12px",background:C.card2,border:`1px solid ${C.goldBorder}`,borderRadius:8,color:C.text,fontSize:17,outline:"none",boxSizing:"border-box"}}/>
               ) : (
-                <select value={data[f.key]||""} onChange={e=>set(f.key,e.target.value)} style={{width:"100%",padding:"9px 12px",background:C.card2,border:`1px solid ${C.goldBorder}`,borderRadius:8,color:data[f.key]?C.text:C.muted,fontSize:13,outline:"none",boxSizing:"border-box"}}>
+                <select value={data[f.key]||""} onChange={e=>set(f.key,e.target.value)} style={{width:"100%",padding:"9px 12px",background:C.card2,border:`1px solid ${C.goldBorder}`,borderRadius:8,color:data[f.key]?C.text:C.muted,fontSize:17,outline:"none",boxSizing:"border-box"}}>
                   <option value="">Select...</option>
                   {f.opts.map(([v,l])=><option key={v} value={v}>{l}</option>)}
                 </select>
@@ -854,14 +854,14 @@ function Onboarding({onComplete}){
           {step===0 && (
             <label style={{display:"flex",alignItems:"flex-start",gap:9,marginBottom:14,cursor:"pointer"}}>
               <input type="checkbox" checked={agreed} onChange={e=>setAgreed(e.target.checked)} style={{marginTop:2,accentColor:C.gold}}/>
-              <span style={{fontSize:11,color:C.muted,lineHeight:1.6}}>I understand TALON is for educational purposes only and does not constitute financial, investment, legal, or tax advice. I agree to the Terms of Service and Privacy Policy.</span>
+              <span style={{fontSize:15,color:C.muted,lineHeight:1.6}}>I understand TALON is for educational purposes only and does not constitute financial, investment, legal, or tax advice. I agree to the Terms of Service and Privacy Policy.</span>
             </label>
           )}
-          <button onClick={next} disabled={!canNext} style={{width:"100%",padding:"12px",background:canNext?C.gold:"rgba(201,162,39,0.1)",border:"none",borderRadius:9,color:canNext?"#000":C.muted,fontSize:14,fontWeight:700,cursor:canNext?"pointer":"not-allowed",transition:"all 0.2s"}}>
+          <button onClick={next} disabled={!canNext} style={{width:"100%",padding:"12px",background:canNext?C.gold:"rgba(201,162,39,0.1)",border:"none",borderRadius:9,color:canNext?"#000":C.muted,fontSize:18,fontWeight:700,cursor:canNext?"pointer":"not-allowed",transition:"all 0.2s"}}>
             {step>=OB.length-1?"Build My TALON Score":"Continue"}
           </button>
         </Card>
-        <p style={{textAlign:"center",fontSize:10,color:C.dim}}>Step {step+1} of {OB.length} — Your data stays private and is never sold</p>
+        <p style={{textAlign:"center",fontSize:14,color:C.dim}}>Step {step+1} of {OB.length} — Your data stays private and is never sold</p>
       </div>
     </div>
   );
@@ -878,14 +878,14 @@ function Dashboard({userData,scoreData,badges,plan,onNav,onUpgrade,streak}){
   return(
     <div>
       <div style={{paddingBottom:12,borderBottom:`1px solid ${C.border}`,marginBottom:18}}>
-        <div style={{fontSize:13,color:C.muted,marginBottom:3}}>Welcome back, <span style={{color:C.gold,fontWeight:600}}>{userData.name||"Investor"}</span></div>
-        <h1 style={{fontSize:21,fontWeight:600,color:C.text,margin:"0 0 4px"}}>Your Financial Dashboard</h1>
-        <div style={{fontSize:11,color:C.muted}}>🔥 {streak}-day streak</div>
+        <div style={{fontSize:17,color:C.muted,marginBottom:3}}>Welcome back, <span style={{color:C.gold,fontWeight:600}}>{userData.name||"Investor"}</span></div>
+        <h1 style={{fontSize:25,fontWeight:600,color:C.text,margin:"0 0 4px"}}>Your Financial Dashboard</h1>
+        <div style={{fontSize:15,color:C.muted}}>🔥 {streak}-day streak</div>
       </div>
       {plan==="free" && (
         <div style={{background:"linear-gradient(135deg,rgba(201,162,39,0.1),rgba(201,162,39,0.04))",border:`1px solid ${C.goldBorder}`,borderRadius:12,padding:"12px 16px",marginBottom:18,display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}}>
-          <div><div style={{fontSize:13,fontWeight:600,color:C.gold,marginBottom:2}}>Founding Member — 100 per tier</div><div style={{fontSize:11,color:C.muted}}>Lock in your rate forever. All features. All modules.</div></div>
-          <button onClick={onUpgrade} style={{padding:"8px 16px",background:C.gold,border:"none",borderRadius:7,color:"#000",fontSize:12,fontWeight:700,cursor:"pointer"}}>Claim Spot</button>
+          <div><div style={{fontSize:17,fontWeight:600,color:C.gold,marginBottom:2}}>Founding Member — 100 per tier</div><div style={{fontSize:15,color:C.muted}}>Lock in your rate forever. All features. All modules.</div></div>
+          <button onClick={onUpgrade} style={{padding:"8px 16px",background:C.gold,border:"none",borderRadius:7,color:"#000",fontSize:16,fontWeight:700,cursor:"pointer"}}>Claim Spot</button>
         </div>
       )}
       <div style={{display:"grid",gridTemplateColumns:"auto 1fr",gap:18,alignItems:"start",marginBottom:20}}>
@@ -897,7 +897,7 @@ function Dashboard({userData,scoreData,badges,plan,onNav,onUpgrade,streak}){
           <SL>SCORE BREAKDOWN</SL>
           {Object.entries(scoreData.breakdown).map(([k,v])=>(
             <div key={k} style={{marginBottom:8}}>
-              <div style={{display:"flex",justifyContent:"space-between",fontSize:11,marginBottom:3}}><span style={{color:C.muted}}>{k}</span><span style={{color:C.gold,fontFamily:"monospace",fontWeight:600}}>{v}/20</span></div>
+              <div style={{display:"flex",justifyContent:"space-between",fontSize:15,marginBottom:3}}><span style={{color:C.muted}}>{k}</span><span style={{color:C.gold,fontFamily:"monospace",fontWeight:600}}>{v}/20</span></div>
               <div style={{height:4,background:"rgba(255,255,255,0.06)",borderRadius:2,overflow:"hidden"}}><div style={{height:4,width:`${(v/20)*100}%`,background:v>=15?C.green:v>=9?C.gold:C.red,borderRadius:2,transition:"width 1s ease"}}/></div>
             </div>
           ))}
@@ -910,13 +910,13 @@ function Dashboard({userData,scoreData,badges,plan,onNav,onUpgrade,streak}){
         {roadmap.slice(0,3).map((item,i)=>(
           <Card key={i} style={{cursor:"pointer",borderColor:i===0?C.goldBorder:C.border}} onClick={()=>onNav("learn")}>
             <div style={{display:"flex",gap:11,alignItems:"flex-start"}}>
-              <span style={{fontSize:18,flexShrink:0}}>{item.icon}</span>
+              <span style={{fontSize:22,flexShrink:0}}>{item.icon}</span>
               <div style={{flex:1}}>
                 <div style={{display:"flex",alignItems:"center",gap:7,marginBottom:4,flexWrap:"wrap"}}>
-                  <span style={{fontSize:13,fontWeight:600,color:C.text}}>{item.title}</span>
+                  <span style={{fontSize:17,fontWeight:600,color:C.text}}>{item.title}</span>
                   <Pill label={item.gain} color={C.green}/>
                 </div>
-                <p style={{fontSize:12,color:C.muted,lineHeight:1.6,margin:0}}>{item.desc}</p>
+                <p style={{fontSize:16,color:C.muted,lineHeight:1.6,margin:0}}>{item.desc}</p>
                 <AffCard affKey={item.aff} context={"roadmap_"+i}/>
               </div>
             </div>
@@ -924,11 +924,11 @@ function Dashboard({userData,scoreData,badges,plan,onNav,onUpgrade,streak}){
         ))}
       </div>
       <div style={{padding:"14px 16px",background:"linear-gradient(135deg,rgba(167,139,250,0.1),rgba(167,139,250,0.03))",border:"1px solid rgba(167,139,250,0.25)",borderRadius:12,marginBottom:14}}>
-        <div style={{fontSize:9,color:C.purple,letterSpacing:"0.1em",marginBottom:6}}>TALON INTELLIGENCE — EXCLUSIVE UPDATES</div>
-        <p style={{fontSize:13,fontWeight:600,color:C.text,margin:"0 0 6px"}}>Be first to know everything.</p>
-        <p style={{fontSize:12,color:C.muted,margin:"0 0 12px",lineHeight:1.7}}>New modules, market updates, and financial insights delivered before anyone else. The newsletter is the only place TALON announcements happen. Biweekly. Free forever. No noise.</p>
-        <a href="https://talon-intelligence.beehiiv.com" target="_blank" rel="noopener noreferrer" style={{display:"block",textAlign:"center",padding:"10px",background:"linear-gradient(135deg,#a78bfa,#7c3aed)",borderRadius:8,color:"#fff",fontSize:13,fontWeight:700,textDecoration:"none",letterSpacing:"0.02em"}}>Get Exclusive Updates — Free</a>
-        <p style={{fontSize:10,color:C.dim,textAlign:"center",margin:"6px 0 0"}}>Join TALON Intelligence. Unsubscribe anytime.</p>
+        <div style={{fontSize:13,color:C.purple,letterSpacing:"0.1em",marginBottom:6}}>TALON INTELLIGENCE — EXCLUSIVE UPDATES</div>
+        <p style={{fontSize:17,fontWeight:600,color:C.text,margin:"0 0 6px"}}>Be first to know everything.</p>
+        <p style={{fontSize:16,color:C.muted,margin:"0 0 12px",lineHeight:1.7}}>New modules, market updates, and financial insights delivered before anyone else. The newsletter is the only place TALON announcements happen. Biweekly. Free forever. No noise.</p>
+        <a href="https://talon-intelligence.beehiiv.com" target="_blank" rel="noopener noreferrer" style={{display:"block",textAlign:"center",padding:"10px",background:"linear-gradient(135deg,#a78bfa,#7c3aed)",borderRadius:8,color:"#fff",fontSize:17,fontWeight:700,textDecoration:"none",letterSpacing:"0.02em"}}>Get Exclusive Updates — Free</a>
+        <p style={{fontSize:14,color:C.dim,textAlign:"center",margin:"6px 0 0"}}>Join TALON Intelligence. Unsubscribe anytime.</p>
       </div>
     </div>
   );
@@ -969,12 +969,12 @@ function Portfolio({plan,onEarnBadge,onUpgrade}){
     <div>
       <div style={{paddingBottom:12,borderBottom:`1px solid ${C.border}`,marginBottom:18}}>
         <div style={{display:"flex",gap:8,marginBottom:12}}>
-          <button onClick={()=>setMode("portfolio")} style={{flex:1,padding:"9px",background:mode==="portfolio"?C.goldDim:"transparent",border:`1px solid ${mode==="portfolio"?C.goldBorder:C.border}`,borderRadius:8,color:mode==="portfolio"?C.gold:C.muted,fontSize:12,fontWeight:mode==="portfolio"?700:400,cursor:"pointer",outline:"none"}}>📈 Build Your Portfolio</button>
-          <button onClick={()=>setMode("research")} style={{flex:1,padding:"9px",background:mode==="research"?C.goldDim:"transparent",border:`1px solid ${mode==="research"?C.goldBorder:C.border}`,borderRadius:8,color:mode==="research"?C.gold:C.muted,fontSize:12,fontWeight:mode==="research"?700:400,cursor:"pointer",outline:"none"}}>🔍 Research Any Asset</button>
+          <button onClick={()=>setMode("portfolio")} style={{flex:1,padding:"9px",background:mode==="portfolio"?C.goldDim:"transparent",border:`1px solid ${mode==="portfolio"?C.goldBorder:C.border}`,borderRadius:8,color:mode==="portfolio"?C.gold:C.muted,fontSize:16,fontWeight:mode==="portfolio"?700:400,cursor:"pointer",outline:"none"}}>📈 Build Your Portfolio</button>
+          <button onClick={()=>setMode("research")} style={{flex:1,padding:"9px",background:mode==="research"?C.goldDim:"transparent",border:`1px solid ${mode==="research"?C.goldBorder:C.border}`,borderRadius:8,color:mode==="research"?C.gold:C.muted,fontSize:16,fontWeight:mode==="research"?700:400,cursor:"pointer",outline:"none"}}>🔍 Research Any Asset</button>
         </div>
-        {mode==="portfolio" && <h2 style={{fontSize:21,fontWeight:600,color:C.text,margin:"0 0 5px"}}>Portfolio Engine</h2>}
-        {mode==="portfolio" && <p style={{fontSize:12,color:C.muted,margin:0}}>AI-generated baskets with plain-English explanations. Tiers 6-10 require Pro.</p>}
-        {mode==="research" && <h2 style={{fontSize:21,fontWeight:600,color:C.text,margin:"0 0 5px"}}>Investment Research</h2>}
+        {mode==="portfolio" && <h2 style={{fontSize:25,fontWeight:600,color:C.text,margin:"0 0 5px"}}>Portfolio Engine</h2>}
+        {mode==="portfolio" && <p style={{fontSize:16,color:C.muted,margin:0}}>AI-generated baskets with plain-English explanations. Tiers 6-10 require Pro.</p>}
+        {mode==="research" && <h2 style={{fontSize:25,fontWeight:600,color:C.text,margin:"0 0 5px"}}>Investment Research</h2>}
         
       </div>
       {mode==="research" && <Research onEarnBadge={onEarnBadge}/>}
@@ -986,39 +986,39 @@ function Portfolio({plan,onEarnBadge,onUpgrade}){
           const act=n===tier;
           const isLocked=plan==="free"&&n>5;
           return(
-            <button key={n} onClick={()=>{setTier(n);setPortfolio(null);setError(null);}} style={{padding:"8px 0",fontSize:12,fontWeight:700,border:`1px solid ${act?col+"70":C.border}`,background:act?col+"18":C.card,color:act?col:isLocked?C.dim:C.muted,borderRadius:7,cursor:"pointer",fontFamily:"monospace",outline:"none",position:"relative"}}>
+            <button key={n} onClick={()=>{setTier(n);setPortfolio(null);setError(null);}} style={{padding:"8px 0",fontSize:16,fontWeight:700,border:`1px solid ${act?col+"70":C.border}`,background:act?col+"18":C.card,color:act?col:isLocked?C.dim:C.muted,borderRadius:7,cursor:"pointer",fontFamily:"monospace",outline:"none",position:"relative"}}>
               {n}
             </button>
           );
         })}
       </div>
-      <div style={{display:"flex",justifyContent:"space-between",fontSize:9,color:C.dim,letterSpacing:"0.07em",marginBottom:16}}>
+      <div style={{display:"flex",justifyContent:"space-between",fontSize:13,color:C.dim,letterSpacing:"0.07em",marginBottom:16}}>
         <span>SAFE</span><span>BALANCED</span><span>GROWTH</span><span>MAX RISK</span>
       </div>
       <Card style={{marginBottom:18,borderColor:t.col+"25"}}>
         <div style={{display:"flex",gap:12,alignItems:"flex-start"}}>
           <div style={{background:t.col+"18",border:`1px solid ${t.col}30`,borderRadius:9,padding:"6px 12px",textAlign:"center",flexShrink:0}}>
-            <div style={{fontSize:24,fontWeight:800,color:t.col,fontFamily:"monospace",lineHeight:1}}>{tier}</div>
-            <div style={{fontSize:8,color:t.col+"80",marginTop:1}}>/ 10</div>
+            <div style={{fontSize:28,fontWeight:800,color:t.col,fontFamily:"monospace",lineHeight:1}}>{tier}</div>
+            <div style={{fontSize:12,color:t.col+"80",marginTop:1}}>/ 10</div>
           </div>
           <div style={{flex:1}}>
-            <div style={{display:"flex",flexWrap:"wrap",gap:7,marginBottom:5}}><span style={{fontSize:14,fontWeight:600,color:C.text}}>{t.l}</span><Pill label={t.g} color={t.col}/></div>
-            <p style={{fontSize:12,color:C.muted,lineHeight:1.6,margin:0}}>{t.desc}</p>
+            <div style={{display:"flex",flexWrap:"wrap",gap:7,marginBottom:5}}><span style={{fontSize:18,fontWeight:600,color:C.text}}>{t.l}</span><Pill label={t.g} color={t.col}/></div>
+            <p style={{fontSize:16,color:C.muted,lineHeight:1.6,margin:0}}>{t.desc}</p>
           </div>
         </div>
       </Card>
       {locked ? (
         <div style={{textAlign:"center",padding:"20px 0"}}>
-          <div style={{fontSize:13,color:C.muted,marginBottom:10}}>Tiers 6-10 require TALON Pro</div>
-          <button onClick={onUpgrade} style={{padding:"10px 22px",background:C.gold,border:"none",borderRadius:8,color:"#000",fontSize:13,fontWeight:700,cursor:"pointer"}}>Upgrade to Pro</button>
+          <div style={{fontSize:17,color:C.muted,marginBottom:10}}>Tiers 6-10 require TALON Pro</div>
+          <button onClick={onUpgrade} style={{padding:"10px 22px",background:C.gold,border:"none",borderRadius:8,color:"#000",fontSize:17,fontWeight:700,cursor:"pointer"}}>Upgrade to Pro</button>
         </div>
       ) : (
         <>
           <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:18}}>
-            <button onClick={generate} disabled={loading} style={{padding:"10px 20px",background:loading?"rgba(201,162,39,0.08)":t.col,border:`1px solid ${t.col}`,borderRadius:9,color:loading?C.gold:"#000",fontSize:13,fontWeight:700,cursor:loading?"not-allowed":"pointer",outline:"none",transition:"all 0.2s"}}>
+            <button onClick={generate} disabled={loading} style={{padding:"10px 20px",background:loading?"rgba(201,162,39,0.08)":t.col,border:`1px solid ${t.col}`,borderRadius:9,color:loading?C.gold:"#000",fontSize:17,fontWeight:700,cursor:loading?"not-allowed":"pointer",outline:"none",transition:"all 0.2s"}}>
               {loading?"Loading: "+loadMsg:"Generate Tier "+tier+" Portfolio"}
             </button>
-            {error && <span style={{fontSize:11,color:C.red}}>{error}</span>}
+            {error && <span style={{fontSize:15,color:C.red}}>{error}</span>}
           </div>
           {portfolio && (()=>{
             const BASKETS=[
@@ -1035,70 +1035,70 @@ function Portfolio({plan,onEarnBadge,onUpgrade}){
                   {BASKETS.map(b=>{
                     const act=b.key===activeBasket;
                     return(
-                      <button key={b.key} onClick={()=>{setActiveBasket(b.key);setHovered(null);}} style={{padding:"9px 6px",background:act?b.accentColor+"18":"transparent",border:`1px solid ${act?b.accentColor+"60":C.border}`,borderRadius:8,color:act?b.accentColor:C.muted,fontSize:11,fontWeight:act?700:400,cursor:"pointer",outline:"none",textAlign:"center"}}>
-                        <div style={{fontSize:14,marginBottom:2}}>{b.icon}</div>
-                        <div style={{fontWeight:700,fontSize:11}}>{b.label}</div>
-                        <div style={{fontSize:9,color:act?b.accentColor+"80":C.dim,marginTop:1}}>{b.desc}</div>
+                      <button key={b.key} onClick={()=>{setActiveBasket(b.key);setHovered(null);}} style={{padding:"9px 6px",background:act?b.accentColor+"18":"transparent",border:`1px solid ${act?b.accentColor+"60":C.border}`,borderRadius:8,color:act?b.accentColor:C.muted,fontSize:15,fontWeight:act?700:400,cursor:"pointer",outline:"none",textAlign:"center"}}>
+                        <div style={{fontSize:18,marginBottom:2}}>{b.icon}</div>
+                        <div style={{fontWeight:700,fontSize:15}}>{b.label}</div>
+                        <div style={{fontSize:13,color:act?b.accentColor+"80":C.dim,marginTop:1}}>{b.desc}</div>
                       </button>
                     );
                   })}
                 </div>
                 <Card style={{marginBottom:16,borderLeft:`3px solid ${bCfg.accentColor}`,borderRadius:"0 10px 10px 0",padding:"12px 14px"}}>
-                  <div style={{fontSize:8,color:bCfg.accentColor,letterSpacing:"0.1em",marginBottom:5}}>THESIS · WHO THIS FITS</div>
-                  <p style={{fontSize:12,color:C.muted,lineHeight:1.8,margin:0}}>{basket.thesis}</p>
+                  <div style={{fontSize:12,color:bCfg.accentColor,letterSpacing:"0.1em",marginBottom:5}}>THESIS · WHO THIS FITS</div>
+                  <p style={{fontSize:16,color:C.muted,lineHeight:1.8,margin:0}}>{basket.thesis}</p>
                 </Card>
                 <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:7,marginBottom:16}}>
                   {[["EXPECTED RETURN",basket.expectedReturn],["HOLDINGS",stocks.length+" positions"],["RISK TIER",t.l]].map(([l,v])=>(
                     <div key={l} style={{background:"rgba(255,255,255,0.03)",border:`1px solid ${C.border}`,borderRadius:8,padding:"9px 11px"}}>
-                      <div style={{fontSize:8,color:C.dim,letterSpacing:"0.1em",marginBottom:3}}>{l}</div>
-                      <div style={{fontSize:12,fontWeight:600,color:C.text}}>{v}</div>
+                      <div style={{fontSize:12,color:C.dim,letterSpacing:"0.1em",marginBottom:3}}>{l}</div>
+                      <div style={{fontSize:16,fontWeight:600,color:C.text}}>{v}</div>
                     </div>
                   ))}
                 </div>
                 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:9,marginBottom:18}}>
-                  <Card style={{borderLeft:`3px solid ${bCfg.accentColor}`,borderRadius:"0 10px 10px 0",padding:"11px 14px"}}><div style={{fontSize:8,color:bCfg.accentColor,letterSpacing:"0.1em",marginBottom:4}}>STRATEGY</div><p style={{fontSize:11,color:C.muted,lineHeight:1.8,margin:0}}>{basket.strategyNote}</p></Card>
-                  <Card style={{borderLeft:"3px solid rgba(239,68,68,0.6)",borderRadius:"0 10px 10px 0",padding:"11px 14px"}}><div style={{fontSize:8,color:C.red,letterSpacing:"0.1em",marginBottom:4}}>KEY RISK</div><p style={{fontSize:11,color:C.muted,lineHeight:1.8,margin:0}}>{basket.keyRisk}</p></Card>
+                  <Card style={{borderLeft:`3px solid ${bCfg.accentColor}`,borderRadius:"0 10px 10px 0",padding:"11px 14px"}}><div style={{fontSize:12,color:bCfg.accentColor,letterSpacing:"0.1em",marginBottom:4}}>STRATEGY</div><p style={{fontSize:15,color:C.muted,lineHeight:1.8,margin:0}}>{basket.strategyNote}</p></Card>
+                  <Card style={{borderLeft:"3px solid rgba(239,68,68,0.6)",borderRadius:"0 10px 10px 0",padding:"11px 14px"}}><div style={{fontSize:12,color:C.red,letterSpacing:"0.1em",marginBottom:4}}>KEY RISK</div><p style={{fontSize:15,color:C.muted,lineHeight:1.8,margin:0}}>{basket.keyRisk}</p></Card>
                 </div>
                 <div style={{display:"grid",gridTemplateColumns:"155px 1fr",gap:20,alignItems:"start"}}>
                   <div>
-                    <div style={{fontSize:9,color:C.muted,letterSpacing:"0.1em",marginBottom:10}}>ALLOCATION</div>
+                    <div style={{fontSize:13,color:C.muted,letterSpacing:"0.1em",marginBottom:10}}>ALLOCATION</div>
                     <div style={{position:"relative",width:145,height:145,margin:"0 auto 12px"}}>
                       <PieChart width={145} height={145}>
                         <Pie data={stocks} dataKey="allocation" cx={72} cy={72} innerRadius={44} outerRadius={66} paddingAngle={2} onMouseEnter={(_,i)=>setHovered(i)} onMouseLeave={()=>setHovered(null)}>
                           {stocks.map((s,i)=><Cell key={s.ticker} fill={PAL[i%PAL.length]} opacity={hovered===null||hovered===i?1:0.3}/>)}
                         </Pie>
-                        <Tooltip formatter={v=>[v+"%"]} contentStyle={{background:C.card2,border:`1px solid ${C.border}`,borderRadius:6,fontSize:11,color:C.text}}/>
+                        <Tooltip formatter={v=>[v+"%"]} contentStyle={{background:C.card2,border:`1px solid ${C.border}`,borderRadius:6,fontSize:15,color:C.text}}/>
                       </PieChart>
                       <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",pointerEvents:"none"}}>
-                        <div style={{fontSize:7,color:C.muted}}>TIER</div>
-                        <div style={{fontSize:17,fontWeight:800,color:t.col,fontFamily:"monospace"}}>{tier}</div>
+                        <div style={{fontSize:11,color:C.muted}}>TIER</div>
+                        <div style={{fontSize:21,fontWeight:800,color:t.col,fontFamily:"monospace"}}>{tier}</div>
                       </div>
                     </div>
                     {stocks.map((s,i)=>(
                       <div key={s.ticker} style={{display:"flex",alignItems:"center",gap:5,marginBottom:3,opacity:hovered===null||hovered===i?1:0.3,transition:"opacity 0.15s"}} onMouseEnter={()=>setHovered(i)} onMouseLeave={()=>setHovered(null)}>
                         <div style={{width:6,height:6,borderRadius:2,background:PAL[i%PAL.length],flexShrink:0}}/>
-                        <span style={{fontFamily:"monospace",fontSize:10,fontWeight:700,color:PAL[i%PAL.length],minWidth:40}}>{s.ticker}</span>
-                        <span style={{fontSize:10,color:C.muted}}>{s.allocation}%</span>
+                        <span style={{fontFamily:"monospace",fontSize:14,fontWeight:700,color:PAL[i%PAL.length],minWidth:40}}>{s.ticker}</span>
+                        <span style={{fontSize:14,color:C.muted}}>{s.allocation}%</span>
                       </div>
                     ))}
                   </div>
                   <div>
-                    <div style={{fontSize:9,color:C.muted,letterSpacing:"0.1em",marginBottom:10}}>HOLDINGS</div>
+                    <div style={{fontSize:13,color:C.muted,letterSpacing:"0.1em",marginBottom:10}}>HOLDINGS</div>
                     {stocks.map((s,i)=>(
                       <div key={s.ticker} style={{paddingBottom:12,marginBottom:12,borderBottom:`1px solid ${C.border}`,opacity:hovered===null||hovered===i?1:0.4,transition:"opacity 0.15s"}} onMouseEnter={()=>setHovered(i)} onMouseLeave={()=>setHovered(null)}>
                         <div style={{display:"flex",gap:9,alignItems:"flex-start"}}>
                           <div style={{background:PAL[i%PAL.length]+"18",border:`1px solid ${PAL[i%PAL.length]}30`,borderRadius:5,padding:"3px 7px",minWidth:44,textAlign:"center",flexShrink:0}}>
-                            <span style={{fontFamily:"monospace",fontSize:10,fontWeight:800,color:PAL[i%PAL.length]}}>{s.ticker}</span>
+                            <span style={{fontFamily:"monospace",fontSize:14,fontWeight:800,color:PAL[i%PAL.length]}}>{s.ticker}</span>
                           </div>
                           <div style={{flex:1,minWidth:0}}>
                             <div style={{display:"flex",justifyContent:"space-between",gap:7,marginBottom:2}}>
-                              <span style={{fontSize:12,fontWeight:600,color:C.text}}>{s.name}</span>
-                              <span style={{fontFamily:"monospace",fontSize:12,fontWeight:800,color:PAL[i%PAL.length],flexShrink:0}}>{s.allocation}%</span>
+                              <span style={{fontSize:16,fontWeight:600,color:C.text}}>{s.name}</span>
+                              <span style={{fontFamily:"monospace",fontSize:16,fontWeight:800,color:PAL[i%PAL.length],flexShrink:0}}>{s.allocation}%</span>
                             </div>
                             <div style={{height:3,background:"rgba(255,255,255,0.06)",borderRadius:2,overflow:"hidden",marginBottom:5}}><div style={{height:3,width:`${s.allocation}%`,background:PAL[i%PAL.length],borderRadius:2}}/></div>
-                            <div style={{fontSize:9,color:C.dim,marginBottom:4}}>{s.assetClass}</div>
-                            <p style={{fontSize:11,color:C.muted,lineHeight:1.8,margin:"0 0 4px"}}>{s.explanation}</p>
-                            {s.whyThisTier && <p style={{fontSize:10,color:bCfg.accentColor+"90",margin:0,fontStyle:"italic"}}>{s.whyThisTier}</p>}
+                            <div style={{fontSize:13,color:C.dim,marginBottom:4}}>{s.assetClass}</div>
+                            <p style={{fontSize:15,color:C.muted,lineHeight:1.8,margin:"0 0 4px"}}>{s.explanation}</p>
+                            {s.whyThisTier && <p style={{fontSize:14,color:bCfg.accentColor+"90",margin:0,fontStyle:"italic"}}>{s.whyThisTier}</p>}
                           </div>
                         </div>
                       </div>
@@ -1107,8 +1107,8 @@ function Portfolio({plan,onEarnBadge,onUpgrade}){
                 </div>
                 <AffCard affKey="robinhood" context="portfolio_complete"/>
                 <div style={{marginTop:16,paddingTop:12,borderTop:`1px solid ${C.border}`,display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:7}}>
-                  <p style={{fontSize:10,color:C.dim,margin:0,lineHeight:1.5}}>Educational only. Not investment advice. Consult a licensed financial advisor before investing.</p>
-                  <button onClick={generate} style={{padding:"6px 12px",background:"transparent",border:`1px solid ${C.border}`,borderRadius:7,color:C.muted,fontSize:11,cursor:"pointer",outline:"none"}}>Regenerate</button>
+                  <p style={{fontSize:14,color:C.dim,margin:0,lineHeight:1.5}}>Educational only. Not investment advice. Consult a licensed financial advisor before investing.</p>
+                  <button onClick={generate} style={{padding:"6px 12px",background:"transparent",border:`1px solid ${C.border}`,borderRadius:7,color:C.muted,fontSize:15,cursor:"pointer",outline:"none"}}>Regenerate</button>
                 </div>
               </div>
             );
@@ -1134,12 +1134,12 @@ function Learn({plan,onEarnBadge,completed,onComplete,onUpgrade}){
     if(isLocked){
       return(
         <div>
-          <button onClick={()=>setActive(null)} style={{background:"none",border:"none",color:C.gold,fontSize:13,cursor:"pointer",padding:"0 0 18px"}}>Back to modules</button>
+          <button onClick={()=>setActive(null)} style={{background:"none",border:"none",color:C.gold,fontSize:17,cursor:"pointer",padding:"0 0 18px"}}>Back to modules</button>
           <div style={{textAlign:"center",padding:"40px 20px"}}>
-            <div style={{fontSize:36,marginBottom:14}}>🔒</div>
-            <h3 style={{fontSize:19,fontWeight:700,color:C.text,margin:"0 0 8px"}}>Pro Content</h3>
-            <p style={{fontSize:13,color:C.muted,lineHeight:1.7,margin:"0 0 20px"}}>This module is part of TALON Pro. Unlock all 20 modules, AI coach, and your personal financial blueprint.</p>
-            <button onClick={onUpgrade} style={{padding:"11px 24px",background:C.gold,border:"none",borderRadius:9,color:"#000",fontSize:13,fontWeight:700,cursor:"pointer"}}>See Founding Member Pricing</button>
+            <div style={{fontSize:40,marginBottom:14}}>🔒</div>
+            <h3 style={{fontSize:23,fontWeight:700,color:C.text,margin:"0 0 8px"}}>Pro Content</h3>
+            <p style={{fontSize:17,color:C.muted,lineHeight:1.7,margin:"0 0 20px"}}>This module is part of TALON Pro. Unlock all 20 modules, AI coach, and your personal financial blueprint.</p>
+            <button onClick={onUpgrade} style={{padding:"11px 24px",background:C.gold,border:"none",borderRadius:9,color:"#000",fontSize:17,fontWeight:700,cursor:"pointer"}}>See Founding Member Pricing</button>
           </div>
         </div>
       );
@@ -1157,18 +1157,18 @@ function Learn({plan,onEarnBadge,completed,onComplete,onUpgrade}){
     };
     return(
       <div>
-        <button onClick={()=>setActive(null)} style={{background:"none",border:"none",color:C.gold,fontSize:13,cursor:"pointer",padding:"0 0 16px"}}>Back to modules</button>
-        <div style={{fontSize:10,color:C.muted,marginBottom:3}}>{mod.icon} {mod.title}</div>
-        <h2 style={{fontSize:19,fontWeight:600,color:C.text,margin:"0 0 16px"}}>{ch.title}</h2>
+        <button onClick={()=>setActive(null)} style={{background:"none",border:"none",color:C.gold,fontSize:17,cursor:"pointer",padding:"0 0 16px"}}>Back to modules</button>
+        <div style={{fontSize:14,color:C.muted,marginBottom:3}}>{mod.icon} {mod.title}</div>
+        <h2 style={{fontSize:23,fontWeight:600,color:C.text,margin:"0 0 16px"}}>{ch.title}</h2>
         <Card style={{borderLeft:`3px solid ${C.gold}`,borderRadius:"0 10px 10px 0",marginBottom:12,padding:"11px 15px"}}>
-          <div style={{fontSize:8,color:C.gold,letterSpacing:"0.1em",marginBottom:5}}>HOOK</div>
-          <p style={{fontSize:14,color:C.text,lineHeight:1.75,margin:0,fontStyle:"italic"}}>"{ch.hook}"</p>
+          <div style={{fontSize:12,color:C.gold,letterSpacing:"0.1em",marginBottom:5}}>HOOK</div>
+          <p style={{fontSize:18,color:C.text,lineHeight:1.75,margin:0,fontStyle:"italic"}}>"{ch.hook}"</p>
         </Card>
-        <Card style={{marginBottom:12}}><div style={{fontSize:8,color:C.muted,letterSpacing:"0.1em",marginBottom:5}}>THE CONCEPT</div><p style={{fontSize:13,color:C.muted,lineHeight:1.85,margin:0}}>{ch.concept}</p></Card>
-        <Card style={{marginBottom:12,background:C.card2}}><div style={{fontSize:8,color:C.blue,letterSpacing:"0.1em",marginBottom:5}}>REAL NUMBERS</div><p style={{fontSize:13,color:C.muted,lineHeight:1.85,margin:0}}>{ch.realNumbers}</p></Card>
-        <Card style={{marginBottom:12}}><div style={{fontSize:8,color:C.purple,letterSpacing:"0.1em",marginBottom:5}}>STREET-LEVEL ANALOGY</div><p style={{fontSize:13,color:C.muted,lineHeight:1.85,margin:0}}>{ch.analogy}</p></Card>
-        <Card style={{marginBottom:12,background:"rgba(201,162,39,0.06)",borderColor:C.goldBorder}}><div style={{fontSize:8,color:C.gold,letterSpacing:"0.1em",marginBottom:5}}>AHA MOMENT</div><p style={{fontSize:13,color:C.text,lineHeight:1.85,margin:0,fontWeight:500}}>{ch.ahaMoment}</p></Card>
-        <Card style={{marginBottom:14,background:"rgba(34,197,94,0.06)",borderColor:"rgba(34,197,94,0.25)"}}><div style={{fontSize:8,color:C.green,letterSpacing:"0.1em",marginBottom:5}}>YOUR ACTION STEP</div><p style={{fontSize:13,color:C.muted,lineHeight:1.85,margin:0}}>{ch.action}</p></Card>
+        <Card style={{marginBottom:12}}><div style={{fontSize:12,color:C.muted,letterSpacing:"0.1em",marginBottom:5}}>THE CONCEPT</div><p style={{fontSize:17,color:C.muted,lineHeight:1.85,margin:0}}>{ch.concept}</p></Card>
+        <Card style={{marginBottom:12,background:C.card2}}><div style={{fontSize:12,color:C.blue,letterSpacing:"0.1em",marginBottom:5}}>REAL NUMBERS</div><p style={{fontSize:17,color:C.muted,lineHeight:1.85,margin:0}}>{ch.realNumbers}</p></Card>
+        <Card style={{marginBottom:12}}><div style={{fontSize:12,color:C.purple,letterSpacing:"0.1em",marginBottom:5}}>STREET-LEVEL ANALOGY</div><p style={{fontSize:17,color:C.muted,lineHeight:1.85,margin:0}}>{ch.analogy}</p></Card>
+        <Card style={{marginBottom:12,background:"rgba(201,162,39,0.06)",borderColor:C.goldBorder}}><div style={{fontSize:12,color:C.gold,letterSpacing:"0.1em",marginBottom:5}}>AHA MOMENT</div><p style={{fontSize:17,color:C.text,lineHeight:1.85,margin:0,fontWeight:500}}>{ch.ahaMoment}</p></Card>
+        <Card style={{marginBottom:14,background:"rgba(34,197,94,0.06)",borderColor:"rgba(34,197,94,0.25)"}}><div style={{fontSize:12,color:C.green,letterSpacing:"0.1em",marginBottom:5}}>YOUR ACTION STEP</div><p style={{fontSize:17,color:C.muted,lineHeight:1.85,margin:0}}>{ch.action}</p></Card>
         {quiz.length>0 && (
           <>
             <SL>KNOWLEDGE CHECK</SL>
@@ -1177,7 +1177,7 @@ function Learn({plan,onEarnBadge,completed,onComplete,onUpgrade}){
                 const qs=qState[qi]||{};
                 return(
                   <Card key={qi}>
-                    <p style={{fontSize:13,fontWeight:600,color:C.text,margin:"0 0 12px",lineHeight:1.6}}>{q.q}</p>
+                    <p style={{fontSize:17,fontWeight:600,color:C.text,margin:"0 0 12px",lineHeight:1.6}}>{q.q}</p>
                     <div style={{display:"flex",flexDirection:"column",gap:5}}>
                       {q.opts.map((opt,oi)=>{
                         let bg="rgba(255,255,255,0.03)",border=C.border,col=C.muted;
@@ -1186,14 +1186,14 @@ function Learn({plan,onEarnBadge,completed,onComplete,onUpgrade}){
                           else if(oi===qs.selected&&qs.selected!==q.ans){bg="rgba(239,68,68,0.12)";border="rgba(239,68,68,0.4)";col=C.red;}
                         }
                         return(
-                          <button key={oi} onClick={()=>!qs.answered&&setQuizState(s=>({...s,[ch.id]:{...s[ch.id],[qi]:{selected:oi,answered:true,correct:oi===q.ans}}}))} style={{padding:"9px 12px",background:bg,border:`1px solid ${border}`,borderRadius:7,color:col,fontSize:12,textAlign:"left",cursor:qs.answered?"default":"pointer"}}>{opt}</button>
+                          <button key={oi} onClick={()=>!qs.answered&&setQuizState(s=>({...s,[ch.id]:{...s[ch.id],[qi]:{selected:oi,answered:true,correct:oi===q.ans}}}))} style={{padding:"9px 12px",background:bg,border:`1px solid ${border}`,borderRadius:7,color:col,fontSize:16,textAlign:"left",cursor:qs.answered?"default":"pointer"}}>{opt}</button>
                         );
                       })}
                     </div>
                     {qs.answered && (
                       <div style={{marginTop:8,padding:"8px 10px",background:qs.correct?"rgba(34,197,94,0.08)":"rgba(239,68,68,0.08)",border:`1px solid ${qs.correct?"rgba(34,197,94,0.25)":"rgba(239,68,68,0.25)"}`,borderRadius:7}}>
-                        <div style={{fontSize:11,fontWeight:600,color:qs.correct?C.green:C.red,marginBottom:3}}>{qs.correct?"Exactly right.":"Not quite — but now you know."}</div>
-                        <div style={{fontSize:11,color:C.muted,lineHeight:1.6}}>{q.exp}</div>
+                        <div style={{fontSize:15,fontWeight:600,color:qs.correct?C.green:C.red,marginBottom:3}}>{qs.correct?"Exactly right.":"Not quite — but now you know."}</div>
+                        <div style={{fontSize:15,color:C.muted,lineHeight:1.6}}>{q.exp}</div>
                       </div>
                     )}
                   </Card>
@@ -1203,20 +1203,20 @@ function Learn({plan,onEarnBadge,completed,onComplete,onUpgrade}){
           </>
         )}
         <div style={{marginBottom:12}}>
-          <div style={{fontSize:9,color:C.muted,letterSpacing:"0.1em",marginBottom:8}}>RATE THIS CHAPTER</div>
+          <div style={{fontSize:13,color:C.muted,letterSpacing:"0.1em",marginBottom:8}}>RATE THIS CHAPTER</div>
           <div style={{display:"flex",gap:6,marginBottom:4}}>
             {[1,2,3,4,5].map(s=>(
-              <button key={s} onClick={()=>setRating(r=>({...r,[ch.id]:s}))} style={{fontSize:20,background:"none",border:"none",cursor:"pointer",opacity:rating[ch.id]>=s?1:0.3,transition:"opacity 0.15s"}}>⭐</button>
+              <button key={s} onClick={()=>setRating(r=>({...r,[ch.id]:s}))} style={{fontSize:24,background:"none",border:"none",cursor:"pointer",opacity:rating[ch.id]>=s?1:0.3,transition:"opacity 0.15s"}}>⭐</button>
             ))}
           </div>
-          {rating[ch.id] && <div style={{fontSize:11,color:C.muted}}>{rating[ch.id]>=4?"Thanks — glad this landed.":rating[ch.id]>=2?"Noted. We will sharpen this.":"Fair. We will fix it."}</div>}
+          {rating[ch.id] && <div style={{fontSize:15,color:C.muted}}>{rating[ch.id]>=4?"Thanks — glad this landed.":rating[ch.id]>=2?"Noted. We will sharpen this.":"Fair. We will fix it."}</div>}
         </div>
         {MOD_AFF[mod.id] && <AffCard affKey={MOD_AFF[mod.id]} context={"module_"+mod.id}/>}
         <div style={{height:14}}/>
-        <button onClick={finish} disabled={!allCorrect&&!isDone} style={{width:"100%",padding:"12px",background:isDone?"rgba(34,197,94,0.12)":!allCorrect?"rgba(201,162,39,0.15)":C.gold,border:isDone?`1px solid ${C.green}`:!allCorrect?`1px solid ${C.goldBorder}`:"none",borderRadius:9,color:isDone?C.green:!allCorrect?C.gold:"#000",fontSize:13,fontWeight:700,cursor:isDone||allCorrect?"pointer":"not-allowed",outline:"none"}}>
+        <button onClick={finish} disabled={!allCorrect&&!isDone} style={{width:"100%",padding:"12px",background:isDone?"rgba(34,197,94,0.12)":!allCorrect?"rgba(201,162,39,0.15)":C.gold,border:isDone?`1px solid ${C.green}`:!allCorrect?`1px solid ${C.goldBorder}`:"none",borderRadius:9,color:isDone?C.green:!allCorrect?C.gold:"#000",fontSize:17,fontWeight:700,cursor:isDone||allCorrect?"pointer":"not-allowed",outline:"none"}}>
           {isDone?"Chapter Complete":!allCorrect?"Answer all questions to continue":"Mark Complete"}
         </button>
-        <p style={{fontSize:10,color:C.dim,textAlign:"center",marginTop:6}}>TALON is for educational purposes only. Not financial advice.</p>
+        <p style={{fontSize:14,color:C.dim,textAlign:"center",marginTop:6}}>TALON is for educational purposes only. Not financial advice.</p>
       </div>
     );
   }
@@ -1226,9 +1226,9 @@ function Learn({plan,onEarnBadge,completed,onComplete,onUpgrade}){
   return(
     <div>
       <div style={{paddingBottom:12,borderBottom:`1px solid ${C.border}`,marginBottom:18}}>
-        <h2 style={{fontSize:21,fontWeight:600,color:C.text,margin:"0 0 5px"}}>Financial Fluency Library</h2>
+        <h2 style={{fontSize:25,fontWeight:600,color:C.text,margin:"0 0 5px"}}>Financial Fluency Library</h2>
         <div style={{display:"flex",alignItems:"center",gap:10,flexWrap:"wrap"}}>
-          <p style={{fontSize:12,color:C.muted,margin:0}}>20 modules — {totalCh} chapters — 3 min each</p>
+          <p style={{fontSize:16,color:C.muted,margin:0}}>20 modules — {totalCh} chapters — 3 min each</p>
           <Pill label={doneCount+"/"+totalCh+" complete"} color={C.green}/>
           {plan==="free" && <Pill label="Modules 1-5 Free" color={C.gold}/>}
         </div>
@@ -1238,8 +1238,8 @@ function Learn({plan,onEarnBadge,completed,onComplete,onUpgrade}){
       </div>
       {plan==="free" && (
         <div style={{padding:"10px 14px",background:"rgba(201,162,39,0.06)",border:`1px solid ${C.goldBorder}`,borderRadius:9,marginBottom:14,display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:7}}>
-          <div style={{fontSize:12,color:C.muted}}>Modules 6-20 unlock with Pro. First 100 founding spots per tier.</div>
-          <button onClick={onUpgrade} style={{padding:"6px 12px",background:C.gold,border:"none",borderRadius:6,color:"#000",fontSize:11,fontWeight:700,cursor:"pointer"}}>Claim Spot</button>
+          <div style={{fontSize:16,color:C.muted}}>Modules 6-20 unlock with Pro. First 100 founding spots per tier.</div>
+          <button onClick={onUpgrade} style={{padding:"6px 12px",background:C.gold,border:"none",borderRadius:6,color:"#000",fontSize:15,fontWeight:700,cursor:"pointer"}}>Claim Spot</button>
         </div>
       )}
       <div style={{display:"flex",flexDirection:"column",gap:8}}>
@@ -1250,26 +1250,26 @@ function Learn({plan,onEarnBadge,completed,onComplete,onUpgrade}){
           return(
             <Card key={mod.id} style={{cursor:"pointer",borderColor:allDone?"rgba(34,197,94,0.25)":isLocked?"rgba(255,255,255,0.03)":C.border,opacity:isLocked?0.65:1}} onClick={()=>mod.chapters[0]&&setActive({moduleId:mod.id,chapterId:mod.chapters[0].id})}>
               <div style={{display:"flex",gap:10,alignItems:"flex-start"}}>
-                <span style={{fontSize:18,flexShrink:0}}>{isLocked?"🔒":mod.icon}</span>
+                <span style={{fontSize:22,flexShrink:0}}>{isLocked?"🔒":mod.icon}</span>
                 <div style={{flex:1,minWidth:0}}>
                   <div style={{display:"flex",alignItems:"center",gap:7,marginBottom:3,flexWrap:"wrap"}}>
-                    <span style={{fontSize:13,fontWeight:600,color:C.text}}>Module {mod.id}: {mod.title}</span>
+                    <span style={{fontSize:17,fontWeight:600,color:C.text}}>Module {mod.id}: {mod.title}</span>
                     {allDone && <Pill label="Complete" color={C.green}/>}
                     {!allDone&&chapDone>0 && <Pill label={chapDone+"/"+mod.chapters.length} color={C.gold}/>}
                     {mod.free && <Pill label="Free" color={C.green}/>}
                   </div>
-                  <p style={{fontSize:11,color:C.muted,lineHeight:1.6,margin:"0 0 6px"}}>{mod.subtitle}</p>
+                  <p style={{fontSize:15,color:C.muted,lineHeight:1.6,margin:"0 0 6px"}}>{mod.subtitle}</p>
                   {!isLocked && (
                     <div style={{display:"flex",flexWrap:"wrap",gap:4}}>
                       {mod.chapters.map(ch=>(
-                        <button key={ch.id} onClick={e=>{e.stopPropagation();setActive({moduleId:mod.id,chapterId:ch.id});}} style={{fontSize:10,padding:"2px 8px",borderRadius:4,background:completed[ch.id]?"rgba(34,197,94,0.12)":C.goldDim,border:`1px solid ${completed[ch.id]?"rgba(34,197,94,0.3)":C.goldBorder}`,color:completed[ch.id]?C.green:C.gold,cursor:"pointer"}}>
+                        <button key={ch.id} onClick={e=>{e.stopPropagation();setActive({moduleId:mod.id,chapterId:ch.id});}} style={{fontSize:14,padding:"2px 8px",borderRadius:4,background:completed[ch.id]?"rgba(34,197,94,0.12)":C.goldDim,border:`1px solid ${completed[ch.id]?"rgba(34,197,94,0.3)":C.goldBorder}`,color:completed[ch.id]?C.green:C.gold,cursor:"pointer"}}>
                           {completed[ch.id]?"Done: ":""}{ch.title.split(":")[0]}
                         </button>
                       ))}
                     </div>
                   )}
                 </div>
-                <span style={{fontSize:10,color:C.muted,flexShrink:0}}>{mod.chapters.length}ch</span>
+                <span style={{fontSize:14,color:C.muted,flexShrink:0}}>{mod.chapters.length}ch</span>
               </div>
             </Card>
           );
@@ -1295,7 +1295,7 @@ function Calculators({onEarnBadge,hasUsed,setHasUsed}){
 
   const Sl=({label,val,min,max,step=1,fmt,onChange})=>(
     <div style={{marginBottom:12}}>
-      <div style={{display:"flex",justifyContent:"space-between",fontSize:11,marginBottom:3}}><span style={{color:C.muted}}>{label}</span><span style={{color:C.gold,fontFamily:"monospace",fontWeight:600}}>{fmt(val)}</span></div>
+      <div style={{display:"flex",justifyContent:"space-between",fontSize:15,marginBottom:3}}><span style={{color:C.muted}}>{label}</span><span style={{color:C.gold,fontFamily:"monospace",fontWeight:600}}>{fmt(val)}</span></div>
       <input type="range" min={min} max={max} step={step} value={val} onChange={e=>onChange(Number(e.target.value))} style={{width:"100%",accentColor:C.gold}}/>
     </div>
   );
@@ -1305,33 +1305,33 @@ function Calculators({onEarnBadge,hasUsed,setHasUsed}){
   return(
     <div>
       <div style={{paddingBottom:12,borderBottom:`1px solid ${C.border}`,marginBottom:18}}>
-        <h2 style={{fontSize:21,fontWeight:600,color:C.text,margin:"0 0 5px"}}>Personal Stakes Calculators</h2>
-        <p style={{fontSize:12,color:C.muted,margin:0}}>Your numbers. Your timeline. Your actual financial future.</p>
+        <h2 style={{fontSize:25,fontWeight:600,color:C.text,margin:"0 0 5px"}}>Personal Stakes Calculators</h2>
+        <p style={{fontSize:16,color:C.muted,margin:0}}>Your numbers. Your timeline. Your actual financial future.</p>
       </div>
       <div style={{display:"flex",gap:5,marginBottom:18,flexWrap:"wrap"}}>
         {[["compound","Compound Interest"],["debt","Debt Payoff"],["retire","Retirement"]].map(([id,label])=>(
-          <button key={id} onClick={()=>setCalc(id)} style={{padding:"7px 14px",background:calc===id?C.goldDim:"transparent",border:`1px solid ${calc===id?C.goldBorder:C.border}`,borderRadius:7,color:calc===id?C.gold:C.muted,fontSize:11,fontWeight:calc===id?600:400,cursor:"pointer",outline:"none"}}>{label}</button>
+          <button key={id} onClick={()=>setCalc(id)} style={{padding:"7px 14px",background:calc===id?C.goldDim:"transparent",border:`1px solid ${calc===id?C.goldBorder:C.border}`,borderRadius:7,color:calc===id?C.gold:C.muted,fontSize:15,fontWeight:calc===id?600:400,cursor:"pointer",outline:"none"}}>{label}</button>
         ))}
       </div>
       {calc==="compound" && (
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
           <Card>
-            <div style={{fontSize:9,color:C.muted,letterSpacing:"0.1em",marginBottom:13}}>INPUTS</div>
+            <div style={{fontSize:13,color:C.muted,letterSpacing:"0.1em",marginBottom:13}}>INPUTS</div>
             <Sl label="Starting amount" val={ci.principal} min={1000} max={100000} step={500} fmt={usd} onChange={v=>setCi(p=>({...p,principal:v}))}/>
             <Sl label="Monthly contribution" val={ci.monthly} min={0} max={2000} step={50} fmt={usd} onChange={v=>setCi(p=>({...p,monthly:v}))}/>
             <Sl label="Annual return" val={ci.rate} min={2} max={15} step={0.5} fmt={pct} onChange={v=>setCi(p=>({...p,rate:v}))}/>
             <Sl label="Years" val={ci.years} min={5} max={50} fmt={v=>v+" yrs"} onChange={v=>setCi(p=>({...p,years:v}))}/>
-            <div style={{marginTop:13,padding:"9px 12px",background:C.card2,borderRadius:7,marginBottom:7}}><div style={{fontSize:8,color:C.muted,marginBottom:2}}>CONTRIBUTIONS</div><div style={{fontSize:14,fontWeight:700,color:C.text}}>{usd(ciContrib)}</div></div>
-            <div style={{padding:"11px 13px",background:C.goldDim,border:`1px solid ${C.goldBorder}`,borderRadius:8}}><div style={{fontSize:8,color:C.gold,marginBottom:2}}>FINAL BALANCE</div><div style={{fontSize:21,fontWeight:800,color:C.gold}}>{usd(ciFinal)}</div><div style={{fontSize:10,color:C.muted,marginTop:2}}>Growth: {usd(Math.max(0,ciFinal-ciContrib))}</div></div>
+            <div style={{marginTop:13,padding:"9px 12px",background:C.card2,borderRadius:7,marginBottom:7}}><div style={{fontSize:12,color:C.muted,marginBottom:2}}>CONTRIBUTIONS</div><div style={{fontSize:18,fontWeight:700,color:C.text}}>{usd(ciContrib)}</div></div>
+            <div style={{padding:"11px 13px",background:C.goldDim,border:`1px solid ${C.goldBorder}`,borderRadius:8}}><div style={{fontSize:12,color:C.gold,marginBottom:2}}>FINAL BALANCE</div><div style={{fontSize:25,fontWeight:800,color:C.gold}}>{usd(ciFinal)}</div><div style={{fontSize:14,color:C.muted,marginTop:2}}>Growth: {usd(Math.max(0,ciFinal-ciContrib))}</div></div>
             <AffCard affKey="betterment" context="compound_calc"/>
           </Card>
           <Card>
-            <div style={{fontSize:9,color:C.muted,letterSpacing:"0.1em",marginBottom:10}}>GROWTH OVER TIME</div>
+            <div style={{fontSize:13,color:C.muted,letterSpacing:"0.1em",marginBottom:10}}>GROWTH OVER TIME</div>
             <ResponsiveContainer width="100%" height={220}>
               <AreaChart data={ciData} margin={{top:5,right:5,left:0,bottom:5}}>
-                <XAxis dataKey="year" tick={{fill:C.dim,fontSize:9}} tickLine={false} axisLine={false}/>
-                <YAxis tick={{fill:C.dim,fontSize:9}} tickLine={false} axisLine={false} tickFormatter={v=>v>=1000000?`${(v/1000000).toFixed(1)}M`:v>=1000?`${(v/1000).toFixed(0)}k`:String(v)}/>
-                <Tooltip formatter={v=>[usd(v)]} contentStyle={{background:C.card2,border:`1px solid ${C.border}`,borderRadius:6,fontSize:10,color:C.text}}/>
+                <XAxis dataKey="year" tick={{fill:C.dim,fontSize:13}} tickLine={false} axisLine={false}/>
+                <YAxis tick={{fill:C.dim,fontSize:13}} tickLine={false} axisLine={false} tickFormatter={v=>v>=1000000?`${(v/1000000).toFixed(1)}M`:v>=1000?`${(v/1000).toFixed(0)}k`:String(v)}/>
+                <Tooltip formatter={v=>[usd(v)]} contentStyle={{background:C.card2,border:`1px solid ${C.border}`,borderRadius:6,fontSize:14,color:C.text}}/>
                 <Area type="monotone" dataKey="principal" stroke="rgba(255,255,255,0.08)" fill="rgba(255,255,255,0.03)" name="Contributions"/>
                 <Area type="monotone" dataKey="total" stroke={C.gold} fill={C.gold+"20"} name="Total Balance"/>
               </AreaChart>
@@ -1342,24 +1342,24 @@ function Calculators({onEarnBadge,hasUsed,setHasUsed}){
       {calc==="debt" && (
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
           <Card>
-            <div style={{fontSize:9,color:C.muted,letterSpacing:"0.1em",marginBottom:13}}>INPUTS</div>
+            <div style={{fontSize:13,color:C.muted,letterSpacing:"0.1em",marginBottom:13}}>INPUTS</div>
             <Sl label="Current balance" val={dp.balance} min={500} max={50000} step={500} fmt={usd} onChange={v=>setDp(p=>({...p,balance:v}))}/>
             <Sl label="APR" val={dp.apr} min={5} max={36} step={0.5} fmt={pct} onChange={v=>setDp(p=>({...p,apr:v}))}/>
             <Sl label="Monthly payment" val={dp.payment} min={50} max={2000} step={25} fmt={usd} onChange={v=>setDp(p=>({...p,payment:v}))}/>
             <div style={{marginTop:13,display:"grid",gridTemplateColumns:"1fr 1fr",gap:7}}>
               {[["MONTHS",dpCalc.months>=360?"Pay more":dpCalc.months+" mo"],["TOTAL INTEREST",usd(dpCalc.totalInterest)]].map(([l,v])=>(
-                <div key={l} style={{padding:"9px 11px",background:C.card2,borderRadius:7}}><div style={{fontSize:8,color:C.dim,marginBottom:2}}>{l}</div><div style={{fontSize:12,fontWeight:700,color:l==="TOTAL INTEREST"?C.red:C.text}}>{v}</div></div>
+                <div key={l} style={{padding:"9px 11px",background:C.card2,borderRadius:7}}><div style={{fontSize:12,color:C.dim,marginBottom:2}}>{l}</div><div style={{fontSize:16,fontWeight:700,color:l==="TOTAL INTEREST"?C.red:C.text}}>{v}</div></div>
               ))}
             </div>
             <AffCard affKey="lendingclub" context="debt_calc"/>
           </Card>
           <Card>
-            <div style={{fontSize:9,color:C.muted,letterSpacing:"0.1em",marginBottom:10}}>BALANCE OVER TIME</div>
+            <div style={{fontSize:13,color:C.muted,letterSpacing:"0.1em",marginBottom:10}}>BALANCE OVER TIME</div>
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={dpCalc.rows} margin={{top:5,right:5,left:0,bottom:5}}>
-                <XAxis dataKey="month" tick={{fill:C.dim,fontSize:9}} tickLine={false} axisLine={false}/>
-                <YAxis tick={{fill:C.dim,fontSize:9}} tickLine={false} axisLine={false} tickFormatter={v=>"$"+(v/1000).toFixed(0)+"k"}/>
-                <Tooltip formatter={v=>[usd(v),"Balance"]} contentStyle={{background:C.card2,border:`1px solid ${C.border}`,borderRadius:6,fontSize:10,color:C.text}}/>
+                <XAxis dataKey="month" tick={{fill:C.dim,fontSize:13}} tickLine={false} axisLine={false}/>
+                <YAxis tick={{fill:C.dim,fontSize:13}} tickLine={false} axisLine={false} tickFormatter={v=>"$"+(v/1000).toFixed(0)+"k"}/>
+                <Tooltip formatter={v=>[usd(v),"Balance"]} contentStyle={{background:C.card2,border:`1px solid ${C.border}`,borderRadius:6,fontSize:14,color:C.text}}/>
                 <Line type="monotone" dataKey="balance" stroke={C.red} strokeWidth={2} dot={false}/>
               </LineChart>
             </ResponsiveContainer>
@@ -1369,22 +1369,22 @@ function Calculators({onEarnBadge,hasUsed,setHasUsed}){
       {calc==="retire" && (
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
           <Card>
-            <div style={{fontSize:9,color:C.muted,letterSpacing:"0.1em",marginBottom:13}}>INPUTS</div>
+            <div style={{fontSize:13,color:C.muted,letterSpacing:"0.1em",marginBottom:13}}>INPUTS</div>
             <Sl label="Current age" val={rt.age} min={18} max={60} fmt={v=>v+" yrs old"} onChange={v=>setRt(p=>({...p,age:v}))}/>
             <Sl label="Retirement age" val={rt.retireAge} min={50} max={75} fmt={v=>v+" yrs old"} onChange={v=>setRt(p=>({...p,retireAge:v}))}/>
             <Sl label="Current savings" val={rt.saved} min={0} max={200000} step={1000} fmt={usd} onChange={v=>setRt(p=>({...p,saved:v}))}/>
             <Sl label="Monthly contribution" val={rt.monthly} min={50} max={3000} step={50} fmt={usd} onChange={v=>setRt(p=>({...p,monthly:v}))}/>
             <Sl label="Expected annual return" val={rt.rate} min={3} max={12} step={0.5} fmt={pct} onChange={v=>setRt(p=>({...p,rate:v}))}/>
-            <div style={{marginTop:13,padding:"12px",background:C.goldDim,border:`1px solid ${C.goldBorder}`,borderRadius:8}}><div style={{fontSize:8,color:C.gold,marginBottom:2}}>PROJECTED AT AGE {rt.retireAge}</div><div style={{fontSize:22,fontWeight:800,color:C.gold}}>{usd(rtData.final)}</div><div style={{fontSize:10,color:C.muted,marginTop:2}}>{rt.retireAge-rt.age} years at {rt.rate}%</div></div>
+            <div style={{marginTop:13,padding:"12px",background:C.goldDim,border:`1px solid ${C.goldBorder}`,borderRadius:8}}><div style={{fontSize:12,color:C.gold,marginBottom:2}}>PROJECTED AT AGE {rt.retireAge}</div><div style={{fontSize:26,fontWeight:800,color:C.gold}}>{usd(rtData.final)}</div><div style={{fontSize:14,color:C.muted,marginTop:2}}>{rt.retireAge-rt.age} years at {rt.rate}%</div></div>
             <AffCard affKey="fidelity" context="retirement_calc"/>
           </Card>
           <Card>
-            <div style={{fontSize:9,color:C.muted,letterSpacing:"0.1em",marginBottom:10}}>PROJECTED GROWTH</div>
+            <div style={{fontSize:13,color:C.muted,letterSpacing:"0.1em",marginBottom:10}}>PROJECTED GROWTH</div>
             <ResponsiveContainer width="100%" height={230}>
               <AreaChart data={rtData.rows} margin={{top:5,right:5,left:0,bottom:5}}>
-                <XAxis dataKey="year" tick={{fill:C.dim,fontSize:9}} tickLine={false} axisLine={false}/>
-                <YAxis tick={{fill:C.dim,fontSize:9}} tickLine={false} axisLine={false} tickFormatter={v=>v>=1000000?"$"+(v/1000000).toFixed(1)+"M":v>=1000?"$"+(v/1000).toFixed(0)+"k":"$0"}/>
-                <Tooltip formatter={v=>[usd(v),"Balance"]} contentStyle={{background:C.card2,border:`1px solid ${C.border}`,borderRadius:6,fontSize:10,color:C.text}}/>
+                <XAxis dataKey="year" tick={{fill:C.dim,fontSize:13}} tickLine={false} axisLine={false}/>
+                <YAxis tick={{fill:C.dim,fontSize:13}} tickLine={false} axisLine={false} tickFormatter={v=>v>=1000000?"$"+(v/1000000).toFixed(1)+"M":v>=1000?"$"+(v/1000).toFixed(0)+"k":"$0"}/>
+                <Tooltip formatter={v=>[usd(v),"Balance"]} contentStyle={{background:C.card2,border:`1px solid ${C.border}`,borderRadius:6,fontSize:14,color:C.text}}/>
                 <Area type="monotone" dataKey="balance" stroke={C.green} fill={C.green+"18"} strokeWidth={2} dot={false}/>
               </AreaChart>
             </ResponsiveContainer>
@@ -1436,64 +1436,64 @@ function Research({onEarnBadge}){
   return(
     <div>
       <div style={{paddingBottom:12,borderBottom:`1px solid ${C.border}`,marginBottom:18}}>
-<h2 style={{fontSize:21,fontWeight:600,color:C.text,margin:"0 0 5px"}}>Investment Research</h2>
+<h2 style={{fontSize:25,fontWeight:600,color:C.text,margin:"0 0 5px"}}>Investment Research</h2>
       </div>
-      <div style={{fontSize:10,color:C.muted,letterSpacing:"0.1em",marginBottom:10}}>SELECT ASSET CLASS</div>
+      <div style={{fontSize:14,color:C.muted,letterSpacing:"0.1em",marginBottom:10}}>SELECT ASSET CLASS</div>
       <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:6,marginBottom:18}}>
         {CLASSES.map(c=>(
-          <button key={c.id} onClick={()=>{setAssetClass(c.id);setResult(null);setQuery("");setError(null);setShowAff(false);}} style={{padding:"9px 6px",background:assetClass===c.id?C.goldDim:"rgba(255,255,255,0.02)",border:`1px solid ${assetClass===c.id?C.goldBorder:C.border}`,borderRadius:8,color:assetClass===c.id?C.gold:C.muted,fontSize:11,fontWeight:assetClass===c.id?600:400,cursor:"pointer",textAlign:"center",outline:"none"}}>
-            <div style={{fontSize:16,marginBottom:3}}>{c.icon}</div>{c.label}
+          <button key={c.id} onClick={()=>{setAssetClass(c.id);setResult(null);setQuery("");setError(null);setShowAff(false);}} style={{padding:"9px 6px",background:assetClass===c.id?C.goldDim:"rgba(255,255,255,0.02)",border:`1px solid ${assetClass===c.id?C.goldBorder:C.border}`,borderRadius:8,color:assetClass===c.id?C.gold:C.muted,fontSize:15,fontWeight:assetClass===c.id?600:400,cursor:"pointer",textAlign:"center",outline:"none"}}>
+            <div style={{fontSize:20,marginBottom:3}}>{c.icon}</div>{c.label}
           </button>
         ))}
       </div>
       <div style={{display:"flex",gap:8,marginBottom:18}}>
-        <input value={query} onChange={e=>setQuery(e.target.value)} onKeyDown={e=>e.key==="Enter"&&research()} placeholder={cur.hint} style={{flex:1,padding:"10px 14px",background:C.card2,border:`1px solid ${C.goldBorder}`,borderRadius:8,color:C.text,fontSize:13,outline:"none"}}/>
-        <button onClick={research} disabled={!query.trim()||loading} style={{padding:"10px 20px",background:query.trim()?C.gold:"rgba(201,162,39,0.15)",border:"none",borderRadius:8,color:query.trim()?"#000":C.muted,fontSize:13,fontWeight:700,cursor:query.trim()?"pointer":"not-allowed",whiteSpace:"nowrap",outline:"none"}}>
+        <input value={query} onChange={e=>setQuery(e.target.value)} onKeyDown={e=>e.key==="Enter"&&research()} placeholder={cur.hint} style={{flex:1,padding:"10px 14px",background:C.card2,border:`1px solid ${C.goldBorder}`,borderRadius:8,color:C.text,fontSize:17,outline:"none"}}/>
+        <button onClick={research} disabled={!query.trim()||loading} style={{padding:"10px 20px",background:query.trim()?C.gold:"rgba(201,162,39,0.15)",border:"none",borderRadius:8,color:query.trim()?"#000":C.muted,fontSize:17,fontWeight:700,cursor:query.trim()?"pointer":"not-allowed",whiteSpace:"nowrap",outline:"none"}}>
           {loading?"Researching...":"Research"}
         </button>
       </div>
-      {error&&<div style={{padding:"10px 14px",background:"rgba(239,68,68,0.08)",border:"1px solid rgba(239,68,68,0.25)",borderRadius:8,fontSize:12,color:C.red,marginBottom:14}}>{error}</div>}
+      {error&&<div style={{padding:"10px 14px",background:"rgba(239,68,68,0.08)",border:"1px solid rgba(239,68,68,0.25)",borderRadius:8,fontSize:16,color:C.red,marginBottom:14}}>{error}</div>}
       {result&&(
         <div>
           <div style={{display:"flex",alignItems:"flex-start",gap:14,marginBottom:16,padding:"14px 16px",background:C.card2,borderRadius:12,border:`1px solid ${C.border}`}}>
-            <div style={{fontSize:28,flexShrink:0}}>{cur.icon}</div>
+            <div style={{fontSize:32,flexShrink:0}}>{cur.icon}</div>
             <div style={{flex:1}}>
               <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:4,flexWrap:"wrap"}}>
-                <span style={{fontSize:17,fontWeight:700,color:C.text}}>{result.name}</span>
-                {result.ticker&&result.ticker!=="N/A"&&<span style={{fontFamily:"monospace",fontSize:12,fontWeight:800,color:C.gold,padding:"2px 8px",background:C.goldDim,borderRadius:5}}>{result.ticker}</span>}
-                <span style={{fontSize:10,fontWeight:700,color:riskCol(result.talonRiskRating),padding:"2px 8px",background:riskCol(result.talonRiskRating)+"18",borderRadius:5}}>RISK {result.talonRiskRating}/10</span>
+                <span style={{fontSize:21,fontWeight:700,color:C.text}}>{result.name}</span>
+                {result.ticker&&result.ticker!=="N/A"&&<span style={{fontFamily:"monospace",fontSize:16,fontWeight:800,color:C.gold,padding:"2px 8px",background:C.goldDim,borderRadius:5}}>{result.ticker}</span>}
+                <span style={{fontSize:14,fontWeight:700,color:riskCol(result.talonRiskRating),padding:"2px 8px",background:riskCol(result.talonRiskRating)+"18",borderRadius:5}}>RISK {result.talonRiskRating}/10</span>
               </div>
-              <p style={{fontSize:13,color:C.muted,margin:0,fontStyle:"italic"}}>{result.oneLiner}</p>
+              <p style={{fontSize:17,color:C.muted,margin:0,fontStyle:"italic"}}>{result.oneLiner}</p>
             </div>
           </div>
           <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:16}}>
-            <Card><div style={{fontSize:8,color:C.blue,letterSpacing:"0.1em",marginBottom:5}}>WHAT IT IS</div><p style={{fontSize:13,color:C.muted,lineHeight:1.8,margin:0}}>{result.whatItIs}</p></Card>
-            <Card><div style={{fontSize:8,color:C.purple,letterSpacing:"0.1em",marginBottom:5}}>WHAT DRIVES THE PRICE</div><p style={{fontSize:13,color:C.muted,lineHeight:1.8,margin:0}}>{result.whatDrivesPrice}</p></Card>
+            <Card><div style={{fontSize:12,color:C.blue,letterSpacing:"0.1em",marginBottom:5}}>WHAT IT IS</div><p style={{fontSize:17,color:C.muted,lineHeight:1.8,margin:0}}>{result.whatItIs}</p></Card>
+            <Card><div style={{fontSize:12,color:C.purple,letterSpacing:"0.1em",marginBottom:5}}>WHAT DRIVES THE PRICE</div><p style={{fontSize:17,color:C.muted,lineHeight:1.8,margin:0}}>{result.whatDrivesPrice}</p></Card>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
-              <Card style={{borderLeft:`3px solid ${C.red}`,borderRadius:"0 10px 10px 0",padding:"12px 14px"}}><div style={{fontSize:8,color:C.red,letterSpacing:"0.1em",marginBottom:4}}>KEY RISK</div><p style={{fontSize:12,color:C.muted,lineHeight:1.7,margin:0}}>{result.keyRisk}</p></Card>
-              <Card style={{borderLeft:`3px solid ${C.gold}`,borderRadius:"0 10px 10px 0",padding:"12px 14px"}}><div style={{fontSize:8,color:C.gold,letterSpacing:"0.1em",marginBottom:4}}>HISTORICAL CONTEXT</div><p style={{fontSize:12,color:C.muted,lineHeight:1.7,margin:0}}>{result.historicalContext}</p></Card>
+              <Card style={{borderLeft:`3px solid ${C.red}`,borderRadius:"0 10px 10px 0",padding:"12px 14px"}}><div style={{fontSize:12,color:C.red,letterSpacing:"0.1em",marginBottom:4}}>KEY RISK</div><p style={{fontSize:16,color:C.muted,lineHeight:1.7,margin:0}}>{result.keyRisk}</p></Card>
+              <Card style={{borderLeft:`3px solid ${C.gold}`,borderRadius:"0 10px 10px 0",padding:"12px 14px"}}><div style={{fontSize:12,color:C.gold,letterSpacing:"0.1em",marginBottom:4}}>HISTORICAL CONTEXT</div><p style={{fontSize:16,color:C.muted,lineHeight:1.7,margin:0}}>{result.historicalContext}</p></Card>
             </div>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
-              <Card style={{background:"rgba(34,197,94,0.05)",borderColor:"rgba(34,197,94,0.2)"}}><div style={{fontSize:8,color:C.green,letterSpacing:"0.1em",marginBottom:4}}>WHO SHOULD CONSIDER</div><p style={{fontSize:12,color:C.muted,lineHeight:1.7,margin:0}}>{result.whoShouldConsider}</p></Card>
-              <Card style={{background:"rgba(239,68,68,0.05)",borderColor:"rgba(239,68,68,0.2)"}}><div style={{fontSize:8,color:C.red,letterSpacing:"0.1em",marginBottom:4}}>WHO SHOULD AVOID</div><p style={{fontSize:12,color:C.muted,lineHeight:1.7,margin:0}}>{result.whoShouldAvoid}</p></Card>
+              <Card style={{background:"rgba(34,197,94,0.05)",borderColor:"rgba(34,197,94,0.2)"}}><div style={{fontSize:12,color:C.green,letterSpacing:"0.1em",marginBottom:4}}>WHO SHOULD CONSIDER</div><p style={{fontSize:16,color:C.muted,lineHeight:1.7,margin:0}}>{result.whoShouldConsider}</p></Card>
+              <Card style={{background:"rgba(239,68,68,0.05)",borderColor:"rgba(239,68,68,0.2)"}}><div style={{fontSize:12,color:C.red,letterSpacing:"0.1em",marginBottom:4}}>WHO SHOULD AVOID</div><p style={{fontSize:16,color:C.muted,lineHeight:1.7,margin:0}}>{result.whoShouldAvoid}</p></Card>
             </div>
             {result.relatedAssets&&result.relatedAssets.length>0&&(
-              <Card><div style={{fontSize:8,color:C.muted,letterSpacing:"0.1em",marginBottom:8}}>EXPLORE RELATED</div>
+              <Card><div style={{fontSize:12,color:C.muted,letterSpacing:"0.1em",marginBottom:8}}>EXPLORE RELATED</div>
                 <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-                  {result.relatedAssets.map(a=><button key={a} onClick={()=>{setQuery(a);setResult(null);setShowAff(false);}} style={{padding:"4px 12px",background:C.goldDim,border:`1px solid ${C.goldBorder}`,borderRadius:6,color:C.gold,fontSize:11,cursor:"pointer"}}>{a}</button>)}
+                  {result.relatedAssets.map(a=><button key={a} onClick={()=>{setQuery(a);setResult(null);setShowAff(false);}} style={{padding:"4px 12px",background:C.goldDim,border:`1px solid ${C.goldBorder}`,borderRadius:6,color:C.gold,fontSize:15,cursor:"pointer"}}>{a}</button>)}
                 </div>
               </Card>
             )}
           </div>
           <div style={{padding:"14px 16px",background:"rgba(255,255,255,0.02)",border:`1px solid ${C.border}`,borderRadius:10,marginBottom:14}}>
-            <p style={{fontSize:12,color:C.muted,margin:"0 0 10px",lineHeight:1.7}}>TALON gives you the foundation. To go deeper — live charts, analyst ratings, earnings history, and real-time financials — you need a brokerage account. Free to open. 10 minutes.</p>
+            <p style={{fontSize:16,color:C.muted,margin:"0 0 10px",lineHeight:1.7}}>TALON gives you the foundation. To go deeper — live charts, analyst ratings, earnings history, and real-time financials — you need a brokerage account. Free to open. 10 minutes.</p>
             {showAff?(
               <AffCard affKey={AFF_BY_CLASS[assetClass]} context={"research_"+assetClass}/>
             ):(
-              <button onClick={()=>setShowAff(true)} style={{width:"100%",padding:"10px",background:C.gold,border:"none",borderRadius:8,color:"#000",fontSize:13,fontWeight:700,cursor:"pointer"}}>Continue Your Research — Open a Free Account</button>
+              <button onClick={()=>setShowAff(true)} style={{width:"100%",padding:"10px",background:C.gold,border:"none",borderRadius:8,color:"#000",fontSize:17,fontWeight:700,cursor:"pointer"}}>Continue Your Research — Open a Free Account</button>
             )}
           </div>
-          <p style={{fontSize:10,color:C.dim,textAlign:"center",lineHeight:1.5}}>Educational only. Not investment advice. Past performance does not guarantee future results.</p>
+          <p style={{fontSize:14,color:C.dim,textAlign:"center",lineHeight:1.5}}>Educational only. Not investment advice. Past performance does not guarantee future results.</p>
         </div>
       )}
     </div>
@@ -1512,13 +1512,13 @@ function ScoreDetail({scoreData,userData,onUpgrade}){
   return(
     <div>
       <div style={{paddingBottom:12,borderBottom:`1px solid ${C.border}`,marginBottom:18}}>
-        <h2 style={{fontSize:21,fontWeight:600,color:C.text,margin:"0 0 5px"}}>Your TALON Score</h2>
-        <p style={{fontSize:12,color:C.muted,margin:0}}>Five dimensions of financial health. One number to improve.</p>
+        <h2 style={{fontSize:25,fontWeight:600,color:C.text,margin:"0 0 5px"}}>Your TALON Score</h2>
+        <p style={{fontSize:16,color:C.muted,margin:0}}>Five dimensions of financial health. One number to improve.</p>
       </div>
       <div style={{display:"flex",justifyContent:"center",marginBottom:20}}><ScoreRing score={scoreData.total} size={172} stroke={15}/></div>
       <div style={{textAlign:"center",marginBottom:20}}>
-        <div style={{fontSize:14,color:col,fontWeight:600,marginBottom:5}}>{scoreData.total>=70?"Strong Financial Foundation":scoreData.total>=45?"Building Momentum":"Financial Work Ahead — And That Is Okay"}</div>
-        <p style={{fontSize:12,color:C.muted,maxWidth:420,margin:"0 auto",lineHeight:1.7}}>{scoreData.total>=70?"You are in a strong position. Focus on optimizing returns and building generational wealth.":scoreData.total>=45?"Fundamentals in place. Biggest gains come from closing the gaps below.":"Every journey starts at zero. You have a clear map of exactly what to improve."}</p>
+        <div style={{fontSize:18,color:col,fontWeight:600,marginBottom:5}}>{scoreData.total>=70?"Strong Financial Foundation":scoreData.total>=45?"Building Momentum":"Financial Work Ahead — And That Is Okay"}</div>
+        <p style={{fontSize:16,color:C.muted,maxWidth:420,margin:"0 auto",lineHeight:1.7}}>{scoreData.total>=70?"You are in a strong position. Focus on optimizing returns and building generational wealth.":scoreData.total>=45?"Fundamentals in place. Biggest gains come from closing the gaps below.":"Every journey starts at zero. You have a clear map of exactly what to improve."}</p>
       </div>
       <ShareCard score={scoreData.total} userData={userData}/>
       <div style={{height:14}}/>
@@ -1530,11 +1530,11 @@ function ScoreDetail({scoreData,userData,onUpgrade}){
           return(
             <Card key={p.key}>
               <div style={{display:"flex",alignItems:"flex-start",gap:11}}>
-                <span style={{fontSize:18,flexShrink:0}}>{p.icon}</span>
+                <span style={{fontSize:22,flexShrink:0}}>{p.icon}</span>
                 <div style={{flex:1}}>
-                  <div style={{display:"flex",justifyContent:"space-between",marginBottom:5}}><span style={{fontSize:13,fontWeight:600,color:C.text}}>{p.key}</span><span style={{fontSize:13,fontWeight:700,fontFamily:"monospace",color:pct>=75?C.green:pct>=45?C.gold:C.red}}>{v}/20</span></div>
+                  <div style={{display:"flex",justifyContent:"space-between",marginBottom:5}}><span style={{fontSize:17,fontWeight:600,color:C.text}}>{p.key}</span><span style={{fontSize:17,fontWeight:700,fontFamily:"monospace",color:pct>=75?C.green:pct>=45?C.gold:C.red}}>{v}/20</span></div>
                   <div style={{height:5,background:"rgba(255,255,255,0.06)",borderRadius:3,overflow:"hidden",marginBottom:8}}><div style={{height:5,width:`${pct}%`,background:pct>=75?C.green:pct>=45?C.gold:C.red,borderRadius:3,transition:"width 1s ease"}}/></div>
-                  <div style={{display:"flex",flexWrap:"wrap",gap:5}}>{p.tips.map(tip=><span key={tip} style={{fontSize:10,padding:"2px 7px",background:"rgba(255,255,255,0.04)",border:`1px solid ${C.border}`,borderRadius:4,color:C.muted}}>{tip}</span>)}</div>
+                  <div style={{display:"flex",flexWrap:"wrap",gap:5}}>{p.tips.map(tip=><span key={tip} style={{fontSize:14,padding:"2px 7px",background:"rgba(255,255,255,0.04)",border:`1px solid ${C.border}`,borderRadius:4,color:C.muted}}>{tip}</span>)}</div>
                   {pct<=59 && <AffCard affKey={p.aff} context={"score_"+p.key.replace(/ /g,"_")}/>}
                 </div>
               </div>
@@ -1550,15 +1550,15 @@ function LegalFooter(){
   const [show,setShow]=useState(null);
   return(
     <div style={{padding:"12px 20px",borderTop:`1px solid ${C.border}`,textAlign:"center"}}>
-      <p style={{fontSize:9,color:C.dim,margin:"0 0 5px",lineHeight:1.6}}>TALON Financial Fluency Engine — Logantia — Educational purposes only — Not financial, investment, legal, or tax advice — Support: support@logantia.com</p>
+      <p style={{fontSize:13,color:C.dim,margin:"0 0 5px",lineHeight:1.6}}>TALON Financial Fluency Engine — Logantia — Educational purposes only — Not financial, investment, legal, or tax advice — Support: support@logantia.com</p>
       <div style={{display:"flex",justifyContent:"center",gap:14,flexWrap:"wrap"}}>
         {[["terms","Terms"],["privacy","Privacy"],["disclaimer","Disclaimer"]].map(([k,l])=>(
-          <button key={k} onClick={()=>setShow(show===k?null:k)} style={{background:"none",border:"none",color:C.dim,fontSize:9,cursor:"pointer",textDecoration:"underline"}}>{l}</button>
+          <button key={k} onClick={()=>setShow(show===k?null:k)} style={{background:"none",border:"none",color:C.dim,fontSize:13,cursor:"pointer",textDecoration:"underline"}}>{l}</button>
         ))}
       </div>
-      {show==="terms" && <div style={{marginTop:10,padding:"12px",background:C.card,border:`1px solid ${C.border}`,borderRadius:8,textAlign:"left",fontSize:10,color:C.muted,lineHeight:1.7}}><strong style={{color:C.text}}>Terms of Service — Logantia / TALON</strong><br/><br/>By using TALON you agree: (1) TALON provides educational content only — not financial, investment, legal, or tax advice; (2) you will consult a licensed professional before making financial decisions; (3) Logantia is not liable for financial decisions made based on TALON content; (4) affiliate links may generate commissions at no cost to you; (5) you are at least 18 years of age.</div>}
-      {show==="privacy" && <div style={{marginTop:10,padding:"12px",background:C.card,border:`1px solid ${C.border}`,borderRadius:8,textAlign:"left",fontSize:10,color:C.muted,lineHeight:1.7}}><strong style={{color:C.text}}>Privacy Policy — Logantia / TALON</strong><br/><br/>TALON collects only information you voluntarily provide: age range, income range, debt level, savings status, financial knowledge, and optional email. This data personalizes your TALON Score. We do not sell your personal data. You may request data deletion at any time.</div>}
-      {show==="disclaimer" && <div style={{marginTop:10,padding:"12px",background:C.card,border:`1px solid ${C.border}`,borderRadius:8,textAlign:"left",fontSize:10,color:C.muted,lineHeight:1.7}}><strong style={{color:C.text}}>Financial Disclaimer — Logantia / TALON</strong><br/><br/>All TALON content is for educational and informational purposes only. Nothing constitutes financial advice, investment advice, tax advice, or legal advice. The TALON Score is an educational tool only. Past market performance does not guarantee future results. Always consult a qualified financial advisor, CPA, or attorney before making financial decisions.</div>}
+      {show==="terms" && <div style={{marginTop:10,padding:"12px",background:C.card,border:`1px solid ${C.border}`,borderRadius:8,textAlign:"left",fontSize:14,color:C.muted,lineHeight:1.7}}><strong style={{color:C.text}}>Terms of Service — Logantia / TALON</strong><br/><br/>By using TALON you agree: (1) TALON provides educational content only — not financial, investment, legal, or tax advice; (2) you will consult a licensed professional before making financial decisions; (3) Logantia is not liable for financial decisions made based on TALON content; (4) affiliate links may generate commissions at no cost to you; (5) you are at least 18 years of age.</div>}
+      {show==="privacy" && <div style={{marginTop:10,padding:"12px",background:C.card,border:`1px solid ${C.border}`,borderRadius:8,textAlign:"left",fontSize:14,color:C.muted,lineHeight:1.7}}><strong style={{color:C.text}}>Privacy Policy — Logantia / TALON</strong><br/><br/>TALON collects only information you voluntarily provide: age range, income range, debt level, savings status, financial knowledge, and optional email. This data personalizes your TALON Score. We do not sell your personal data. You may request data deletion at any time.</div>}
+      {show==="disclaimer" && <div style={{marginTop:10,padding:"12px",background:C.card,border:`1px solid ${C.border}`,borderRadius:8,textAlign:"left",fontSize:14,color:C.muted,lineHeight:1.7}}><strong style={{color:C.text}}>Financial Disclaimer — Logantia / TALON</strong><br/><br/>All TALON content is for educational and informational purposes only. Nothing constitutes financial advice, investment advice, tax advice, or legal advice. The TALON Score is an educational tool only. Past market performance does not guarantee future results. Always consult a qualified financial advisor, CPA, or attorney before making financial decisions.</div>}
     </div>
   );
 }
@@ -1612,19 +1612,19 @@ function ProfilePanel({userData, plan, onSave}){
   const inputStyle = {
     width:"100%", padding:"9px 12px", background:C.card2,
     border:`1px solid ${C.goldBorder}`, borderRadius:8, color:C.text,
-    fontSize:13, outline:"none", boxSizing:"border-box",
+    fontSize:17, outline:"none", boxSizing:"border-box",
   };
 
   return(
     <div style={{maxWidth:520,margin:"0 auto"}}>
       <div style={{marginBottom:24}}>
-        <div style={{fontSize:11,color:C.gold,letterSpacing:"0.14em",fontWeight:600,marginBottom:4}}>YOUR PROFILE</div>
-        <div style={{fontSize:13,color:C.muted,lineHeight:1.6}}>Changes here recalculate your TALON Score instantly.</div>
+        <div style={{fontSize:15,color:C.gold,letterSpacing:"0.14em",fontWeight:600,marginBottom:4}}>YOUR PROFILE</div>
+        <div style={{fontSize:17,color:C.muted,lineHeight:1.6}}>Changes here recalculate your TALON Score instantly.</div>
       </div>
       <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:14,padding:"22px 20px",display:"flex",flexDirection:"column",gap:16}}>
         {PROFILE_FIELDS.map(f=>(
           <div key={f.key}>
-            <label style={{display:"block",fontSize:11,color:C.muted,marginBottom:5,letterSpacing:"0.04em"}}>{f.label.toUpperCase()}</label>
+            <label style={{display:"block",fontSize:15,color:C.muted,marginBottom:5,letterSpacing:"0.04em"}}>{f.label.toUpperCase()}</label>
             {f.type==="text"
               ? <input
                   value={form[f.key]}
@@ -1651,7 +1651,7 @@ function ProfilePanel({userData, plan, onSave}){
               width:"100%", padding:"12px", border:"none", borderRadius:9,
               background:status==="saving"?"rgba(201,162,39,0.2)":C.gold,
               color:status==="saving"?"rgba(0,0,0,0.4)":"#000",
-              fontSize:14, fontWeight:700,
+              fontSize:18, fontWeight:700,
               cursor:status==="saving"?"not-allowed":"pointer",
             }}
           >
@@ -1660,9 +1660,9 @@ function ProfilePanel({userData, plan, onSave}){
         </div>
       </div>
       <div style={{marginTop:16,padding:"12px 16px",background:C.goldDim,border:`1px solid ${C.goldBorder}`,borderRadius:10}}>
-        <div style={{fontSize:11,color:C.gold,letterSpacing:"0.1em",fontWeight:600,marginBottom:2}}>ACCOUNT</div>
-        <div style={{fontSize:12,color:C.muted}}>{userData.email||"—"}</div>
-        <div style={{fontSize:11,color:C.dim,marginTop:2}}>Plan: {plan?.toUpperCase()||"FREE"}</div>
+        <div style={{fontSize:15,color:C.gold,letterSpacing:"0.1em",fontWeight:600,marginBottom:2}}>ACCOUNT</div>
+        <div style={{fontSize:16,color:C.muted}}>{userData.email||"—"}</div>
+        <div style={{fontSize:15,color:C.dim,marginTop:2}}>Plan: {plan?.toUpperCase()||"FREE"}</div>
       </div>
     </div>
   );
@@ -1836,7 +1836,7 @@ export default function TALON(){
     <div style={{minHeight:"100vh",background:C.bg,display:"flex",alignItems:"center",justifyContent:"center"}}>
       <div style={{textAlign:"center"}}>
         <img src={TALON_LOGO} alt="TALON" style={{width:120,objectFit:"contain",marginBottom:16}}/>
-        <div style={{fontSize:11,color:C.muted,letterSpacing:"0.1em"}}>LOADING...</div>
+        <div style={{fontSize:15,color:C.muted,letterSpacing:"0.1em"}}>LOADING...</div>
       </div>
     </div>
   );
@@ -1857,30 +1857,30 @@ export default function TALON(){
           <img src={TALON_WORDMARK} alt="TALON" style={{height:28,width:"auto",objectFit:"contain",maxWidth:120}}/>
         </div>
         <div style={{display:"flex",alignItems:"center",gap:7}}>
-          <div style={{fontFamily:"monospace",fontSize:9,color:C.dim,textAlign:"right"}}>
+          <div style={{fontFamily:"monospace",fontSize:13,color:C.dim,textAlign:"right"}}>
             <div>{time.toLocaleTimeString("en-US",{hour12:false})}</div>
             <div>NYSE NASDAQ</div>
           </div>
-          {plan==="free" && <button onClick={()=>setShowUpgrade(true)} style={{padding:"4px 9px",background:C.goldDim,border:`1px solid ${C.goldBorder}`,borderRadius:5,color:C.gold,fontSize:9,fontWeight:700,cursor:"pointer"}}>PRO</button>}
+          {plan==="free" && <button onClick={()=>setShowUpgrade(true)} style={{padding:"4px 9px",background:C.goldDim,border:`1px solid ${C.goldBorder}`,borderRadius:5,color:C.gold,fontSize:13,fontWeight:700,cursor:"pointer"}}>PRO</button>}
           {plan!=="free" && <Pill label={plan.toUpperCase()} color={C.green}/>}
           {scoreData && (
             <div style={{display:"flex",alignItems:"center",gap:8,padding:"4px 13px 4px 9px",background:C.goldDim,border:`1px solid ${tab==="profile"?C.gold:C.goldBorder}`,borderRadius:7,cursor:"pointer",boxShadow:tab==="profile"?`0 0 0 1px ${C.gold}`:"none"}} onClick={()=>setTab("profile")}>
               <ScoreRing score={scoreData.total} size={24} stroke={4} hideLabel={true}/>
               <div style={{display:"flex",flexDirection:"column",alignItems:"center",lineHeight:1.1}}>
-                <span style={{fontSize:8,color:C.muted,letterSpacing:"0.08em"}}>SCORE</span>
-                <span style={{fontSize:13,fontWeight:700,color:C.gold,fontFamily:"monospace"}}>{scoreData.total}</span>
-                <span style={{fontSize:8,color:C.muted,letterSpacing:"0.08em"}}>PROFILE</span>
+                <span style={{fontSize:12,color:C.muted,letterSpacing:"0.08em"}}>SCORE</span>
+                <span style={{fontSize:17,fontWeight:700,color:C.gold,fontFamily:"monospace"}}>{scoreData.total}</span>
+                <span style={{fontSize:12,color:C.muted,letterSpacing:"0.08em"}}>PROFILE</span>
               </div>
             </div>
           )}
-          <button onClick={handleSignOut} style={{padding:"4px 9px",background:"transparent",border:`1px solid ${C.border}`,borderRadius:5,color:"rgba(255,255,255,0.75)",fontSize:10,cursor:"pointer"}}>Sign Out</button>
+          <button onClick={handleSignOut} style={{padding:"4px 9px",background:"transparent",border:`1px solid ${C.border}`,borderRadius:5,color:"rgba(255,255,255,0.75)",fontSize:14,cursor:"pointer"}}>Sign Out</button>
         </div>
       </div>
       <div style={{background:C.nav,borderBottom:`1px solid ${C.border}`,display:"flex",justifyContent:"space-around",padding:"0 6px"}}>
         {TABS.map(t=>(
-          <button key={t.id} onClick={()=>setTab(t.id)} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:2,padding:"8px 9px",background:"none",border:"none",borderBottom:`2px solid ${tab===t.id?C.gold:"transparent"}`,color:tab===t.id?C.gold:C.muted,cursor:"pointer",fontSize:11,fontWeight:tab===t.id?600:400,transition:"all 0.15s",outline:"none"}}>
-            <span style={{fontSize:14}}>{t.icon}</span>
-            <span style={{fontSize:8,letterSpacing:"0.07em"}}>{t.label.toUpperCase()}</span>
+          <button key={t.id} onClick={()=>setTab(t.id)} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:2,padding:"8px 9px",background:"none",border:"none",borderBottom:`2px solid ${tab===t.id?C.gold:"transparent"}`,color:tab===t.id?C.gold:C.muted,cursor:"pointer",fontSize:15,fontWeight:tab===t.id?600:400,transition:"all 0.15s",outline:"none"}}>
+            <span style={{fontSize:18}}>{t.icon}</span>
+            <span style={{fontSize:12,letterSpacing:"0.07em"}}>{t.label.toUpperCase()}</span>
           </button>
         ))}
       </div>
