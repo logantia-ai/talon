@@ -441,7 +441,6 @@ function ScoreRing({score,size=160,stroke=14,hideLabel=false}){
       {!hideLabel && (
         <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
           <span style={{fontSize:size>120?32:20,fontWeight:700,color:col,fontFamily:"monospace",lineHeight:1}}>{score}</span>
-          <span style={{fontSize:13,color:C.muted,letterSpacing:"0.08em",marginTop:2}}>TALON SCORE</span>
         </div>
       )}
     </div>
@@ -605,7 +604,7 @@ function ShareCard({score,userData}){
         <ScoreRing score={score} size={64} stroke={7}/>
         <div style={{flex:1}}>
           <div style={{fontSize:19,fontWeight:700,color:C.text,marginBottom:2}}>{msg}</div>
-          <div style={{fontSize:15,color:C.muted}}>TALON Financial Fluency — Logantia</div>
+          <div style={{fontSize:15,color:C.muted}}>TALON Score</div>
           <div style={{fontSize:16,color:col,fontFamily:"monospace",fontWeight:700,marginTop:3}}>{score} / 100</div>
         </div>
       </div>
