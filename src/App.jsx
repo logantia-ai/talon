@@ -3,8 +3,8 @@ import { PieChart, Pie, Cell, Tooltip, AreaChart, Area, XAxis, YAxis, LineChart,
 
 
 // ─── Supabase Client ──────────────────────────────────────────────────────────
-const SUPA_URL = "https://ueqhctnnmadxqfsrzzvk.supabase.co";
-const SUPA_KEY = "sb_publishable_RMeOyqewfzMG6xtjps2GoQ_3TY2d_Y0";
+const SUPA_URL = "https://opjukxysiazgufezarci.supabase.co";
+const SUPA_KEY = "sb_publishable_F8rus4ktSri3Zpur8zhfsA_-Bo95-a9";
 
 async function supaFetch(path, options={}) {
   const res = await fetch(SUPA_URL + path, {
