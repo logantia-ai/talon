@@ -1549,7 +1549,7 @@ function LegalFooter(){
   const [show,setShow]=useState(null);
   return(
     <div style={{padding:"12px 20px",borderTop:`1px solid ${C.border}`,textAlign:"center"}}>
-      <p style={{fontSize:13,color:C.dim,margin:"0 0 5px",lineHeight:1.6}}>TALON Financial Fluency Engine — Logantia — Educational purposes only — Not financial, investment, legal, or tax advice — Support: support@logantia.com</p>
+      <p style={{fontSize:13,color:C.dim,margin:"0 0 5px",lineHeight:1.6}}>TALON Financial Fluency Engine — Logantia — Educational purposes only — Not financial, investment, legal, or tax advice — Support: <a href="mailto:support@logantia.com" style={{color:C.gold,fontWeight:600}}>support@logantia.com</a></p>
       <div style={{display:"flex",justifyContent:"center",gap:14,flexWrap:"wrap"}}>
         {[["terms","Terms"],["privacy","Privacy"],["disclaimer","Disclaimer"]].map(([k,l])=>(
           <button key={k} onClick={()=>setShow(show===k?null:k)} style={{background:"none",border:"none",color:C.dim,fontSize:13,cursor:"pointer",textDecoration:"underline"}}>{l}</button>
