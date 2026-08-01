@@ -487,7 +487,7 @@ function WingmanButton(){
             ) : (
               <>
                 <div style={{fontSize:14,color:C.gold,letterSpacing:"0.1em",marginBottom:8}}>🦅 WINGMAN SUPPORT</div>
-                <h3 style={{fontSize:22,fontWeight:700,color:C.text,margin:"0 0 8px"}}>Oh. That was not supposed to happen.</h3>
+                <h3 style={{fontSize:22,fontWeight:700,color:C.text,margin:"0 0 8px"}}>Your Wingman has your six.</h3>
                 <p style={{fontSize:17,color:C.muted,margin:"0 0 16px",lineHeight:1.6}}>Tell us what broke. Be as specific as your feelings allow. Someone is about to have a very educational Monday morning.</p>
                 <textarea value={text} onChange={e=>setText(e.target.value)} placeholder="What went wrong? The more detail you give us the faster we fix it and the better we sleep at night." rows={4} style={{width:"100%",padding:"10px 12px",background:C.card2,border:`1px solid ${C.border}`,borderRadius:8,color:C.text,fontSize:17,outline:"none",resize:"vertical",boxSizing:"border-box"}}/>
                 <div style={{display:"flex",gap:8,marginTop:12}}>
