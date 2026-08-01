@@ -589,14 +589,7 @@ function ShareCard({score,userData}){
     };
     if(urls[p]) window.open(urls[p],"_blank");
   };
-  const PLAT=[
-    {id:"twitter",label:"X / Twitter",color:"#1da1f2",bg:"rgba(29,161,242,0.12)",border:"rgba(29,161,242,0.3)"},
-    {id:"facebook",label:"Facebook",color:"#1877f2",bg:"rgba(24,119,242,0.12)",border:"rgba(24,119,242,0.3)"},
-    {id:"linkedin",label:"LinkedIn",color:"#0077b5",bg:"rgba(0,119,181,0.12)",border:"rgba(0,119,181,0.3)"},
-    {id:"whatsapp",label:"WhatsApp",color:"#25d366",bg:"rgba(37,211,102,0.12)",border:"rgba(37,211,102,0.3)"},
-    {id:"reddit",label:"Reddit",color:"#ff4500",bg:"rgba(255,69,0,0.12)",border:"rgba(255,69,0,0.3)"},
-    {id:"pinterest",label:"Pinterest",color:"#e60023",bg:"rgba(230,0,35,0.12)",border:"rgba(230,0,35,0.3)"},
-  ];
+  const PLAT=[     {id:"twitter",label:"X / Twitter",color:"#1da1f2",bg:"rgba(29,161,242,0.12)",border:"rgba(29,161,242,0.3)",logo:"https://cdn.simpleicons.org/x/1da1f2"},     {id:"facebook",label:"Facebook",color:"#1877f2",bg:"rgba(24,119,242,0.12)",border:"rgba(24,119,242,0.3)",logo:"https://cdn.simpleicons.org/facebook/1877f2"},     {id:"linkedin",label:"LinkedIn",color:"#0077b5",bg:"rgba(0,119,181,0.12)",border:"rgba(0,119,181,0.3)",logo:"https://cdn.simpleicons.org/linkedin/0077b5"},     {id:"whatsapp",label:"WhatsApp",color:"#25d366",bg:"rgba(37,211,102,0.12)",border:"rgba(37,211,102,0.3)",logo:"https://cdn.simpleicons.org/whatsapp/25d366"},     {id:"reddit",label:"Reddit",color:"#ff4500",bg:"rgba(255,69,0,0.12)",border:"rgba(255,69,0,0.3)",logo:"https://cdn.simpleicons.org/reddit/ff4500"},     {id:"pinterest",label:"Pinterest",color:"#e60023",bg:"rgba(230,0,35,0.12)",border:"rgba(230,0,35,0.3)",logo:"https://cdn.simpleicons.org/pinterest/e60023"},
   return(
     <Card style={{borderColor:col+"30"}}>
       <div style={{fontSize:13,color:C.muted,letterSpacing:"0.1em",marginBottom:12}}>SHARE YOUR SCORE</div>
