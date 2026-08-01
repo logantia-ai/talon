@@ -255,7 +255,7 @@ const MODULES = [
     analogy:"Minimum payments are bailing a sinking boat with a teacup. Interest floods in faster than you remove it.",
     ahaMoment:"$10,000 at 22% APR on minimums: 30+ years in debt, $15,000+ in interest. The card is a subscription to debt.",
     action:"Find your card's rate and balance. Use a minimum payment calculator. Let the total interest number make you angry enough to pay more.",
-    quiz:[{q:"Why do credit card companies set minimums so low?",opts:["To help customers pay faster","To maximize interest income by keeping balances high","Required by law","To compete with other banks"],ans:1,exp:"Low minimums maximize bank profit — they cover interest plus almost nothing toward principal."}]}]},
+    quiz:[{q:"Why do credit card companies set minimums so low?",opts:["To Wingman customers pay faster","To maximize interest income by keeping balances high","Required by law","To compete with other banks"],ans:1,exp:"Low minimums maximize bank profit — they cover interest plus almost nothing toward principal."}]}]},
   {id:5,icon:"📊",title:"Credit Score",free:true,subtitle:"Three digits controlling your financial life",
    chapters:[{id:"5-1",title:"FICO: The Number That Rules Everything",
     hook:"Your credit score determines your mortgage rate, car loan, apartment, and sometimes your job offer.",
@@ -619,7 +619,7 @@ function ShareCard({score,userData}){
         <button onClick={()=>{navigator.clipboard?.writeText(tt);setTtCopied(true);setTimeout(()=>setTtCopied(false),2500);}} style={{padding:"7px 4px",background:"rgba(255,255,255,0.05)",border:`1px solid ${C.border}`,borderRadius:7,color:C.text,fontSize:14,fontWeight:600,cursor:"pointer"}}>TikTok {ttCopied?"Copied!":""}</button>
         <button onClick={()=>{navigator.clipboard?.writeText(url);setCopied(true);setTimeout(()=>setCopied(false),2000);}} style={{padding:"7px 4px",background:"rgba(255,255,255,0.03)",border:`1px solid ${C.border}`,borderRadius:7,color:C.muted,fontSize:14,fontWeight:600,cursor:"pointer"}}>Link {copied?"Copied!":""}</button>
       </div>
-      <p style={{fontSize:14,color:C.dim,textAlign:"center",margin:0}}>Every share helps someone who was never taught money.</p>
+      <p style={{fontSize:14,color:C.dim,textAlign:"center",margin:0}}>Every share Wingmans someone who was never taught money.</p>
     </Card>
   );
 }
