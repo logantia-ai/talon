@@ -466,7 +466,7 @@ function AffCard({affKey,context=""}){
   );
 }
 
-function WTFButton(){
+function WingmanButton(){
   const [open,setOpen]=useState(false);
   const [text,setText]=useState("");
   const [sent,setSent]=useState(false);
@@ -1850,7 +1850,7 @@ export default function TALON(){
     <div style={{minHeight:"100vh",background:C.bg,color:C.text,fontFamily:"'SF Pro Text',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"}}>
       {showUpgrade && <UpgradeModal onClose={()=>setShowUpgrade(false)} onSelect={handleUpgrade}/>}
       <AICoach userData={userData} scoreData={scoreData} plan={plan} onUpgrade={()=>setShowUpgrade(true)} completedCh={completedCh}/>
-      <WTFButton/>
+      <WingmanButton/>
       <div style={{background:C.nav,borderBottom:`1px solid ${C.border}`,padding:"8px 18px",display:"flex",alignItems:"center",justifyContent:"space-between",position:"sticky",top:0,zIndex:10}}>
         <div style={{display:"flex",alignItems:"center",gap:8}}>
           <img src={TALON_WORDMARK} alt="TALON" style={{height:28,width:"auto",objectFit:"contain",maxWidth:120}}/>
