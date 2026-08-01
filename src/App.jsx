@@ -473,7 +473,7 @@ function WingmanButton(){
   const close=()=>{setOpen(false);setSent(false);setText("");};
   return(
     <>
-      <button onClick={()=>setOpen(true)} style={{position:"fixed",bottom:80,right:16,background:"transparent",border:"2px solid "+C.red,borderRadius:20,padding:"8px 14px",color:C.red,fontSize:16,fontWeight:800,cursor:"pointer",zIndex:50}}>WTF!?</button>
+      <button onClick={()=>setOpen(true)} style={{position:"fixed",bottom:80,right:16,background:"rgba(201,162,39,0.15)",border:"2px solid "+C.gold,borderRadius:20,padding:"8px 14px",color:C.gold,fontSize:13,fontWeight:800,cursor:"pointer",zIndex:50,letterSpacing:"0.1em"}}>🦅 WINGMAN</button>
       {open && (
         <div onClick={close} style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.8)",zIndex:100,display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
           <div onClick={e=>e.stopPropagation()}><Card style={{maxWidth:400,width:"100%"}}>
