@@ -181,12 +181,12 @@ const LOAD_MSGS = [
 ];
 
 const STRIPE={   student:"https://buy.stripe.com/28EdR92xnbTvafkbxc00001",   core:"https://buy.stripe.com/bJe7sLgode1DfzE0Sy00005",   pro:"https://buy.stripe.com/aFa00j7RH5v773844K00006",   life:"https://buy.stripe.com/dRmeVdc7X6zbbjo7gW00004",   family:"https://buy.stripe.com/7sY6oH7RH9LnafkfNs00003",   lifetime:"https://buy.stripe.com/7sYbJ12xn7Df0EK0Sy00002", }; const FOUNDING = {
-  student: {name:"Founding Student",price:2.99,regular:3.99,spots:97,color:"#a78bfa"},
-  core:    {name:"Founding Core",   price:4.99,regular:7.99,spots:89,color:C.green},
-  pro:     {name:"Founding Pro",    price:9.99,regular:17.99,spots:76,color:C.gold},
-  life:    {name:"Founding Life",   price:19.99,regular:34.99,spots:91,color:C.blue},
-  family:  {name:"Founding Family", price:29.99,regular:54.99,spots:94,color:"#f97316"},
-  lifetime:{name:"Founding Lifetime",price:147,regular:397,spots:83,color:"#c13584",once:true},
+  student: {name:"Founding Student",price:4.99,regular:9.99,spots:97,color:"#a78bfa"},
+  core:    {name:"Founding Core",   price:9.99,regular:19.99,spots:89,color:C.green},
+  pro:     {name:"Founding Pro",    price:19.99,regular:39.99,spots:76,color:C.gold},
+  life:    {name:"Founding Life",   price:34.99,regular:69.99,spots:91,color:C.blue},
+  family:  {name:"Founding Family", price:49.99,regular:99.99,spots:94,color:"#f97316"},
+  lifetime:{name:"Founding Lifetime",price:347,regular:997,spots:83,color:"#c13584",once:true},
 };
 
 const AFFS = {
