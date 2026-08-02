@@ -641,7 +641,7 @@ function UpgradeModal({onClose,onSelect}){
                 <div style={{fontSize:14,color:C.muted,textDecoration:"line-through"}}>${tier.regular}</div>
               </div>
             </div>
-            <button onClick={()=>{key==="pro"?window.open("https://buy.stripe.com/28E14n6NDf5H2MSat800000","_blank"):onSelect(key);}} style={{width:"100%",padding:"9px",background:key==="pro"?tier.color:"transparent",border:`1px solid ${key==="pro"?tier.color:C.border}`,borderRadius:8,color:key==="pro"?"#000":C.text,fontSize:16,fontWeight:key==="pro"?700:400,cursor:"pointer"}}>
+            <button onClick={()=>window.open(STRIPE[key],"_blank")} style={{width:"100%",padding:"9px",background:key==="pro"?tier.color:"transparent",border:`1px solid ${key==="pro"?tier.color:C.border}`,borderRadius:8,color:key==="pro"?"#000":C.text,fontSize:16,fontWeight:key==="pro"?700:400,cursor:"pointer"}}>
               {key==="pro"?"Claim Founding Pro Spot →":"Select "+tier.name}
             </button>
           </div>
