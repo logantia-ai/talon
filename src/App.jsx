@@ -180,7 +180,7 @@ const LOAD_MSGS = [
   "Telling the algorithm to calm down…",
 ];
 
-const FOUNDING = {
+const STRIPE={   student:"https://buy.stripe.com/28EdR92xnbTvafkbxc00001",   core:"https://buy.stripe.com/bJe7sLgode1DfzE0Sy00005",   pro:"https://buy.stripe.com/aFa00j7RH5v773844K00006",   life:"https://buy.stripe.com/dRmeVdc7X6zbbjo7gW00004",   family:"https://buy.stripe.com/7sY6oH7RH9LnafkfNs00003",   lifetime:"https://buy.stripe.com/7sYbJ12xn7Df0EK0Sy00002", }; const FOUNDING = {
   student: {name:"Founding Student",price:2.99,regular:3.99,spots:97,color:"#a78bfa"},
   core:    {name:"Founding Core",   price:4.99,regular:7.99,spots:89,color:C.green},
   pro:     {name:"Founding Pro",    price:9.99,regular:17.99,spots:76,color:C.gold},
