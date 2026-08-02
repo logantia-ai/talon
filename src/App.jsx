@@ -181,7 +181,7 @@ const LOAD_MSGS = [
 ];
 
 const STRIPE={   student:"https://buy.stripe.com/28EdR92xnbTvafkbxc00001",   core:"https://buy.stripe.com/bJe7sLgode1DfzE0Sy00005",   pro:"https://buy.stripe.com/aFa00j7RH5v773844K00006",   life:"https://buy.stripe.com/dRmeVdc7X6zbbjo7gW00004",   family:"https://buy.stripe.com/7sY6oH7RH9LnafkfNs00003",   lifetime:"https://buy.stripe.com/7sYbJ12xn7Df0EK0Sy00002", }; const FOUNDING = {
-  student: {name:"Founding Student",price:4.99,regular:9.99,spots:97,color:"#a78bfa"},
+  student: {name:"Founding Student",price:5.99,regular:9.99,spots:97,color:"#a78bfa"},
   core:    {name:"Founding Core",   price:9.99,regular:19.99,spots:89,color:C.green},
   pro:     {name:"Founding Pro",    price:19.99,regular:39.99,spots:76,color:C.gold},
   life:    {name:"Founding Life",   price:34.99,regular:69.99,spots:91,color:C.blue},
