@@ -754,7 +754,7 @@ function AuthScreen({onAuth, defaultMode="login"}) {
           setError("An account with this email already exists. Please sign in instead.");
           setMode("login");
         } else {
-          setError(errMsg||"Something went wrong. Try again.");
+          setError(mode==="signup"?"Account created! Check your email to verify your account before signing in.":errMsg||"Something went wrong. Try again.");
         }
       }
     }catch(e){setError("Connection error. Try again.");}
