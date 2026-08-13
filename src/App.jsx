@@ -212,23 +212,46 @@ const AFFS = {
 const MOD_AFF = {1:"ynab",2:"sofi",3:"lendingclub",4:"nerdwallet",5:"creditkarma",6:"fidelity",7:"robinhood",8:"betterment",9:"acorns",10:"coinbase",11:"fundrise",12:"policygenius",13:"turbotax",14:"betterment",15:"trustwill",16:"lendingclub",17:"coinbase",18:"smartasset",19:"greenlight",20:"smartasset"};
 
 const MODULES = [
-  {id:1,icon:"🏗️",title:"Foundation",free:true,subtitle:"Net worth, budgeting, emergency fund",
-   chapters:[{id:"1-1",title:"Net Worth: Your Financial Scoreboard",
-    hook:"You can't improve what you don't measure. Most people have no idea if they're winning or losing.",
-    concept:"Net worth = everything you own minus everything you owe. Assets minus liabilities. That single number is your financial snapshot.",
-    realNumbers:"Assets: $12k checking + $8k 401k + $18k car = $38k. Liabilities: $5.2k credit card + $24k loans = $29.2k. Net Worth = $8,800.",
-    analogy:"A business doing $1M revenue but owing $1.1M is losing. A teacher earning $45k with zero debt beats someone earning $200k drowning in debt. Income is not wealth.",
-    ahaMoment:"60% of Americans live paycheck to paycheck. Most have never calculated their net worth. Measuring it puts you ahead of the majority immediately.",
-    action:"Write down every asset and liability right now. Calculate your net worth. That is your starting point.",
-    quiz:[{q:"What is net worth?",opts:["Your annual salary","Assets minus liabilities","Your credit score","Monthly income"],ans:1,exp:"Net worth = everything you own minus everything you owe. Income is not wealth."}]},
-   {id:"1-2",title:"The 50/30/20 Rule",
-    hook:"Most people spend first and try to save what's left. The wealthy save first.",
-    concept:"50% to needs, 30% to wants, 20% to financial goals. Simple filter that prevents most financial disasters.",
-    realNumbers:"$4,000 take-home. Needs $2,000. Wants $1,200. Goals $800. That $800/month invested from age 28 to 65 at 8% = $1.9M.",
-    analogy:"Your paycheck is a pie. Cut it intentionally before you start eating or rent and subscriptions eat everything.",
-    ahaMoment:"The gap between 10% and 20% savings rate is not retiring 10 years later — it's the difference between retiring comfortably and working until you can't.",
-    action:"Pull last month's bank statement. Categorize every transaction as Need, Want, or Goal. Find your real percentages.",
-    quiz:[{q:"In the 50/30/20 rule, what is the 20%?",opts:["Housing","Food","Financial goals","Entertainment"],ans:2,exp:"The 20% goes to financial goals — saving, investing, extra debt payments."}]}]},
+  {id:1,icon:"🏗️",title:"Foundation",free:true,subtitle:"Why the system profits from what you don't know",
+   chapters:[{id:"1-1",title:"The System Profits When You Don't Know",
+    hook:"Nobody is coming to teach you this. The gap in your financial education isn't an accident — it's a revenue line on someone else's balance sheet.",
+    concept:"Every financial product you don't fully understand has a price attached to that confusion. Overdraft fees, 24% card interest, high fund expense ratios, the 0.01% your bank pays you while lending that same deposit out at 7% — none of it is illegal, and all of it depends on you not doing the math. Financial literacy was never about being smart. It's about knowing which questions to ask before you sign.",
+    realNumbers:"US banks collect billions of dollars a year in overdraft and NSF fees alone. Americans carry over $1 trillion in credit card debt at an average APR above 20%. Fewer than half of US states guarantee a personal finance course before a student can graduate. Meanwhile the average household quietly pays a lifetime of small charges nobody ever sat down and explained.",
+    analogy:"Casinos don't cheat. They don't need to — the rules are printed on the wall and the odds still favor the house. Consumer finance works the same way: every term is disclosed, in a 40-page agreement written to be skimmed. The house edge isn't the fine print. It's knowing you won't read it.",
+    ahaMoment:"You were never bad with money. You were handed a system whose rules nobody translated, then blamed for losing a game you were never taught. The moment you learn the rules, the same products that quietly charged you start quietly paying you — same institutions, opposite direction.",
+    action:"Log into your primary bank account and find two numbers: the interest rate they pay you on savings, and every fee they charged you in the last 90 days. Write both down. That is the cost of the gap, in your own handwriting.",
+    quiz:[{q:"Why does financial illiteracy persist so widely?",opts:["The information is legally secret","The math is genuinely too hard for most people","Confusion is profitable, and almost nobody is paid to fix it","Banks are prohibited from explaining their products"],ans:2,exp:"Every term is disclosed somewhere. The edge isn't hidden information — it's the safe assumption that you won't read it or run the numbers."}]},
+   {id:"1-2",title:"Three Numbers That Change Everything",
+    hook:"Three pieces of arithmetic separate the people who build wealth from the people who fund it. Not one of them is complicated.",
+    concept:"Where your money sits, what your debt costs you, and when you start. Those three variables will do more damage — or more good — over your lifetime than your salary ever will. Handle them and you've handled most of what actually moves the needle.",
+    realNumbers:"ONE — WHERE IT SITS: $15,000 in a big-bank savings account at 0.01% earns $1.50 a year. The same $15,000 in a high-yield account at 4.5% earns $675. Identical FDIC insurance, identical access, one transfer, $673 difference. TWO — WHAT DEBT COSTS: $5,000 on a card at 24% APR. Paying the minimum (1% of balance plus interest, starting near $150 and shrinking every month) takes over 20 years and roughly $7,000 in interest — more than you borrowed. Pay a flat $250/month instead and it's gone in about 26 months for roughly $1,450. Same debt, ~$5,500 saved. THREE — WHEN YOU START: invest $300/month from 25 to 35 and then never contribute another dollar — $36,000 in, about $552,000 at 65 at 8%. Start at 35 and invest $300/month faithfully until 65 — $108,000 in, about $447,000. The person who contributed three times less finishes $105,000 ahead. The only variable was ten years.",
+    analogy:"Marcus and David are both 26 and both earn $52,000. Marcus keeps $12,000 in a big-bank savings account at 0.01%, carries a $4,000 card balance at 24%, and skips his employer's 4% 401(k) match because the enrollment paperwork looked confusing. David: identical salary, but $12,000 in a 4.5% HYSA, no card balance, full match claimed. Year one — Marcus earns $1.20 in interest, David earns $540. Marcus pays $960 in card interest, David pays $0. Marcus leaves $2,080 of free employer money on the table, David takes all of it. Same job, same paycheck, same city: David finishes the year $3,579 ahead on three decisions that took a combined two hours.",
+    ahaMoment:"Run that $3,579 annual gap forward at 8% and it's roughly $52,000 in ten years — a full year of Marcus's salary, lost to three afternoons he never spent. Nobody out-earned anybody. The gap wasn't income, discipline, or luck. It was arithmetic he was never shown.",
+    action:"Pick whichever of the three is costing you most right now — idle cash, a card balance, or simply not having started — and fix that one this week. Not all three. One.",
+    quiz:[{q:"Someone invests $300/month from 25 to 35 and stops. Someone else invests $300/month from 35 to 65. At 8%, who ends up with more at 65?",opts:["The one who started at 35 — they contributed 3x more","The one who started at 25, by about $105,000","They finish roughly even","Impossible to say without knowing their salaries"],ans:1,exp:"$36,000 contributed early beats $108,000 contributed late — about $552,000 vs $447,000. Time in the market compounds harder than the amount you put in."}]},
+   {id:"1-3",title:"Your Foundation Toolkit",
+    hook:"Fluency is knowing exactly what the words mean when someone is using them on you.",
+    concept:"Five terms carry most of the weight in personal finance. Learn these and account disclosures, loan offers, and benefit packages stop being fog and start being numbers you can compare. Then run the checklist — the entire foundation is five moves.",
+    realNumbers:"Two of these terms — APY and APR — differ by a single letter and point in opposite directions. APY is what you earn; APR is what you're charged. Confusing them is how a 4.5% savings account and a 24% credit card end up feeling like the same category of number.",
+    analogy:"A mechanic who can't tell oil pressure from tire pressure isn't a mechanic. These five terms are your gauges. You don't need to build the engine — you need to read the dashboard.",
+    ahaMoment:"Nobody is hiding these definitions. They're printed on every disclosure you have ever been handed. The advantage isn't secret information — it's the ten minutes of attention almost nobody spends.",
+    vocab:[
+      {term:"APY — Annual Percentage Yield",def:"What you EARN on money you hold, including the effect of compounding. Higher is better. A 4.5% APY on $10,000 pays roughly $450 over a year."},
+      {term:"APR — Annual Percentage Rate",def:"What BORROWING costs you per year, including most fees. Lower is better. A 24% APR on a $4,000 balance costs roughly $960 a year to simply carry."},
+      {term:"Compound Interest",def:"Interest earning interest. Year one you earn on your deposit; year two you earn on the deposit plus year one's interest. It runs identically in reverse — which is precisely what credit card debt is."},
+      {term:"Employer Match",def:"Money your employer adds to your 401(k) when you contribute. A 4% match on a $52,000 salary is $2,080 a year of free money. Not contributing enough to capture it in full is a voluntary pay cut."},
+      {term:"Net Worth",def:"Everything you own minus everything you owe. The one number that says whether you're actually winning. Income is not wealth — a $200,000 earner who owes $250,000 is behind a $45,000 earner who owes nothing."}],
+    action:"Work the checklist below in order. Each item is a single sitting, and the first one takes ten minutes.",
+    checklist:[
+      "Calculate your net worth — list every asset, subtract every debt. One number.",
+      "Move your savings into a high-yield account paying 4%+ — one transfer, roughly $675/year on $15,000.",
+      "Contribute enough to your 401(k) to capture the FULL employer match. Never leave free money.",
+      "Pay a fixed amount above the minimum on your highest-APR debt every month — never the minimum.",
+      "Build one month of expenses in cash, then keep going to three — the buffer that stops the card cycle from restarting."],
+    aff:"sofi",
+    quiz:[{q:"You're comparing a savings account and a credit card. Which number do you want HIGH, and which do you want LOW?",opts:["High APR on savings, low APY on the card","High APY on savings, low APR on the card","Both as high as possible","Both as low as possible"],ans:1,exp:"APY is what you earn — you want it high. APR is what you're charged — you want it low. One letter, opposite directions."},
+     {q:"Your employer offers a 4% 401(k) match and you earn $52,000. What does skipping it cost you each year?",opts:["Nothing — it's optional","$520","$2,080 of free money","Only the tax deduction"],ans:2,exp:"4% of $52,000 is $2,080 a year your employer would have added for free. Declining the match is a voluntary pay cut."},
+     {q:"Marcus and David both earn $52,000. Why is David $3,579 ahead after one year?",opts:["David got a raise","David worked more hours","David spent less on rent","David used a HYSA, carried no card balance, and took the full match"],ans:3,exp:"Identical income. Three decisions — where cash sits, what debt costs, and claiming the match — created the entire gap."}]}]},
   {id:2,icon:"🏦",title:"Banking",free:true,subtitle:"Stop letting your bank quietly steal from you",
    chapters:[{id:"2-1",title:"High-Yield Savings: The $1,400 Mistake",
     hook:"Your bank pays 0.01% interest. High-yield savings accounts pay 4-5%. On $30,000 that's $1,500/year for doing nothing differently.",
@@ -1162,6 +1185,32 @@ function Learn({plan,onEarnBadge,completed,onComplete,onUpgrade}){
         <Card style={{marginBottom:12}}><div style={{fontSize:12,color:C.purple,letterSpacing:"0.1em",marginBottom:5}}>STREET-LEVEL ANALOGY</div><p style={{fontSize:17,color:C.muted,lineHeight:1.85,margin:0}}>{ch.analogy}</p></Card>
         <Card style={{marginBottom:12,background:"rgba(201,162,39,0.06)",borderColor:C.goldBorder}}><div style={{fontSize:12,color:C.gold,letterSpacing:"0.1em",marginBottom:5}}>AHA MOMENT</div><p style={{fontSize:17,color:C.text,lineHeight:1.85,margin:0,fontWeight:500}}>{ch.ahaMoment}</p></Card>
         <Card style={{marginBottom:14,background:"rgba(34,197,94,0.06)",borderColor:"rgba(34,197,94,0.25)"}}><div style={{fontSize:12,color:C.green,letterSpacing:"0.1em",marginBottom:5}}>YOUR ACTION STEP</div><p style={{fontSize:17,color:C.muted,lineHeight:1.85,margin:0}}>{ch.action}</p></Card>
+        {ch.vocab?.length>0 && (
+          <>
+            <SL>VOCABULARY</SL>
+            <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:14}}>
+              {ch.vocab.map((v,vi)=>(
+                <Card key={vi} style={{background:C.card2,padding:"13px 16px"}}>
+                  <div style={{fontSize:16,fontWeight:700,color:C.gold,marginBottom:4}}>{v.term}</div>
+                  <p style={{fontSize:16,color:C.muted,lineHeight:1.8,margin:0}}>{v.def}</p>
+                </Card>
+              ))}
+            </div>
+          </>
+        )}
+        {ch.checklist?.length>0 && (
+          <Card style={{marginBottom:14,background:"rgba(34,197,94,0.06)",borderColor:"rgba(34,197,94,0.25)"}}>
+            <div style={{fontSize:12,color:C.green,letterSpacing:"0.1em",marginBottom:9}}>ACTION CHECKLIST</div>
+            <div style={{display:"flex",flexDirection:"column",gap:8}}>
+              {ch.checklist.map((item,ci)=>(
+                <div key={ci} style={{display:"flex",gap:9,alignItems:"flex-start"}}>
+                  <span style={{fontSize:16,color:C.green,lineHeight:1.8,flexShrink:0}}>☐</span>
+                  <span style={{fontSize:16,color:C.muted,lineHeight:1.8}}>{item}</span>
+                </div>
+              ))}
+            </div>
+          </Card>
+        )}
         {quiz.length>0 && (
           <>
             <SL>KNOWLEDGE CHECK</SL>
@@ -1204,7 +1253,7 @@ function Learn({plan,onEarnBadge,completed,onComplete,onUpgrade}){
           </div>
           {rating[ch.id] && <div style={{fontSize:15,color:C.muted}}>{rating[ch.id]>=4?"Thanks — glad this landed.":rating[ch.id]>=2?"Noted. We will sharpen this.":"Fair. We will fix it."}</div>}
         </div>
-        {MOD_AFF[mod.id] && <AffCard affKey={MOD_AFF[mod.id]} context={"module_"+mod.id}/>}
+        {(ch.aff||MOD_AFF[mod.id]) && <AffCard affKey={ch.aff||MOD_AFF[mod.id]} context={ch.aff?"chapter_"+ch.id:"module_"+mod.id}/>}
         <div style={{height:14}}/>
         <button onClick={finish} disabled={!allCorrect&&!isDone} style={{width:"100%",padding:"12px",background:isDone?"rgba(34,197,94,0.12)":!allCorrect?"rgba(201,162,39,0.15)":C.gold,border:isDone?`1px solid ${C.green}`:!allCorrect?`1px solid ${C.goldBorder}`:"none",borderRadius:9,color:isDone?C.green:!allCorrect?C.gold:"#000",fontSize:17,fontWeight:700,cursor:isDone||allCorrect?"pointer":"not-allowed",outline:"none"}}>
           {isDone?"Chapter Complete":!allCorrect?"Answer all questions to continue":"Mark Complete"}
